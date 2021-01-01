@@ -19,6 +19,8 @@ export const Routes = () => (
                 <Route path='/products/add' />
                 <Route path='/products/edit/:productName' />
                 <Route path='/products/:productName' />
+                <Route path='/cart' />
+                <Route path='/checkout' />
                 <Route path='/' component={Home} />
             </Switch>
         </Router>
