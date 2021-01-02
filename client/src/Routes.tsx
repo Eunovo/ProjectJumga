@@ -15,15 +15,19 @@ export const Routes = () => (
                 <Route path='/signup/store' component={StoreOwnerSignup} />
                 <Route path='/signup/rider' />
 
-                <Header />
+            </Switch>
+            
+            <Header />
 
+            <Switch>
                 <Route path='/dashboard/store' component={StoreDashboard} />
                 <Route path='/products/add' />
                 <Route path='/products/edit/:productName' />
                 <Route path='/products/:productName' />
                 <Route path='/cart' />
                 <Route path='/checkout' />
-                <Route path='/' component={Home} />
+                <Route exact path='/' component={Home} />
+                <Route path='*'>Not Found</Route>
             </Switch>
         </Router>
     </>
