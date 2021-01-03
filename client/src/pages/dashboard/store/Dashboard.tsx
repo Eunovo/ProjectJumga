@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { StoreOwnerSidebar } from '../../../components/sidebar';
 import { useStyles } from '../styles';
 import { HorizontalProductsView } from '../../../components/products';
+import { StorePage } from './StorePage';
 
 
 export const StoreDashboard = () => {
@@ -30,12 +30,8 @@ export const StoreDashboard = () => {
         }
     ];
 
-    return <div className={classes.dashboard}>
-
-        <StoreOwnerSidebar className={classes.sidebar} selected='dashboard' />
-
-        <div className={classes.content}>
-
+    return <StorePage selected='dashboard'>
+        <>
             <Typography className={classes.header} variant='h4'>Welcome Owner!</Typography>
 
             <div className={classes.grid}>
@@ -71,6 +67,6 @@ export const StoreDashboard = () => {
 
             </div>
 
-        </div>
-    </div>;
+        </>
+    </StorePage>;
 }

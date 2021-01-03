@@ -7,7 +7,7 @@ import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 
 
-type Items = 'dashboard' | 'orders' | 'products' | 'settings';
+export type StoreSideBarItems = 'dashboard' | 'orders' | 'products' | 'settings';
 
 interface SideBarProps {
     className?: string;
@@ -15,7 +15,7 @@ interface SideBarProps {
     /**
      * The current selected sidebar item
      */
-    selected: Items;
+    selected: StoreSideBarItems;
 }
 
 export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected }) => {
@@ -50,8 +50,8 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
 
 
 interface SideBarItemProps {
-    name: Items;
-    selected: Items;
+    name: StoreSideBarItems;
+    selected: StoreSideBarItems;
 }
 
 export const SideBarItem: React.FC<SideBarItemProps> = ({ children, name, selected }) => {

@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing()
         },
         header: {
-            marginBottom: theme.spacing(6)
+            marginBottom: theme.spacing(4)
         },
         grid: {
             marginInline: 'auto',
@@ -57,6 +57,9 @@ export const useStyles = makeStyles((theme: Theme) =>
                 fontSize: '3rem',
             }
         },
-        infoBlockSub: {}
+        infoBlockSub: {},
+        table: {
+            minWidth: 700
+        }
     })
 );
