@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { ProductGrid } from "../../../components/products";
 import { Product } from "../../../models";
 import { useStyles } from "../styles"
@@ -39,11 +39,21 @@ export const StoreProducts = () => {
     return <StorePage selected='products'>
         <>
 
-        <Typography className={classes.header} variant='h4'>
-            Products
-        </Typography>
 
-        <ProductGrid products={products} />
+            <div className={classes.header} style={{
+                display: 'flex', alignItems: 'flex-end',
+                flexWrap: 'wrap'
+            }}>
+
+                <Typography variant='h4'>
+                    Products
+                </Typography>
+                <Button color='primary' variant='text' style={{ marginLeft: '1rem' }}>
+                    new</Button>
+
+            </div>
+
+            <ProductGrid products={products} />
 
         </>
     </StorePage>
