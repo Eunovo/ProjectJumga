@@ -5,26 +5,23 @@ import ArrowLeft from '@material-ui/icons/ChevronLeft';
 import ArrowRight from '@material-ui/icons/ChevronRight';
 import { Product } from '../../models';
 import { useProductStyles } from './styles';
+import { ProductCard } from './ProductCard';
 
 
 interface HorizontalProductsViewProps {
     className?: string;
-    products: Product[];
+    products: Partial<Product>[];
 }
 
 export const HorizontalProductsView: React.FC<HorizontalProductsViewProps> = ({ className, products }) => {
     const classes = useProductStyles();
 
     const productsView = products.map((product, index) => (
-        <div key={index} className={classes.product}>
-            <div className={classes.image}>
-                <img src={product.image} alt={product.name} />
-            </div>
-
-            <div className={classes.name}>
-                {product.name}
-            </div>
-        </div>
+        <ProductCard
+            key={index}
+            className={classes.sliderProduct}
+            product={product}
+        />
     ));
 
     return <div className={clsx(classes.slider, className)}>

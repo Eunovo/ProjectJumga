@@ -13,7 +13,8 @@ export const useStyles = makeStyles((theme: Theme) =>
             marginRight: theme.spacing(3)
         },
         content: {
-            padding: theme.spacing()
+            padding: theme.spacing(),
+            flexGrow: 1
         },
         header: {
             marginBottom: theme.spacing(4)
