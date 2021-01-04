@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
+import IconButton from '@material-ui/core/IconButton';
 import ArrowLeft from '@material-ui/icons/ChevronLeft';
 import ArrowRight from '@material-ui/icons/ChevronRight';
 import { Product } from '../../models';
@@ -26,8 +27,8 @@ export const HorizontalProductsView: React.FC<HorizontalProductsViewProps> = ({ 
 
     return <div className={clsx(classes.slider, className)}>
         <ScrollMenu
-            arrowLeft={<div className={classes.arrow}><ArrowLeft /></div>}
-            arrowRight={<div className={classes.arrow}><ArrowRight /></div>}
+            arrowLeft={<IconButton className={classes.arrow}><ArrowLeft /></IconButton>}
+            arrowRight={<IconButton className={classes.arrow}><ArrowRight /></IconButton>}
             data={productsView}
         />
     </div>

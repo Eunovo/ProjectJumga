@@ -22,7 +22,10 @@ export const useSideBarStyles = makeStyles((theme: Theme) =>
         },
         selected: {
             color: 'white',
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
+            '&:hover': {
+                backgroundColor: theme.palette.primary.dark
+            }
         },
         icon: {
             marginRight: theme.spacing(),

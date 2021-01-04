@@ -1,14 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
+import { useSideBarStyles } from './styles';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
 import OrdersIcon from '@material-ui/icons/ShoppingBasketOutlined';
 import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import { SideBarItem } from './Sidebar';
-import { useSideBarStyles } from './styles';
 
 
-export type StoreSideBarItems = 'dashboard' | 'orders' | 'products' | 'settings';
+export type RiderSideBarItems = 'dashboard' | 'orders' | 'products' | 'settings';
 
 interface SideBarProps {
     className?: string;
@@ -16,17 +16,17 @@ interface SideBarProps {
     /**
      * The current selected sidebar item
      */
-    selected: StoreSideBarItems;
+    selected: RiderSideBarItems;
 }
 
-export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected }) => {
+export const RiderSidebar: React.FC<SideBarProps> = ({ className, selected }) => {
     const classes = useSideBarStyles();
 
     return <div className={clsx(classes.sidebar, className)}>
         <SideBarItem
             name='dashboard'
             selected={selected}
-            route={`/dashboard/store`}
+            route={``}
         >
             <DashboardIcon className={classes.icon} />
 
@@ -36,7 +36,7 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
         <SideBarItem
             name='orders'
             selected={selected}
-            route={`/dashboard/orders`}
+            route={``}
         >
             <OrdersIcon className={classes.icon} />
 
@@ -46,7 +46,7 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
         <SideBarItem
             name='products'
             selected={selected}
-            route={`/dashboard/products`}
+            route={``}
         >
             <ProductsIcon className={classes.icon} />
 
@@ -56,7 +56,7 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
         <SideBarItem
             name='settings'
             selected={selected}
-            route={`/dashboard/settings`}
+            route={``}
         >
             <SettingsIcon className={classes.icon} />
 
@@ -64,3 +64,4 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
         </SideBarItem>
     </div>
 }
+
