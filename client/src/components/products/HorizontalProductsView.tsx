@@ -8,10 +8,10 @@ import { Product } from '../../models';
 import { useProductStyles } from './styles';
 import { ProductCard } from './ProductCard';
 
-
+type Keys = "name" | "image" | "url";
 interface HorizontalProductsViewProps {
     className?: string;
-    products: Partial<Product>[];
+    products: Pick<Product, Keys>[];
 }
 
 export const HorizontalProductsView: React.FC<HorizontalProductsViewProps> = ({ className, products }) => {

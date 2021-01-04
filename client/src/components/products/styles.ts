@@ -4,9 +4,11 @@ export const useProductStyles = makeStyles((theme: Theme) =>
     createStyles({
         grid: {
             display: 'grid',
-            gridGap: theme.spacing(),
+            grdiColumnGap: `${theme.spacing()}px`,
+            gridRowGap: theme.spacing(2),
             gridTemplateColumns: "repeat(auto-fit, minmax(15rem, 1fr))",
-            minWidth: `calc(30rem + ${theme.spacing()}px)`
+            justifyItems: 'center',
+            minWidth: `15rem`,
         },
         slider: {
             marginInline: 'auto',
