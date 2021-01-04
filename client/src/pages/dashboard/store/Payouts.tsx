@@ -21,6 +21,11 @@ const payouts: Payout[] = [
         amount: 1000,
         earningPeriod: { from: new Date(), to: new Date() },
         paidOn: new Date()
+    },
+    {
+        amount: 1000,
+        earningPeriod: { from: new Date(), to: new Date() },
+        paidOn: new Date()
     }
 ];
 
