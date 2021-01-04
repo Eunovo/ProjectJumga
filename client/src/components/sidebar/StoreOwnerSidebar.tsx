@@ -3,12 +3,13 @@ import clsx from 'clsx';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
 import OrdersIcon from '@material-ui/icons/ShoppingBasketOutlined';
 import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
+import PayoutsIcon from '@material-ui/icons/MoneyOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import { SideBarItem } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
 
-export type StoreSideBarItems = 'dashboard' | 'orders' | 'products' | 'settings';
+export type StoreSideBarItems = 'dashboard' | 'orders' | 'products' | 'payouts' | 'settings';
 
 interface SideBarProps {
     className?: string;
@@ -51,6 +52,16 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
             <ProductsIcon className={classes.icon} />
 
             <div>Products</div>
+        </SideBarItem>
+
+        <SideBarItem
+            name='payouts'
+            selected={selected}
+            route={`/dashboard/payouts`}
+        >
+            <PayoutsIcon className={classes.icon} />
+
+            <div>Payouts</div>
         </SideBarItem>
 
         <SideBarItem

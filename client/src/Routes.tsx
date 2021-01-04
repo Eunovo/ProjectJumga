@@ -6,6 +6,7 @@ import {
     StoreDashboard,
     StoreOrders,
     StoreProducts,
+    StorePayouts,
     StoreSettings
 } from './pages/dashboard';
 import { Home } from './pages/home/Home';
@@ -30,6 +31,7 @@ export const Routes = () => (
                 <Route path='/dashboard/products/add' />
                 <Route path='/dashboard/products/edit/:productName' />
                 <Route path='/dashboard/products' component={StoreProducts} />
+                <Route path='/dashboard/payouts' component={StorePayouts} />
                 <Route path='/dashboard/settings' component={StoreSettings} />
                 <Route path='/cart' />
                 <Route path='/checkout' />
