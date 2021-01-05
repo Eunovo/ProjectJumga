@@ -9,12 +9,18 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         sidebar: {
             height: '50vh',
-            width: '20vw',
-            marginRight: theme.spacing(3)
+            width: '10vw',
+            marginRight: theme.spacing(3),
+            [theme.breakpoints.up('md')]: {
+                width: '20vw'
+            }
         },
         content: {
             padding: theme.spacing(),
-            flexGrow: 1
+            flexGrow: 1,
+            [theme.breakpoints.up('md')]: {
+                width: `calc(80vw - ${theme.spacing(3)}px)`
+            }
         },
         header: {
             marginBottom: theme.spacing(4)
@@ -41,12 +47,15 @@ export const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(),
             textAlign: 'center',
             height: '6rem',
-            minWidth: '8rem',
+            width: '100%',
+            marginTop: theme.spacing(2),
+            marginInline: theme.spacing(2),
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            [theme.breakpoints.up('md')]: {
+            [theme.breakpoints.up('sm')]: {
                 height: '8rem',
+                maxWidth: '12rem',
                 minWidth: '10rem',
             }
         },

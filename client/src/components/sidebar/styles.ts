@@ -8,17 +8,22 @@ export const useSideBarStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-evenly',
-            alignItems: 'stretch',
+            alignItems: 'center',
             borderRadius: '.5rem',
-            boxShadow: theme.shadows[1]
+            boxShadow: theme.shadows[1],
+            [theme.breakpoints.up('md')]: {
+                alignItems: 'stretch'
+            }
         },
         sidebarItem: {
             display: 'flex',
             justifyContent: 'start',
             alignItems: 'center',
-            borderRadius: '.5rem',
             padding: theme.spacing(),
-            marginBottom: theme.spacing()
+            marginBottom: theme.spacing(),
+            [theme.breakpoints.up('md')]: {
+                borderRadius: '.5rem'
+            }
         },
         selected: {
             color: 'white',
@@ -28,7 +33,9 @@ export const useSideBarStyles = makeStyles((theme: Theme) =>
             }
         },
         icon: {
-            marginRight: theme.spacing(),
+            [theme.breakpoints.up('md')]: {
+                marginRight: theme.spacing()
+            }
         }
     })
 );

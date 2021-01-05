@@ -1,5 +1,4 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { useStyles } from '../styles';
 import { HorizontalProductsView } from '../../../components/products';
 import { StorePage } from './StorePage';
@@ -39,7 +38,12 @@ export const StoreDashboard = () => {
         <>
             <Typography className={classes.header} variant='h4'>Welcome Owner!</Typography>
 
-            <div className={classes.grid}>
+            <Box
+                display='flex'
+                flexWrap='wrap'
+                justifyContent='space-between'
+                marginTop={-2}
+            >
 
                 <div className={classes.infoBlock}>
                     <div className={classes.infoBlockMain}>1000</div>
@@ -61,7 +65,7 @@ export const StoreDashboard = () => {
                     <div className={classes.infoBlockSub}>Average Weekly Sale</div>
                 </div>
 
-            </div>
+            </Box>
 
 
             <div style={{ marginTop: '5rem' }}>

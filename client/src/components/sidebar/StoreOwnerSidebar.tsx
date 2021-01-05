@@ -1,11 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
+import Hidden from '@material-ui/core/Hidden';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
 import OrdersIcon from '@material-ui/icons/ShoppingBasketOutlined';
 import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
 import PayoutsIcon from '@material-ui/icons/MoneyOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
-import { SideBarItem } from './Sidebar';
+import { Nav, SideBarItem } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
 
@@ -23,55 +24,53 @@ interface SideBarProps {
 export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected }) => {
     const classes = useSideBarStyles();
 
-    return <div className={clsx(classes.sidebar, className)}>
-        <SideBarItem
-            name='dashboard'
-            selected={selected}
-            route={`/dashboard/store`}
-        >
-            <DashboardIcon className={classes.icon} />
+    const StoreOwnerNavs: Nav[] = [
+        {
+            name: 'dashboard',
+            icon: <DashboardIcon className={classes.icon} />,
+            route: '/dashboard/store'
+        },
+        {
+            name: 'orders',
+            icon: <OrdersIcon className={classes.icon} />,
+            route: '/dashboard/orders'
+        },
+        {
+            name: 'products',
+            icon: <ProductsIcon className={classes.icon} />,
+            route: '/dashboard/products'
+        },
+        {
+            name: 'payouts',
+            icon: <PayoutsIcon className={classes.icon} />,
+            route: '/dashboard/payouts'
+        },
+        {
+            name: 'settings',
+            icon: <SettingsIcon className={classes.icon} />,
+            route: '/dashboard/settings'
+        }
+    ];
 
-            <div>Dashboard</div>
-        </SideBarItem>
-
-        <SideBarItem
-            name='orders'
-            selected={selected}
-            route={`/dashboard/orders`}
-        >
-            <OrdersIcon className={classes.icon} />
-
-            <div>Orders</div>
-        </SideBarItem>
-
-        <SideBarItem
-            name='products'
-            selected={selected}
-            route={`/dashboard/products`}
-        >
-            <ProductsIcon className={classes.icon} />
-
-            <div>Products</div>
-        </SideBarItem>
-
-        <SideBarItem
-            name='payouts'
-            selected={selected}
-            route={`/dashboard/payouts`}
-        >
-            <PayoutsIcon className={classes.icon} />
-
-            <div>Payouts</div>
-        </SideBarItem>
-
-        <SideBarItem
-            name='settings'
-            selected={selected}
-            route={`/dashboard/settings`}
-        >
-            <SettingsIcon className={classes.icon} />
-
-            <div>Settings</div>
-        </SideBarItem>
-    </div>
+    return <>
+        <Hidden xsDown>
+            <div className={clsx(classes.sidebar, className)}>
+                {
+                    StoreOwnerNavs.map((nav, i) => (
+                        <SideBarItem
+                            key={i}
+                            name={nav.name}
+                            selected={selected}
+                            route={nav.route}
+                        >
+                            {nav.icon}
+                            <Hidden smDown>
+                                {nav.name}
+                            </Hidden>
+                        </SideBarItem>
+                    ))
+                }
+            </div>
+        </Hidden>
+    </>
 }

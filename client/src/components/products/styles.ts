@@ -12,7 +12,13 @@ export const useProductStyles = makeStyles((theme: Theme) =>
         },
         slider: {
             marginInline: 'auto',
-            maxWidth: '50rem'
+            maxWidth: '20rem',
+            [theme.breakpoints.up('sm')]: {
+                maxWidth: '30rem'
+            },
+            [theme.breakpoints.up('md')]: {
+                maxWidth: '50rem'
+            }
         },
         sliderProduct: {
             marginInline: theme.spacing()
