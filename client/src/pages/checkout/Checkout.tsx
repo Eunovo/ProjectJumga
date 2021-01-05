@@ -5,7 +5,7 @@ import { Confirmation } from './Confirmation';
 
 
 export const Checkout = () => {
-    const [stage, setStage] = useState(1);
+    const [stage, setStage] = useState(0);
    
     return <Box
         maxWidth={'50rem'}
