@@ -5,7 +5,8 @@ export const useFormStyles = makeStyles((theme: Theme) =>
         form: {
             width: '100%',
             marginInline: 'auto',
-            maxWidth: '40rem'
+            maxWidth: '40rem',
+            marginTop: theme.spacing(-1.5)
         },
         field: {
             marginBlock: theme.spacing(1.5),

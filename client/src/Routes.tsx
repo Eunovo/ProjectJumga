@@ -8,7 +8,8 @@ import {
     StoreOrders,
     StoreProducts,
     StorePayouts,
-    StoreSettings
+    StoreSettings,
+    StoreAddProduct
 } from './pages/dashboard';
 import { Home } from './pages/home/Home';
 
@@ -29,7 +30,7 @@ export const Routes = () => (
             <Switch>
                 <Route path='/dashboard/store' component={StoreDashboard} />
                 <Route path='/dashboard/orders' component={StoreOrders} />
-                <Route path='/dashboard/products/add' />
+                <Route path='/dashboard/products/add' component={StoreAddProduct} />
                 <Route path='/dashboard/products/edit/:productName' />
                 <Route path='/dashboard/products' component={StoreProducts} />
                 <Route path='/dashboard/payouts' component={StorePayouts} />

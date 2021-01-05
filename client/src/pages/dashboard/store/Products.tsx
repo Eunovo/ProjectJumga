@@ -1,4 +1,5 @@
 import { Button, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import { ProductGrid } from "../../../components/products";
 import { Product } from "../../../models";
 import { useStyles } from "../styles"
@@ -35,6 +36,7 @@ const products: Pick<Product, Keys>[] = [
 
 export const StoreProducts = () => {
     const classes = useStyles();
+    const history = useHistory();
 
     return <StorePage selected='products'>
         <>
@@ -48,8 +50,15 @@ export const StoreProducts = () => {
                 <Typography variant='h4'>
                     Products
                 </Typography>
-                <Button color='primary' variant='text' style={{ marginLeft: '1rem' }}>
-                    new</Button>
+
+                <Button
+                    color='primary'
+                    variant='text'
+                    style={{ marginLeft: '1rem' }}
+                    onClick={() => history.push('/dashboard/products/add')}
+                >
+                    new
+                </Button>
 
             </div>
 
