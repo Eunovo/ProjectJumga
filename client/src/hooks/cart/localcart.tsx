@@ -10,15 +10,20 @@ import { Product } from "../../models";
 
 type Keys = "name" | "price" | "image" | "url";
 type ProductInfo = Pick<Product, Keys>;
+
+export type CartItem = ProductInfo & { quantity: number };
+
 type Cart<T = any> = {
-    [P in keyof T]: ProductInfo & { quantity: number }
+    [P in keyof T]: CartItem
 }
 
 const CartContext = createContext<{
-    cart?: Cart,
+    cart: Cart,
     increment?: (product: ProductInfo, quantity: number) => void,
     decrement?: (product: ProductInfo, quantity: number) => void
-}>({});
+}>({
+    cart: {}
+});
 
 export const CartProvider: React.FC = ({ children }) => {
     const [cart, setCart] = useState<Cart>({});

@@ -1,7 +1,8 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/header';
 import { StoreOwnerSignup } from './pages/auth';
+import { Cart } from './pages/cart';
+import { Checkout } from './pages/checkout';
 import {
     StoreDashboard,
     StoreOrders,
@@ -33,8 +34,8 @@ export const Routes = () => (
                 <Route path='/dashboard/products' component={StoreProducts} />
                 <Route path='/dashboard/payouts' component={StorePayouts} />
                 <Route path='/dashboard/settings' component={StoreSettings} />
-                <Route path='/cart' />
-                <Route path='/checkout' />
+                <Route path='/cart' component={Cart} />
+                <Route path='/checkout' component={Checkout} />
                 <Route exact path='/' component={Home} />
                 <Route path='*'>Not Found</Route>
             </Switch>

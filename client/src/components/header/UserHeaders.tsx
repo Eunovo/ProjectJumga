@@ -6,13 +6,18 @@ import {
     IconButton,
     Badge
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import CartIcon from '@material-ui/icons/ShoppingCart';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { useCart } from '../../hooks/cart';
 import { useStyles } from './styles';
 
 
 export const GuestHeader = () => {
     const classes = useStyles();
+    const history = useHistory();
+    const { cart } = useCart();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -73,7 +78,20 @@ export const GuestHeader = () => {
         </Menu>
     );
 
+    const totalItemsInCart = Object.values(cart)
+        .reduce((prev, cur) => prev + cur.quantity, 0);
+
     return <>
+        <IconButton
+            aria-label='cart'
+            color='inherit'
+            onClick={() => history.push('/cart')}
+        >
+            <Badge color='secondary' badgeContent={totalItemsInCart}>
+                <CartIcon />
+            </Badge>
+        </IconButton>
+
         <div className={classes.sectionDesktop}>
             <Button
                 aria-label="signup"
