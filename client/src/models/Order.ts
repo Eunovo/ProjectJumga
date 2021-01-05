@@ -12,6 +12,7 @@ export interface Order {
 
 export enum OrderStatus {
     pending = 'pending',
+    paid = 'paid',
     completed = 'completed',
     cancelled = 'cancelled',
     returned = 'returned'
