@@ -1,15 +1,23 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-export const useCartStyles = makeStyles((theme: Theme) => 
-    createStyles({
+
+export const useCartStyles = makeStyles((theme: Theme) => {
+    const bottomBarHeight = `calc(${theme.spacing(4)}px + 3rem)`;
+
+    return createStyles({
         root: {},
+        cartRoot: {
+            marginBottom: bottomBarHeight
+        },
         bottomBar: {
             backgroundColor: 'white',
             position: 'fixed',
             bottom: 0,
             left: 0,
             right: 0,
-            paddingBlock: theme.spacing(2),
+            height: bottomBarHeight,
+            display: 'flex',
+            alignItems: 'center',
             borderColor: theme.palette.grey[300],
             borderTop: 'solid 1px'
         },
@@ -35,4 +43,4 @@ export const useCartStyles = makeStyles((theme: Theme) =>
             borderColor: theme.palette.grey[100]
         }
     })
-);
+});
