@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '@material-ui/core/Button';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
