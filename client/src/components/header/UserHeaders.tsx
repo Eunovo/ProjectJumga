@@ -4,30 +4,36 @@ import {
     Menu,
     MenuItem,
     IconButton,
-    Badge
+    Badge,
+    withStyles
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import CartIcon from '@material-ui/icons/ShoppingCart';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { useCart } from '../../hooks/cart';
 import { useStyles } from './styles';
 
+const StyledMenuItem = withStyles({
+    root: {
+        minWidth: '7rem'
+    }
+})(MenuItem);
 
 export const GuestHeader = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { cart } = useCart();
 
+    const [route, setRoute] = React.useState<"login" | "signup">("login");
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleMenuOpen = (route: "login" | "signup") =>
+        (event: React.MouseEvent<HTMLElement>) => {
+            setRoute(route);
+            setAnchorEl(event.currentTarget);
+        };
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
@@ -46,15 +52,27 @@ export const GuestHeader = () => {
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             id={menuId}
             keepMounted
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Seller</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Rider</MenuItem>
+            <StyledMenuItem onClick={() => {
+                history.push(`/${route}/store`);
+            }}>
+                Seller
+            </StyledMenuItem>
+            {
+                route === 'login' && (
+                    <StyledMenuItem onClick={() => {
+                        history.push(`/${route}/rider`);
+                    }}>
+                        Rider
+                    </StyledMenuItem>
+                )
+            }
         </Menu>
     );
 
@@ -62,42 +80,29 @@ export const GuestHeader = () => {
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             id={mobileMenuId}
             keepMounted
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
+            <StyledMenuItem onClick={handleMenuOpen('login')}>
                 <p>Login</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
+            </StyledMenuItem>
+            <StyledMenuItem onClick={handleMenuOpen('signup')}>
                 <p>Signup</p>
-            </MenuItem>
+            </StyledMenuItem>
         </Menu>
     );
 
-    const totalItemsInCart = Object.values(cart)
-        .reduce((prev, cur) => prev + cur.quantity, 0);
-
     return <>
-        <IconButton
-            aria-label='cart'
-            color='inherit'
-            onClick={() => history.push('/cart')}
-        >
-            <Badge color='secondary' badgeContent={totalItemsInCart}>
-                <CartIcon />
-            </Badge>
-        </IconButton>
-
         <div className={classes.sectionDesktop}>
             <Button
                 aria-label="signup"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleMenuOpen('login')}
                 color="inherit"
             >
                 Login
@@ -107,7 +112,7 @@ export const GuestHeader = () => {
                 aria-label="signup"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleMenuOpen('signup')}
                 color="inherit"
             >
                 Signup
@@ -147,7 +152,7 @@ export const StoreOwnerHeader = () => {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleMenuOpen}
                 color="inherit"
             >
                 <AccountCircle />
