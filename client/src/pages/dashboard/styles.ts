@@ -15,9 +15,19 @@ export const useStyles = makeStyles((theme: Theme) =>
                 width: '20vw'
             }
         },
+        bottomMenu: {
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '8vh',
+            borderTop: `solid 1px ${theme.palette.grey[300]}`,
+            zIndex: 1100
+        },
         content: {
             padding: theme.spacing(),
             flexGrow: 1,
+            marginBottom: '8vh',
             [theme.breakpoints.up('md')]: {
                 width: `calc(80vw - ${theme.spacing(3)}px)`
             }

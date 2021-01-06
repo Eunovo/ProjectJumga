@@ -8,7 +8,13 @@ export const StorePage: React.FC<{ selected: StoreSideBarItems }> = ({ children,
 
     return <div className={classes.dashboard}>
 
-        <StoreOwnerSidebar className={classes.sidebar} selected={selected} />
+        <StoreOwnerSidebar
+            classes={{
+                sideBar: classes.sidebar,
+                bottomBar: classes.bottomMenu
+            }}
+            selected={selected}
+        />
 
         <div className={classes.content}>
 

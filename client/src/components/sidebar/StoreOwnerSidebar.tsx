@@ -6,6 +6,7 @@ import OrdersIcon from '@material-ui/icons/ShoppingBasketOutlined';
 import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
 import PayoutsIcon from '@material-ui/icons/MoneyOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
+import { BottomMenu } from './BottomMenu';
 import { Nav, SideBarItem } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
@@ -13,7 +14,10 @@ import { useSideBarStyles } from './styles';
 export type StoreSideBarItems = 'dashboard' | 'orders' | 'products' | 'payouts' | 'settings';
 
 interface SideBarProps {
-    className?: string;
+    classes?: {
+        sideBar?: string,
+        bottomBar?: string
+    };
 
     /**
      * The current selected sidebar item
@@ -21,40 +25,40 @@ interface SideBarProps {
     selected: StoreSideBarItems;
 }
 
-export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected }) => {
-    const classes = useSideBarStyles();
+export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ classes, selected }) => {
+    const sidebarClasses = useSideBarStyles();
 
     const StoreOwnerNavs: Nav[] = [
         {
             name: 'dashboard',
-            icon: <DashboardIcon className={classes.icon} />,
+            icon: <DashboardIcon className={sidebarClasses.icon} />,
             route: '/dashboard/store'
         },
         {
             name: 'orders',
-            icon: <OrdersIcon className={classes.icon} />,
+            icon: <OrdersIcon className={sidebarClasses.icon} />,
             route: '/dashboard/orders'
         },
         {
             name: 'products',
-            icon: <ProductsIcon className={classes.icon} />,
+            icon: <ProductsIcon className={sidebarClasses.icon} />,
             route: '/dashboard/products'
         },
         {
             name: 'payouts',
-            icon: <PayoutsIcon className={classes.icon} />,
+            icon: <PayoutsIcon className={sidebarClasses.icon} />,
             route: '/dashboard/payouts'
         },
         {
             name: 'settings',
-            icon: <SettingsIcon className={classes.icon} />,
+            icon: <SettingsIcon className={sidebarClasses.icon} />,
             route: '/dashboard/settings'
         }
     ];
 
     return <>
         <Hidden xsDown>
-            <div className={clsx(classes.sidebar, className)}>
+            <div className={clsx(classes?.sideBar, sidebarClasses.sidebar)}>
                 {
                     StoreOwnerNavs.map((nav, i) => (
                         <SideBarItem
@@ -71,6 +75,10 @@ export const StoreOwnerSidebar: React.FC<SideBarProps> = ({ className, selected 
                     ))
                 }
             </div>
+        </Hidden>
+
+        <Hidden smUp>
+            <BottomMenu className={classes?.bottomBar} navs={StoreOwnerNavs}/>
         </Hidden>
     </>
 }
