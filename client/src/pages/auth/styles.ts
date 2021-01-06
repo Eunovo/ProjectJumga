@@ -8,16 +8,15 @@ export const useStyles = makeStyles((theme: Theme) => createStyles({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: theme.palette.background.default,
-        paddingInline: theme.spacing(4),
+        paddingBlock: theme.spacing(4),
+        paddingInline: theme.spacing(2),
         minBlockSize: '100vh'
     },
     authForm: {
-        marginBlockStart: theme.spacing(4),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch',
-        maxInlineSize: '30rem',
         width: '100%'
     },
     field: {

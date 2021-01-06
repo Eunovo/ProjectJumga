@@ -40,6 +40,14 @@ export const StoreOwnerSignup = () => {
     };
 
     return <AuthPage>
+
+        <Typography variant='h5'>
+            Signup
+        </Typography>
+        <Typography variant='subtitle1'>
+            As a Seller
+        </Typography>
+
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -83,7 +91,7 @@ export const StoreOwnerSignup = () => {
                     type='password'
                 />
 
-                <Box marginBottom={2}>
+                <Box marginTop={2}>
                     <Typography variant='h5'>Address</Typography>
                 </Box>
 

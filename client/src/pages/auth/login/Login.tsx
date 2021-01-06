@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { Field } from '../../../components/forms';
@@ -19,6 +20,9 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
     const classes = useStyles();
 
     return <AuthPage>
+
+        <Typography variant='h5'>Login</Typography>
+
         <Formik
             initialValues={{ email: '', password: '' }}
             validationSchema={validationSchema}

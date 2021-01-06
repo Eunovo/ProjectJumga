@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
 
 
@@ -8,9 +8,18 @@ export const AuthPage: React.FC = ({ children }) => {
 
     return <div className={classes.authRoot}>
 
-        <Typography variant='h4'>JUMGA</Typography>
+        <Box marginBottom={4}>
+            <Typography align='center' variant='h4'>JUMGA</Typography>
+        </Box>
 
-        {children}
+        <Box
+            display='flex'
+            flexDirection='column'
+            width='100%'
+            maxWidth='30rem'
+        >
+            {children}
+        </Box>
 
     </div>
 }
