@@ -32,6 +32,7 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
                     className={classes.field}
                     name='email'
                     label='Email'
+                    placeholder='test@gmail.com'
                 />
 
                 <Field
