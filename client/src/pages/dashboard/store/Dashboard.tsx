@@ -33,14 +33,14 @@ const ApproveSection = () => {
             <Box
                 padding={4}
             >
-                <Box fontWeight='bold' marginBottom={2}>
-                    <Typography align='center'>
+                <Box marginBottom={2}>
+                    <Typography align='center' variant='h6'>
                         Your account is not active!
                 </Typography>
                 </Box>
 
                 <Typography align='center' variant='body1'>
-                    Customers will not be able to see and purchase your products
+                    Customers will not be able to see or purchase your products
                     on our platform until you activate your account.
                     You have to pay a one-time fee of $20 to activate your account
                 </Typography>
