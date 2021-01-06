@@ -27,6 +27,8 @@ export const Routes = () => (
             
             <Header />
 
+            {/* TODO decide what routes to render if user is logged in */}
+
             <Switch>
                 <Route path='/dashboard/store' component={StoreDashboard} />
                 <Route path='/dashboard/orders' component={StoreOrders} />

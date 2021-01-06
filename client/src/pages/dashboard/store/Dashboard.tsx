@@ -1,10 +1,66 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, Button, Paper, Typography } from '@material-ui/core';
 import { useStyles } from '../styles';
 import { HorizontalProductsView } from '../../../components/products';
 import { StorePage } from './StorePage';
 
 
 export const StoreDashboard = () => {
+    const classes = useStyles();
+    const isApproved = false;
+
+    return <StorePage selected='dashboard'>
+        <>
+            <Typography className={classes.header} variant='h4'>
+                Welcome Owner!
+            </Typography>
+
+            {
+                isApproved ? <ApprovedStore /> : <ApproveSection />
+            }
+
+        </>
+    </StorePage>;
+}
+
+const ApproveSection = () => {
+    return <Box
+        width='100%'
+        maxWidth='35rem'
+        marginX={'auto'}
+    >
+        <Paper variant='outlined'>
+
+            <Box
+                padding={4}
+            >
+                <Box fontWeight='bold' marginBottom={2}>
+                    <Typography align='center'>
+                        Your account is not active!
+                </Typography>
+                </Box>
+
+                <Typography align='center' variant='body1'>
+                    Customers will not be able to see and purchase your products
+                    on our platform until you activate your account.
+                    You have to pay a one-time fee of $20 to activate your account
+                </Typography>
+
+                <Box
+                    width='fit-content'
+                    marginX={'auto'}
+                    marginTop={3}
+                >
+                    <Button color='primary' variant='contained'>
+                        pay $20 now to activate your account
+                    </Button>
+                </Box>
+            </Box>
+
+        </Paper>
+    </Box>
+}
+
+const ApprovedStore = () => {
     const classes = useStyles();
     const topProducts = [
         {
@@ -34,48 +90,43 @@ export const StoreDashboard = () => {
         }
     ];
 
-    return <StorePage selected='dashboard'>
-        <>
-            <Typography className={classes.header} variant='h4'>Welcome Owner!</Typography>
+    return <>
+        <Box
+            display='flex'
+            flexWrap='wrap'
+            justifyContent='space-between'
+            marginTop={-2}
+        >
 
-            <Box
-                display='flex'
-                flexWrap='wrap'
-                justifyContent='space-between'
-                marginTop={-2}
-            >
-
-                <div className={classes.infoBlock}>
-                    <div className={classes.infoBlockMain}>1000</div>
-                    <div className={classes.infoBlockSub}>Products Sold</div>
-                </div>
-
-                <div className={classes.infoBlock}>
-                    <div className={classes.infoBlockMain}>10</div>
-                    <div className={classes.infoBlockSub}>Refunds</div>
-                </div>
-
-                <div className={classes.infoBlock}>
-                    <div className={classes.infoBlockMain}>4.5</div>
-                    <div className={classes.infoBlockSub}>Average Rating</div>
-                </div>
-
-                <div className={classes.infoBlock}>
-                    <div className={classes.infoBlockMain}>$100.00</div>
-                    <div className={classes.infoBlockSub}>Average Weekly Sale</div>
-                </div>
-
-            </Box>
-
-
-            <div style={{ marginTop: '5rem' }}>
-
-                <Typography className={classes.header} variant='h5'>Top Selling Products</Typography>
-
-                <HorizontalProductsView products={topProducts} />
-
+            <div className={classes.infoBlock}>
+                <div className={classes.infoBlockMain}>1000</div>
+                <div className={classes.infoBlockSub}>Products Sold</div>
             </div>
 
-        </>
-    </StorePage>;
+            <div className={classes.infoBlock}>
+                <div className={classes.infoBlockMain}>10</div>
+                <div className={classes.infoBlockSub}>Refunds</div>
+            </div>
+
+            <div className={classes.infoBlock}>
+                <div className={classes.infoBlockMain}>4.5</div>
+                <div className={classes.infoBlockSub}>Average Rating</div>
+            </div>
+
+            <div className={classes.infoBlock}>
+                <div className={classes.infoBlockMain}>$100.00</div>
+                <div className={classes.infoBlockSub}>Average Weekly Sale</div>
+            </div>
+
+        </Box >
+
+
+        <div style={{ marginTop: '5rem' }}>
+
+            <Typography className={classes.header} variant='h5'>Top Selling Products</Typography>
+
+            <HorizontalProductsView products={topProducts} />
+
+        </div>
+    </>
 }
