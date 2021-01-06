@@ -78,8 +78,6 @@ export const useStyles = makeStyles((theme: Theme) =>
             }
         },
         infoBlockSub: {},
-        table: {
-            minWidth: 700
-        }
+        table: {}
     })
 );
