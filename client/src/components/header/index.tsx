@@ -7,13 +7,16 @@ import InputBase from '@material-ui/core/InputBase';
 import CartIcon from '@material-ui/icons/ShoppingCart';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory } from 'react-router-dom';
+import { useCart } from '../../hooks/cart';
+import { useCurrentUser } from '../../state/AppState';
 import { GuestHeader, StoreOwnerHeader } from './UserHeaders';
 import { useStyles } from './styles';
-import { useCart } from '../../hooks/cart';
+
 
 export const Header = () => {
     const classes = useStyles();
     const history = useHistory();
+    const { user } = useCurrentUser();
     const { cart } = useCart();
 
     const totalItemsInCart = Object.values(cart)
@@ -57,7 +60,9 @@ export const Header = () => {
                         </Badge>
                     </IconButton>
 
-                    <StoreOwnerHeader />
+                    {
+                        user ? <StoreOwnerHeader /> : <GuestHeader />
+                    }
                 </Toolbar>
             </AppBar>
         </div>

@@ -9,12 +9,13 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
+      // display: 'none',
+      // [theme.breakpoints.up('sm')]: {
+      //   display: 'block',
+      // },
     },
     search: {
+      display: 'none',
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
