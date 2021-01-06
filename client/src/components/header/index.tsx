@@ -7,7 +7,7 @@ import InputBase from '@material-ui/core/InputBase';
 import CartIcon from '@material-ui/icons/ShoppingCart';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory } from 'react-router-dom';
-import { GuestHeader } from './UserHeaders';
+import { GuestHeader, StoreOwnerHeader } from './UserHeaders';
 import { useStyles } from './styles';
 import { useCart } from '../../hooks/cart';
 
@@ -57,7 +57,7 @@ export const Header = () => {
                         </Badge>
                     </IconButton>
 
-                    <GuestHeader />
+                    <StoreOwnerHeader />
                 </Toolbar>
             </AppBar>
         </div>

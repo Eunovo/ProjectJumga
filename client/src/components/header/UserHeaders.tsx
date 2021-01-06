@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useStyles } from './styles';
 
@@ -135,28 +136,62 @@ export const GuestHeader = () => {
 }
 
 export const StoreOwnerHeader = () => {
-    // <IconButton aria-label="show 4 new mails" color="inherit">
-    //             <Badge badgeContent={4} color="secondary">
-    //                 <MailIcon />
-    //             </Badge>
-    //         </IconButton>
-    //         <IconButton aria-label="show 17 new notifications" color="inherit">
-    //             <Badge badgeContent={17} color="secondary">
-    //                 <NotificationsIcon />
-    //             </Badge>
-    //         </IconButton>
+    const history = useHistory();
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+
+    const menuId = 'primary-search-account-menu';
+
     return <>
-        {/* <div>
-            <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleMenuOpen}
-                color="inherit"
-            >
-                <AccountCircle />
-            </IconButton>
-        </div> */}
+
+        <IconButton aria-label="show 17 new notifications" color="inherit">
+            <Badge badgeContent={17} color="secondary">
+                <NotificationsIcon />
+            </Badge>
+        </IconButton>
+
+        <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleMenuOpen}
+            color="inherit"
+        >
+            <AccountCircle />
+        </IconButton>
+
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <StyledMenuItem onClick={() => {
+                history.push(`/profile`);
+            }}>
+                Profile
+            </StyledMenuItem>
+
+            <StyledMenuItem onClick={() => {
+                history.push(`/logout`);
+            }}>
+                Logout
+            </StyledMenuItem>
+        </Menu>
+
     </>;
 }
