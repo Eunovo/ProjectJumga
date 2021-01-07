@@ -4,18 +4,22 @@ import { Login, StoreOwnerSignup } from './pages/auth';
 import { Cart } from './pages/cart';
 import { Checkout } from './pages/checkout';
 import {
-    StoreDashboard,
-    StoreOrders,
-    StoreProducts,
-    StorePayouts,
-    StoreSettings,
-    StoreAddProduct
+    StoreRoutes,
+    RiderRoutes
 } from './pages/dashboard';
 import { Home } from './pages/home/Home';
+import { useCurrentUser } from './state/AppState';
 
 
-export const Routes = () => (
-    <>
+export const Routes = () => {
+    const { user, ready } = useCurrentUser();
+
+    const routes: any = {
+        'seller': StoreRoutes,
+        'rider': RiderRoutes
+    }
+
+    return <>
         {/* TODO decide what routes to render if user is logged in */}
         <Router>
             <Switch>
@@ -26,15 +30,9 @@ export const Routes = () => (
 
                 <Route path='/dashboard'>
                     <Header />
-                    <Switch>
-                        <Route path='/dashboard/store' component={StoreDashboard} />
-                        <Route path='/dashboard/orders' component={StoreOrders} />
-                        <Route path='/dashboard/products/add' component={StoreAddProduct} />
-                        <Route path='/dashboard/products/edit/:productName' />
-                        <Route path='/dashboard/products' component={StoreProducts} />
-                        <Route path='/dashboard/payouts' component={StorePayouts} />
-                        <Route path='/dashboard/settings' component={StoreSettings} />
-                    </Switch>
+                    {
+                        ready && user && <DashboardRoutes routes={routes[user.role]} />
+                    }
                 </Route>
 
                 <Route path='/'>
@@ -49,4 +47,20 @@ export const Routes = () => (
             </Switch>
         </Router>
     </>
+};
+
+const DashboardRoutes: React.FC<{ routes: any }> = ({ routes }) => (
+    <Switch>
+        {
+            Object.keys(routes)
+                .map((key, i) => (
+                    <Route
+                        key={i}
+                        path={`/dashboard${key}`}
+                    >
+                        {routes[key]}
+                    </Route>
+                ))
+        }
+    </Switch>
 );

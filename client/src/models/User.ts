@@ -8,6 +8,13 @@ export interface User {
         city: string
         street: string
     }
+    role: Role
+}
+
+export enum Role {
+    seller = 'seller',
+    rider = 'rider',
+    admin = 'admin'
 }
 
 export interface Payable {

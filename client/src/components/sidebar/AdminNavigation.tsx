@@ -27,7 +27,7 @@ export const AdminNavigation: React.FC<SideBarProps> = ({ classes, selected }) =
         {
             name: 'dashboard',
             icon: <DashboardIcon className={sidebarClasses.icon} />,
-            route: '/dashboard/store'
+            route: '/dashboard'
         },
         {
             name: 'riders',
