@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import clsx from 'clsx';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -9,20 +8,15 @@ import { Nav } from './Sidebar';
 interface BottomMenuProps {
     className?: string;
     navs: Nav[];
+    selected: string;
 }
 
-export const BottomMenu: React.FC<BottomMenuProps> = ({ className, navs }) => {
+export const BottomMenu: React.FC<BottomMenuProps> = ({ className, navs, selected }) => {
     const history = useHistory();
-    const [value, setValue] = useState(navs[0].name);
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-        setValue(newValue);
-    };
 
     return <BottomNavigation
         className={clsx(className)}
-        value={value}
-        onChange={handleChange}
+        value={selected}
     >
         {
             navs.map((nav, i) => (

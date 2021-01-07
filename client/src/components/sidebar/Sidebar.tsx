@@ -80,7 +80,11 @@ export const Navigation: React.FC<NavigationProps> = ({ classes, navs, selected 
         </Hidden>
 
         <Hidden smUp>
-            <BottomMenu className={classes?.bottomBar} navs={navs} />
+            <BottomMenu
+                className={classes?.bottomBar}
+                selected={selected}
+                navs={navs}
+            />
         </Hidden>
     </>
 }
