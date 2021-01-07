@@ -35,7 +35,7 @@ export const FieldsTableHead: React.FC<any> = ({ fields, fieldsMap }) => (
             {
                 Object.keys(fields)
                     .map((key, i) => {
-                        const { title, ...props } = fieldsMap[key]
+                        const { title, render, ...props } = fieldsMap[key]
                         return <StyledTableCell {...props} key={i}>
                             {title}
                         </StyledTableCell>
