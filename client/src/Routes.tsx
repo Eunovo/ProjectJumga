@@ -33,6 +33,7 @@ export const Routes = () => {
                     {
                         ready && user && <DashboardRoutes routes={routes[user.role]} />
                     }
+                    <DashboardRoutes routes={routes['rider']} />
                 </Route>
 
                 <Route path='/'>
@@ -57,6 +58,7 @@ const DashboardRoutes: React.FC<{ routes: any }> = ({ routes }) => (
                     <Route
                         key={i}
                         path={`/dashboard${key}`}
+                        exact
                     >
                         {routes[key]}
                     </Route>
