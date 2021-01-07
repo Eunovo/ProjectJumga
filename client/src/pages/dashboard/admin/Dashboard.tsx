@@ -1,14 +1,14 @@
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../styles";
-import { RiderPage } from "./RiderPage";
+import { AdminPage } from "./AdminPage";
 
-export const RiderDashboard = () => {
+export const AdminDashboard = () => {
     const classes = useStyles();
 
-    return <RiderPage selected='dashboard'>
+    return <AdminPage selected='dashboard'>
         <Typography className={classes.header} align='center' variant='h4'>
-            Welcome Rider!
+            Welcome Admin!
         </Typography>
 
         <Box
@@ -20,5 +20,5 @@ export const RiderDashboard = () => {
         >
 
         </Box>
-    </RiderPage>
+    </AdminPage>
 }

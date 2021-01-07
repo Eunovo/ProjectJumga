@@ -92,7 +92,7 @@ export const StoreOwnerSignup = () => {
                 />
 
                 <Box marginTop={2}>
-                    <Typography variant='h5'>Address</Typography>
+                    <Typography variant='h6'>Address</Typography>
                 </Box>
 
                 <Field

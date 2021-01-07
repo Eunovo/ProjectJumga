@@ -7,7 +7,7 @@ import {
 import { RiderPage } from './RiderPage';
 
 
-const user: Rider = {
+const user: Omit<Rider, "createdAt"> = {
     firstName: 'Novo', lastName: 'Bob',
     email: 'test@g.com',
     address: {
@@ -16,7 +16,7 @@ const user: Rider = {
         city: 'Lagos',
         street: 'Badmus Street'
     },
-    role: Role.seller,
+    role: Role.rider,
     accountName: 'Novo Bob',
     accountNumber: '0177298559',
     bank: 'Access Bank'

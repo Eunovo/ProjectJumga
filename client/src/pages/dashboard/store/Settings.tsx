@@ -7,7 +7,7 @@ import {
 import { StorePage } from './StorePage';
 
 
-const user: StoreOwner = {
+const user: Omit<StoreOwner, "createdAt" | "approved" | "dispatchRider"> = {
     firstName: 'Novo', lastName: 'Bob',
     email: 'test@g.com',
     address: {

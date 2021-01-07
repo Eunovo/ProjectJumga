@@ -5,7 +5,8 @@ import { Cart } from './pages/cart';
 import { Checkout } from './pages/checkout';
 import {
     StoreRoutes,
-    RiderRoutes
+    RiderRoutes,
+    AdminRoutes
 } from './pages/dashboard';
 import { Home } from './pages/home/Home';
 import { useCurrentUser } from './state/AppState';
@@ -16,7 +17,8 @@ export const Routes = () => {
 
     const routes: any = {
         'seller': StoreRoutes,
-        'rider': RiderRoutes
+        'rider': RiderRoutes,
+        'admin': AdminRoutes
     }
 
     return <>
@@ -33,7 +35,7 @@ export const Routes = () => {
                     {
                         ready && user && <DashboardRoutes routes={routes[user.role]} />
                     }
-                    <DashboardRoutes routes={routes['rider']} />
+                    <DashboardRoutes routes={routes['admin']} />
                 </Route>
 
                 <Route path='/'>

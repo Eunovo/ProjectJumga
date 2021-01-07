@@ -8,7 +8,7 @@ import { TabPanelProps, TabPanel } from "./common";
 
 
 interface UserTabProps extends Pick<TabPanelProps, "index"> {
-    user: User
+    user: Omit<User, "createdAt">
 }
 
 const validationSchema = yup.object({

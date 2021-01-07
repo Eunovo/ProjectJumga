@@ -9,6 +9,7 @@ export interface User {
         street: string
     }
     role: Role
+    createdAt: Date
 }
 
 export enum Role {
@@ -23,6 +24,15 @@ export interface Payable {
     bank: string
 }
 
-export interface StoreOwner extends User, Payable {}
+export interface StoreOwner extends User, Payable {
+    /**
+     * `approved = true` when the seller
+     * has paid the one-time registration fee
+     */
+    approved: boolean
+    dispatchRider: string
+}
 
 export interface Rider extends User, Payable {}
+
+export interface Admin extends User {}
