@@ -1,4 +1,4 @@
-import { StoreOwner } from '../../../models';
+import { Role, StoreOwner } from '../../../models';
 import {
     Settings,
     UserTab,
@@ -16,6 +16,7 @@ const user: StoreOwner = {
         city: 'Lagos',
         street: 'Badmus Street'
     },
+    role: Role.seller,
     accountName: 'Novo Bob',
     accountNumber: '0177298559',
     bank: 'Access Bank'
