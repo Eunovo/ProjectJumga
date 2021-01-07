@@ -1,14 +1,12 @@
 import React from 'react';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
-import OrdersIcon from '@material-ui/icons/ShoppingBasketOutlined';
-import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
-import PayoutsIcon from '@material-ui/icons/MoneyOutlined';
+import RidersIcon from '@material-ui/icons/DriveEtaOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import { Nav, Navigation } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
 
-export type RiderSideBarItems = 'dashboard' | 'orders' | 'payouts' | 'settings';
+export type AdminSideBarItems = 'dashboard' | 'riders' | 'settings';
 
 interface SideBarProps {
     classes?: {
@@ -19,27 +17,22 @@ interface SideBarProps {
     /**
      * The current selected sidebar item
      */
-    selected: RiderSideBarItems;
+    selected: AdminSideBarItems;
 }
 
-export const RiderSidebar: React.FC<SideBarProps> = ({ classes, selected }) => {
+export const AdminSidebar: React.FC<SideBarProps> = ({ classes, selected }) => {
     const sidebarClasses = useSideBarStyles();
 
-    const RiderNavs: Nav[] = [
+    const AdminNavs: Nav[] = [
         {
             name: 'dashboard',
             icon: <DashboardIcon className={sidebarClasses.icon} />,
             route: '/dashboard/store'
         },
         {
-            name: 'orders',
-            icon: <OrdersIcon className={sidebarClasses.icon} />,
-            route: '/dashboard/orders'
-        },
-        {
-            name: 'payouts',
-            icon: <PayoutsIcon className={sidebarClasses.icon} />,
-            route: '/dashboard/payouts'
+            name: 'riders',
+            icon: <RidersIcon className={sidebarClasses.icon} />,
+            route: '/dashboard/riders'
         },
         {
             name: 'settings',
@@ -50,7 +43,7 @@ export const RiderSidebar: React.FC<SideBarProps> = ({ classes, selected }) => {
 
     return <Navigation
         classes={classes}
-        navs={RiderNavs}
+        navs={AdminNavs}
         selected={selected}
     />
 }
