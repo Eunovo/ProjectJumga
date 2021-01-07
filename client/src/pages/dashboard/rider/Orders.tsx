@@ -8,17 +8,17 @@ import {
 } from '../../../components/orders';
 import { OrderStatus } from '../../../models';
 import { useStyles } from "../styles";
-import { StorePage } from "./StorePage";
+import { RiderPage } from "./RiderPage";
 import { HorizontalOptionButtons } from '../../../components/forms';
 
 
-export const StoreOrders = () => {
+export const RiderOrders = () => {
     const classes = useStyles();
     const [selected, setSelected] = useState('all');
 
     const statuses = ['all'].concat(Object.values(OrderStatus));
 
-    return <StorePage selected='orders'>
+    return <RiderPage selected='orders'>
         <>
             <Typography className={classes.header} variant='h4'>Orders</Typography>
 
@@ -38,7 +38,6 @@ export const StoreOrders = () => {
                     classes={classes}
                     fields={{
                         customerName: true,
-                        amountSold: true,
                         status: true,
                         createdAt: true
                     }}
@@ -46,5 +45,5 @@ export const StoreOrders = () => {
             </Box>
 
         </>
-    </StorePage>
+    </RiderPage>
 }

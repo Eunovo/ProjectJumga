@@ -6,13 +6,13 @@ import {
     PayoutsTable
 } from '../../../components/payouts';
 import { useStyles } from "../styles";
-import { StorePage } from "./StorePage";
+import { RiderPage } from "./RiderPage";
 
 
-export const StorePayouts = () => {
+export const RiderPayouts = () => {
     const classes = useStyles();
 
-    return <StorePage selected='payouts'>
+    return <RiderPage selected='payouts'>
         <>
             <Typography className={classes.header} variant='h4'>Payouts</Typography>
 
@@ -28,5 +28,5 @@ export const StorePayouts = () => {
             </Box>
 
         </>
-    </StorePage>
+    </RiderPage>
 }
