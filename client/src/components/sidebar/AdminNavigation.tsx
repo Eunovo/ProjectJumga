@@ -6,7 +6,7 @@ import { Nav, Navigation } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
 
-export type AdminSideBarItems = 'dashboard' | 'riders' | 'settings';
+export type AdminNavigationItems = 'dashboard' | 'riders' | 'settings';
 
 interface SideBarProps {
     classes?: {
@@ -17,10 +17,10 @@ interface SideBarProps {
     /**
      * The current selected sidebar item
      */
-    selected: AdminSideBarItems;
+    selected: AdminNavigationItems;
 }
 
-export const AdminSidebar: React.FC<SideBarProps> = ({ classes, selected }) => {
+export const AdminNavigation: React.FC<SideBarProps> = ({ classes, selected }) => {
     const sidebarClasses = useSideBarStyles();
 
     const AdminNavs: Nav[] = [
