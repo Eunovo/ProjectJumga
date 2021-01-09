@@ -12,7 +12,10 @@
     "watch-ts": "tsc -w"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.9",
+    "@types/express": "^4.17.9",
     "@types/jest": "^26.0.20",
+    "@types/jsonwebtoken": "^8.5.0",
     "concurrently": "^5.3.0",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
@@ -20,8 +23,10 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@eunovo/superbackend": "^0.1.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.10"
   }
 }

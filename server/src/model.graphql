@@ -1,0 +1,161 @@
+scalar Date
+
+enum Role {
+    seller
+    rider
+    admin
+}
+
+"""
+@model
+@usernamepasswordauth
+"""
+type User {
+    firstName: String!
+    lastName: String!
+    """
+    @unique
+    @username
+    """
+    email: String!
+    """
+    @password
+    """
+    password: String!
+    address: Address!
+    role: Role!
+    createdAt: Date!
+}
+
+type Account {
+    name: String!
+    number: String!
+    bank: String!
+}
+
+type Address {
+    country: String!
+    state: String!
+    city: String!
+    street: String!
+}
+
+"""
+@model
+"""
+type Seller {
+    """
+    @OneToOne('User', '_id')
+    """
+    user: User!
+    account: Account
+    """
+    @default(false)
+    """
+    approved: Boolean!
+    """
+    @unique
+    """
+    storeName: String!
+}
+
+"""
+@model
+"""
+type Rider {
+    """
+    @OneToOne('User', '_id')
+    """
+    user: User!
+    account: Account
+}
+
+"""
+@model
+"""
+type Product {
+    """
+    @ManyToOne('Seller', 'storeName')
+    """
+    store: String!
+    name: String!
+    price: Number!
+    """
+    @default(true)
+    """
+    inStock: Boolean!
+    """
+    @unique
+    """
+    url: String!
+    createdAt: Date!
+}
+
+"""
+@model
+"""
+type Order {
+    customerName: String!
+    sales: [Sale]!
+    amountSold: Number!
+    """
+    @default('pending')
+    """
+    status: OrderStatus!
+    """
+    @default([])
+    """
+    history: [OrderEvent]!
+    createdAt: Date!
+}
+
+type OrderEvent {
+    status: OrderStatus!
+    at: Date!
+}
+
+type Sale {
+    """
+    @ManyToOne('Product', 'url')
+    """
+    product: String!
+    quantity: Number!
+}
+
+enum OrderStatus {
+    pending
+    paid
+    completed
+    cancelled
+    returned
+}
+
+"""
+@model
+"""
+type Payout {
+    user: User!
+    earningPeriod: EarningPeriod!
+    paidOn: Date!
+}
+
+type EarningPeriod {
+    from: Date!
+    to: Date!
+}
+
+"""
+@model
+"""
+type Transaction {
+    type: TransactionType!
+    amount: Number!
+    subject: String!
+    description: String!
+    date: Date!
+}
+
+enum TransactionType {
+    credit
+    debit
+}
