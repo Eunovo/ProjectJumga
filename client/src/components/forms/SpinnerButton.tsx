@@ -8,7 +8,7 @@ interface SpinnerButtonProps extends ButtonProps {
 }
 
 export const SpinnerButton: React.FC<SpinnerButtonProps> = ({ children, loading, ...props }) => {
-    return <Button {...props}>
+    return <Button disabled={!loading} {...props}>
         <Box
             display='flex'
             alignItems='center'
