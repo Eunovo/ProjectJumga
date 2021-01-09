@@ -1,3 +1,4 @@
+import { orderPayService } from "../../services/orders";
 import { services } from "../../backend";
 import { BaseController } from "../BaseController";
 
@@ -10,6 +11,7 @@ export class OrderController extends BaseController {
         super.get('/', this.getAll);
         super.put('/', this.update);
         super.get('/pay', this.pay);
+        super.post('/confirm-pay', this.giveValue);
     }
 
     private async create(req: any) {
@@ -28,7 +30,17 @@ export class OrderController extends BaseController {
     }
 
     private async pay(req: any) {
-        const order = await services.Order.findOne(req.query);
-        return { message: "success", body: { paymentLink: '' } };
+        const paymentLink = await orderPayService
+            .payOrder(req.query.id);
+        return { message: "success", body: { paymentLink } };
+    }
+
+    private async giveValue(req: any) {
+        await orderPayService
+            .giveValue(
+                req.query.transaction_id,
+                req.post.meta._id
+            )
+        return { message: "success" };
     }
 }

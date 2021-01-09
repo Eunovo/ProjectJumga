@@ -95,7 +95,7 @@ type Product {
 @model
 """
 type Order {
-    customerName: String!
+    customer: CustomerDetails!
     sales: [Sale]!
     amountSold: Float!
     """
@@ -107,6 +107,11 @@ type Order {
     """
     history: [OrderEvent]!
     createdAt: Date!
+}
+
+type CustomerDetails {
+    name: String!
+    email: String!
 }
 
 type OrderEvent {

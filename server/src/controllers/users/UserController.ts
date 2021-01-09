@@ -1,3 +1,4 @@
+import { approveSellerService } from "../../services/users";
 import { services } from "../../backend";
 import { BaseController } from "../BaseController";
 
@@ -8,6 +9,8 @@ export class UserController extends BaseController {
         super();
         super.post('/', this.create);
         super.put('/', this.update);
+        super.get('/approve', this.approveSeller);
+        super.post('/confirm-pay', this.confirmPay);
     }
 
     private async create(req: any) {
@@ -27,5 +30,20 @@ export class UserController extends BaseController {
     private async update(req: any) {
         await services.User.updateOne(req.body, req.query);
         return { message: "success" }
+    }
+
+    private async approveSeller(req: any) {
+        const paymentLink = await approveSellerService
+            .approveSeller(req.principal.email);
+        return { message: "success", body: { paymentLink } };
+    }
+
+    private async confirmPay(req: any) {
+        await approveSellerService.giveValue(
+            req.query.transaction_id,
+            req.body.meta.sellerId
+        );
+
+        return { message: "success" };
     }
 }
