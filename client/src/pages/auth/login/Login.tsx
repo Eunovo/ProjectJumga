@@ -1,8 +1,9 @@
-import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { Field } from '../../../components/forms';
+import { Field, SpinnerButton } from '../../../components/forms';
 import { useLogin } from '../../../hooks/users';
 import { AuthPage } from "../AuthPage";
 import { useStyles } from '../styles';
@@ -19,11 +20,15 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ userType }) => {
     const classes = useStyles();
-    const { login, loading } = useLogin();
-    console.log(loading);
+    const { error, login, loading } = useLogin();
+
     return <AuthPage>
 
         <Typography variant='h5'>Login</Typography>
+
+        {error?.message && <Box marginTop={2}>
+            <Alert severity='error'>{error.message}</Alert>
+        </Box>}
 
         <Formik
             initialValues={{ email: '', password: '' }}
@@ -53,14 +58,15 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
                     type='password'
                 />
 
-                <Button
+                <SpinnerButton
                     className={classes.submitBtn}
                     type='submit'
                     color='primary'
                     variant='contained'
+                    loading={loading}
                 >
                     login
-                </Button>
+                </SpinnerButton>
             </Form>
 
         </Formik>
