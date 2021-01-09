@@ -9,7 +9,7 @@ import {
     CreatedAtPlugin
 } from './plugins';
 
-const schemaPath = `${__dirname}/model.graphql`;
+const schemaPath = `${process.cwd()}/model.graphql`;
 const { repos, services } = buildServices(schemaPath, buildMongoRepo, [
     new CRUDPlugin(),
     new UsernamePasswordAuthPlugin(),

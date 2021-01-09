@@ -22,7 +22,7 @@ export class AuthController extends BaseController {
 
     private createToken(user: any) {
         const { email, role } = user;
-        return jwt.sign({ email, role }, "private");
+        return jwt.sign({ email, role }, process.env.JWT_SECRET);
     }
 
 }

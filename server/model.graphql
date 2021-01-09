@@ -29,7 +29,7 @@ type User {
 
 type Account {
     name: String!
-    number: String!
+    Float: String!
     bank: String!
 }
 
@@ -79,7 +79,7 @@ type Product {
     """
     store: String!
     name: String!
-    price: Number!
+    price: Float!
     """
     @default(true)
     """
@@ -97,7 +97,7 @@ type Product {
 type Order {
     customerName: String!
     sales: [Sale]!
-    amountSold: Number!
+    amountSold: Float!
     """
     @default('pending')
     """
@@ -119,7 +119,7 @@ type Sale {
     @ManyToOne('Product', 'url')
     """
     product: String!
-    quantity: Number!
+    quantity: Int!
 }
 
 enum OrderStatus {
@@ -149,7 +149,7 @@ type EarningPeriod {
 """
 type Transaction {
     type: TransactionType!
-    amount: Number!
+    amount: Float!
     subject: String!
     description: String!
     date: Date!

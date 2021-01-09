@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { Field } from '../../../components/forms';
+import { useLogin } from '../../../hooks/users';
 import { AuthPage } from "../AuthPage";
 import { useStyles } from '../styles';
 
@@ -18,7 +19,8 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ userType }) => {
     const classes = useStyles();
-
+    const { login, loading } = useLogin();
+    console.log(loading);
     return <AuthPage>
 
         <Typography variant='h5'>Login</Typography>
@@ -26,8 +28,13 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
         <Formik
             initialValues={{ email: '', password: '' }}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
-
+            onSubmit={async (values, actions) => {
+                try {
+                    await login(values);
+                } catch (error) {
+                    console.log(error);
+                    actions.setErrors(error);
+                }
             }}
         >
 
