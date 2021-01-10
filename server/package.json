@@ -24,7 +24,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@eunovo/superbackend": "^0.1.1",
+    "@eunovo/superbackend": "^0.1.2",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

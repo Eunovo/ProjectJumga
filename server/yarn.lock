@@ -278,10 +278,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@eunovo/superbackend@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@eunovo/superbackend/-/superbackend-0.1.1.tgz#5914774c84a145d9c83ddb000169f7f917a91591"
-  integrity sha512-HP9yJwbYxvwg6ZgP21F4lecFe+TQuX6JscLff42T+kHu1t4ST6A5fmyhoDenOuqW2Vg26hRdKwnJLTuxPGH5jw==
+"@eunovo/superbackend@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@eunovo/superbackend/-/superbackend-0.1.2.tgz#2bf17373bd9a1519f4961761619785b05621b72a"
+  integrity sha512-HH0Wbj552d7CDnfd08qGUMklM2xtdqN7C5SS0c3w/BE2vucE7axWi1BrS9ul7bRCcdNHdCDSuTmMkdT39FCOEA==
   dependencies:
     bcrypt "^5.0.0"
     graphql "^15.4.0"

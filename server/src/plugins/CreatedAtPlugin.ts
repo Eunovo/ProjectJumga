@@ -19,8 +19,8 @@ export class CreatedAtPlugin extends Plugin {
                 
                 if (!createdAtField) return;
 
-                services[model.name].pre('create', async (context, input, ...args) => {
-                    return [context, { ...input, createdAt: new Date() }, ...args];
+                services[model.name].pre('create', async (args) => {
+                    args.input = { ...args.input, createdAt: new Date() };
                 });
             });
     }
