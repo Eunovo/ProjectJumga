@@ -2,16 +2,20 @@ import { Box, Button, Paper, Typography } from '@material-ui/core';
 import { useStyles } from '../styles';
 import { HorizontalProductsView } from '../../../components/products';
 import { StorePage } from './StorePage';
+import { useCurrentUser } from '../../../state/AppState';
+import { useApproveStore } from '../../../hooks/users';
+import { SpinnerButton } from '../../../components/forms';
 
 
 export const StoreDashboard = () => {
+    const { user } = useCurrentUser();
     const classes = useStyles();
-    const isApproved = false;
+    const isApproved = user.approved;
 
     return <StorePage selected='dashboard'>
         <>
             <Typography className={classes.header} variant='h4'>
-                Welcome Owner!
+                Welcome {user?.firstName}!
             </Typography>
 
             {
@@ -23,6 +27,8 @@ export const StoreDashboard = () => {
 }
 
 const ApproveSection = () => {
+    const { approveStore, loading } = useApproveStore();
+
     return <Box
         width='100%'
         maxWidth='35rem'
@@ -50,9 +56,14 @@ const ApproveSection = () => {
                     marginX={'auto'}
                     marginTop={3}
                 >
-                    <Button color='primary' variant='contained'>
+                    <SpinnerButton
+                        color='primary'
+                        variant='contained'
+                        onClick={approveStore}
+                        loading={loading}
+                    >
                         pay $20 now to activate your account
-                    </Button>
+                    </SpinnerButton>
                 </Box>
             </Box>
 
