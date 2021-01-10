@@ -12,7 +12,7 @@ type Keys = "name" | "image" | "price" | "url";
 export const StoreProducts = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { data, loading } = useGetProducts();
+    const { data } = useGetProducts();
 
     let products = data?.products || [];
     products = products.map((p: any) => ({ ...p, image: p.images[0] }));
