@@ -10,7 +10,7 @@ export class FormError {
     public readonly errors: any;
 
     constructor(
-        errors: InputError[]
+        errors: InputError[] = []
     ) {
         this.errors = errors.reduce((prev, cur) => ({
             ...prev,
