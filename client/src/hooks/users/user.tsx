@@ -29,6 +29,7 @@ export const useSignup = () => {
             setState((s: any) => ({ ...s, loading: false }));
         } catch (error) {
             setState((s: any) => ({ ...s, loading: false, error }));
+            throw error;
         }
     }
 

@@ -38,7 +38,7 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
                     await login(values);
                 } catch (error) {
                     console.log(error);
-                    actions.setErrors(error);
+                    actions.setErrors(error?.errors);
                 }
             }}
         >

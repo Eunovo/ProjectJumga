@@ -1,7 +1,9 @@
+import { useHistory } from 'react-router-dom';
 import { useMutate } from '../../api';
 import { useCurrentUser } from '../../state/AppState';
 
 export const useLogin = () => {
+    const history = useHistory();
     const { setUser } = useCurrentUser();
     const { mutate, ...state } = useMutate('/auth/login', 'post');
 
@@ -12,6 +14,7 @@ export const useLogin = () => {
 
         const { token, user } = response.data;
         setUser({ ...user, token });
+        history.push('/dashboard');
     };
 
     return { login, ...state };

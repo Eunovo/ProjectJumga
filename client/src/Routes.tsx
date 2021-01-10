@@ -35,7 +35,6 @@ export const Routes = () => {
                     {
                         ready && user && <DashboardRoutes routes={routes[user.role]} />
                     }
-                    <DashboardRoutes routes={routes['admin']} />
                 </Route>
 
                 <Route path='/'>

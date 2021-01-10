@@ -7,22 +7,22 @@ export class AuthController extends BaseController {
 
     constructor() {
         super();
-        super.post('/login', this.login);
+        this.post('/login', this.login);
     }
 
     async login(req: any) {
         const { email, password } = req.body;
         const user = await services.User.authenticate(email, password);
-        const token = this.createToken(user);
+        const token = createToken(user);
         return {
             message: 'Authenticated',
-            body: { user, token }
+            data: { user, token }
         };
     }
 
-    private createToken(user: any) {
-        const { email, role } = user;
-        return jwt.sign({ email, role }, process.env.JWT_SECRET);
-    }
+}
 
+function createToken(user: any) {
+    const { email, role } = user;
+    return jwt.sign({ email, role }, process.env.JWT_SECRET);
 }

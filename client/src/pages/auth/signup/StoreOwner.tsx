@@ -72,8 +72,7 @@ export const StoreOwnerSignup = () => {
                         }
                     });
                 } catch (error) {
-                    console.log(error);
-                    actions.setErrors(error);
+                    actions.setErrors(error?.errors);
                 }
             }}
         >

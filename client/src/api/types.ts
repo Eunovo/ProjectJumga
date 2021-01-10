@@ -7,15 +7,21 @@ export interface Response {
 
 export class FormError {
     public message: string = 'An error occured';
+    public readonly errors: any;
 
     constructor(
-        public errors: InputError[]
-    ) { }
+        errors: InputError[]
+    ) {
+        this.errors = errors.reduce((prev, cur) => ({
+            ...prev,
+            [cur.name]: cur.message
+        }), {});
+    }
 }
 
 export interface InputError {
-    field: string;
-    error: string;
+    name: string;
+    message: string;
 }
 
 export type Method = 'post' | 'put' | 'delete';

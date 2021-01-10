@@ -15,7 +15,8 @@ axios.interceptors.response.use(
     (response) => response, (error) => {
         if (!error.response) return Promise.reject(error);
         if (error.response.status === 400)
-            return Promise.reject(new FormError(error.response.data.errors));
+            return Promise.reject(
+                new FormError(error.response.data.errors || []));
 
         return Promise.reject(error);
     });

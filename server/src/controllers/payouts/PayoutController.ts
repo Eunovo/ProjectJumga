@@ -6,8 +6,8 @@ export class PayoutController extends BaseController {
 
     constructor() {
         super();
-        super.post('/', this.triggerPayout);
-        super.get('/', this.getAll);
+        this.post('/', this.triggerPayout);
+        this.get('/', this.getAll);
     }
 
     private async triggerPayout(req: any) {
@@ -17,6 +17,6 @@ export class PayoutController extends BaseController {
 
     private async getAll(req: any) {
         const payouts = await services.Payout.findMany(req.query);
-        return { message: "success", body: { payouts } };
+        return { message: "success", data: { payouts } };
     }
 }

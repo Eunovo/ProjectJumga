@@ -35,7 +35,7 @@ export class UserController extends BaseController {
     private async approveSeller(req: any) {
         const paymentLink = await approveSellerService
             .approveSeller(req.principal.email);
-        return { message: "success", body: { paymentLink } };
+        return { message: "success", data: { paymentLink } };
     }
 
     private async confirmPay(req: any) {
