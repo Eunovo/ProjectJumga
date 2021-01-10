@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Reducer, useEffect, useReducer } from 'react';
+import { useCurrentUser } from '../state/AppState';
 import { Action, ActionTypes, reducer, RequestState } from './reducer-utils';
 import {
     Method,
@@ -16,7 +17,7 @@ axios.interceptors.response.use(
         if (!error.response) return Promise.reject(error);
         if (error.response.status === 400)
             return Promise.reject(
-                new FormError(error.response.data.errors || []));
+                new FormError(error.response.data.errors));
 
         return Promise.reject(error);
     });
@@ -31,13 +32,19 @@ axios.interceptors.response.use(
 export const useGet = (route: string, options?: RequestOptions): GetReponse => {
     const [state, dispatch] = useReducer<Reducer<RequestState, Action>>(
         reducer, { loading: true, data: null, error: null });
+    const { user } = useCurrentUser();
 
     const doGet = () => {
         let isMounted = true;
 
         (async () => {
             try {
-                const response = await axios.get(`${baseUrl}${route}`, options);
+                const response = await axios.get(`${baseUrl}${route}`, {
+                    ...options,
+                    headers: {
+                        Authorization: `Bearer ${user?.token}`
+                    }
+                });
                 if (!isMounted) return;
 
                 dispatch({
@@ -82,12 +89,18 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
 export const useLazyGet = (route: string) => {
     const [state, dispatch] = useReducer<Reducer<RequestState, Action>>(
         reducer, { loading: false, data: null, error: null });
+    const { user } = useCurrentUser();
 
     const get = async (options?: RequestOptions) => {
         if (state.loading) return;
         dispatch({ type: ActionTypes.REQUEST_START });
         try {
-            const response = await axios.get(`${baseUrl}${route}`, options);
+            const response = await axios.get(`${baseUrl}${route}`, {
+                ...options,
+                headers: {
+                    Authorization: `Bearer ${user?.token}`
+                }
+            });
 
             dispatch({
                 type: ActionTypes.REQUEST_FINISH,
@@ -122,6 +135,7 @@ export const useLazyGet = (route: string) => {
 export const useMutate = (route: string, method: Method): MutateReponse => {
     const [state, dispatch] = useReducer<Reducer<RequestState, Action>>(
         reducer, { loading: false, data: null, error: null });
+    const { user } = useCurrentUser();
 
     const mutate = async (body: any, options?: RequestOptions) => {
         try {
@@ -129,7 +143,12 @@ export const useMutate = (route: string, method: Method): MutateReponse => {
 
             dispatch({ type: ActionTypes.REQUEST_START });
             const response = await axios.request({
-                method, url: `${baseUrl}${route}`, data: body, ...options
+                method, url: `${baseUrl}${route}`,
+                data: body,
+                ...options,
+                headers: {
+                    Authorization: `Bearer ${user?.token}`
+                }
             });
 
             dispatch({
