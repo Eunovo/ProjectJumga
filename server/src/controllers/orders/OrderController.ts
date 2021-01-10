@@ -11,6 +11,7 @@ export class OrderController extends BaseController {
         super.get('/', this.getAll);
         super.put('/', this.update);
         super.get('/pay', this.pay);
+        super.post('/pay', this.createAndPay);
         super.post('/confirm-pay', this.giveValue);
     }
 
@@ -32,6 +33,13 @@ export class OrderController extends BaseController {
     private async pay(req: any) {
         const paymentLink = await orderPayService
             .payOrder(req.query.id);
+        return { message: "success", body: { paymentLink } };
+    }
+
+    private async createAndPay(req: any) {
+        const id = await services.Order.create(req.body);
+        const paymentLink = await orderPayService
+            .payOrder(id);
         return { message: "success", body: { paymentLink } };
     }
 

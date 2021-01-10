@@ -7,10 +7,10 @@ export class UserController extends BaseController {
 
     constructor() {
         super();
-        super.post('/', this.create);
-        super.put('/', this.update);
-        super.get('/approve', this.approveSeller);
-        super.post('/confirm-pay', this.confirmPay);
+        this.post('/', this.create);
+        this.put('/', this.update);
+        this.get('/approve', this.approveSeller);
+        this.post('/confirm-pay', this.confirmPay);
     }
 
     private async create(req: any) {

@@ -1,9 +1,11 @@
+import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { Field } from '../../../components/forms';
+import { Field, SpinnerButton } from '../../../components/forms';
+import { useSignup } from '../../../hooks/users';
 import { AuthPage } from '../AuthPage';
 import { useStyles } from '../styles';
 
@@ -25,6 +27,7 @@ const validationSchema = yup.object({
 
 export const StoreOwnerSignup = () => {
     const classes = useStyles();
+    const { signup, loading, error } = useSignup();
 
     const initialValues = {
         firstName: '',
@@ -48,11 +51,30 @@ export const StoreOwnerSignup = () => {
             As a Seller
         </Typography>
 
+        {error?.message && <Box marginTop={2}>
+            <Alert severity='error'>{error.message}</Alert>
+        </Box>}
+
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
-
+            onSubmit={async (values, actions) => {
+                const { country, state, city, street, ...rest } = values;
+                try {
+                    await signup({
+                        ...rest,
+                        role: 'seller',
+                        address: {
+                            country,
+                            state,
+                            city,
+                            street
+                        }
+                    });
+                } catch (error) {
+                    console.log(error);
+                    actions.setErrors(error);
+                }
             }}
         >
             <Form className={classes.authForm}>
@@ -116,14 +138,15 @@ export const StoreOwnerSignup = () => {
                     label='Street'
                 />
 
-                <Button
+                <SpinnerButton
                     className={classes.submitBtn}
+                    type='submit'
                     color='primary'
                     variant='contained'
-                    type='submit'
+                    loading={loading}
                 >
-                    Signup
-                </Button>
+                    signup
+                </SpinnerButton>
             </Form>
         </Formik>
     </AuthPage>

@@ -7,7 +7,7 @@ export async function updateStatus(status: string, orderId: string) {
 
     const { history } = order;
     return repos.Order.updateOne(
-        { _id: orderId }
+        { _id: orderId },
         {
             status,
             history: [...history, { status, at: new Date() }]

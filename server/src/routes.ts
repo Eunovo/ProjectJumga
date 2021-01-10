@@ -15,8 +15,8 @@ const router = Router();
 router.use((req: any, res, next) => {
     let auth = req.header('authorization');
     auth = auth?.trim();
-    const isBearerToken = auth.startsWith('Bearer ') ||
-        auth.startsWith('bearer ');
+    const isBearerToken = auth?.startsWith('Bearer ') ||
+        auth?.startsWith('bearer ');
 
     if (!auth || !isBearerToken) {
         next();
@@ -53,7 +53,10 @@ function use(router: Router, controller: BaseController) {
                         const response = await handler[method](req);
                         res.status(200).json(response);
                     } catch (error) {
-                        next(error);
+                        res.status(400).json({
+                            message: error.message,
+                            errors: error?.errors
+                        });
                     }
                 });
             });

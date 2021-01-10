@@ -31,9 +31,10 @@ export abstract class BaseController {
     }
 
     private on(method: HttpMethods, route: string, requestHandler: RequestHandler) {
+        route = `${this.baseRoute}${route}`;
         const handler = this.handlers.get(route) || {};
         handler[method] = requestHandler;
-        this.handlers.set(`${this.baseRoute}${route}`, handler);
+        this.handlers.set(route, handler);
     }
 }
 
