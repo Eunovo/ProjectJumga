@@ -88,6 +88,10 @@ type Product {
     @unique
     """
     url: String!
+    """
+    @default([])
+    """
+    images: [String]
     createdAt: Date!
 }
 
@@ -164,3 +168,14 @@ enum TransactionType {
     credit
     debit
 }
+
+"""
+@model
+"""
+type File {
+    """
+    @unique
+    """
+    path: String!
+}
+

@@ -1,42 +1,21 @@
 import { Button, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { ProductGrid } from "../../../components/products";
+import { useGetProducts } from "../../../hooks/products";
 import { Product } from "../../../models";
 import { useStyles } from "../styles"
 import { StorePage } from "./StorePage"
 
 
 type Keys = "name" | "image" | "price" | "url";
-const products: Pick<Product, Keys>[] = [
-    {
-        name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-        image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-        price: 10000,
-        url: 'Tecno-POP4-658'
-    },
-    {
-        name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-        image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-        price: 10000,
-        url: 'Tecno-POP4-658'
-    },
-    {
-        name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-        image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-        price: 10000,
-        url: 'Tecno-POP4-658'
-    },
-    {
-        name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-        image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-        price: 10000,
-        url: 'Tecno-POP4-658'
-    }
-];
 
 export const StoreProducts = () => {
     const classes = useStyles();
     const history = useHistory();
+    const { data, loading } = useGetProducts();
+
+    let products = data?.products || [];
+    products = products.map((p: any) => ({ ...p, image: p.images[0] }));
 
     return <StorePage selected='products'>
         <>

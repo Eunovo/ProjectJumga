@@ -2,10 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import * as yup from 'yup';
 import ImageUploader from 'react-images-upload';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { Formik, Form, FormikHelpers, useField } from 'formik';
-import { Field, useFormStyles } from '../forms';
-
+import { Field, SpinnerButton, useFormStyles } from '../forms';
 
 interface ProductFormValues {
     name: string
@@ -30,11 +29,17 @@ const validationSchema = yup.object({
 interface ProductFormProps {
     className?: string
     product?: ProductFormValues,
+    loading: boolean,
     onSubmit: (values: ProductFormValues, formikHelpers: FormikHelpers<ProductFormValues>) => Promise<void>
 }
 
 
-export const ProductForm: React.FC<ProductFormProps> = ({ className, product, onSubmit }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({
+    className,
+    loading,
+    product,
+    onSubmit
+}) => {
     const form = useFormStyles();
 
     const initialValues: ProductFormValues = product || {
@@ -73,13 +78,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({ className, product, on
 
                 <ProductImageUpload name='images' />
 
-                <Button
+                <SpinnerButton
                     className={form.submitBtn}
                     color='primary'
                     variant='contained'
+                    type='submit'
+                    loading={loading}
                 >
                     Submit
-                </Button>
+                </SpinnerButton>
             </Form>
         </Formik>
     </div>

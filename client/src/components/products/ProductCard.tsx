@@ -20,7 +20,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ className, product, ad
 
     return <div className={clsx(classes.product, className)}>
         <div className={classes.image}>
-            <img src={image} alt={name} />
+            <img
+                src={`http://localhost:5000/files/${image}`}
+                alt={name}
+            />
         </div>
 
         <div className={classes.name}>

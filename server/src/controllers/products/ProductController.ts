@@ -12,7 +12,21 @@ export class ProductController extends BaseController {
     }
 
     private async create(req: any) {
-        await services.Product.create(req.body);
+        const id = await services.Product.create(req.body);
+
+        (async () => {
+            // obtain file ids for each image
+            let images = [req.files.images]
+                .map((file) => {
+                    const id = services.File.create({ path: file.path });
+                    return id;
+                });
+                
+            images = await Promise.all(images);
+
+            services.Product.updateOne({ images }, { _id: id });
+        })()
+
         return { message: "success" }
     }
 

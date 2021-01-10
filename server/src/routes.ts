@@ -7,6 +7,7 @@ import {
     PayoutController,
     ProductController,
     UserController,
+    FileController,
     Handler
 } from './controllers';
 
@@ -36,7 +37,8 @@ router.use((req: any, res, next) => {
     new OrderController(),
     new PayoutController(),
     new ProductController(),
-    new UserController()
+    new UserController(),
+    new FileController()
 ].forEach((controller) => {
     use(router, controller);
 });
@@ -51,7 +53,12 @@ function use(router: Router, controller: BaseController) {
                 router[method](route, async (req, res, next) => {
                     try {
                         const response = await handler[method](req);
-                        res.status(200).json(response);
+
+                        if (response.type === 'file') {
+                            res.sendFile(response.path)
+                        } else {
+                            res.status(200).json(response);
+                        }
                     } catch (error) {
                         res.status(400).json({
                             message: error.message,
