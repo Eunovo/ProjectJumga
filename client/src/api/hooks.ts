@@ -66,7 +66,7 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
         return () => { isMounted = false; }
     }
 
-    useEffect(doGet, [route, options]);
+    useEffect(doGet, []);
 
     return {
         ...state,
