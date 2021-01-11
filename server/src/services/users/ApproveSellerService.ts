@@ -7,10 +7,15 @@ export class ApproveSellerService {
         const user = await services.User
             .findOne({ email: sellerEmail });
 
-        // TODO fail is user is not seller
+        if (user.role !== 'seller')
+            throw new Error('Illegal Operation');
 
         const seller = await services.Seller
             .findOne({ user: user._id });
+
+        if (seller.approved)
+            throw new Error('Illegal Operation');
+
         return paymentService.getPaymentLink({
             amount: 20,
             redirectUrl: `${process.env.URL}/users/confirm-pay`,
@@ -27,10 +32,11 @@ export class ApproveSellerService {
     async giveValue(tranxId: string, sellerId: string) {
         const isVerified = await paymentService.verify(tranxId, 20);
         if (!isVerified)
-            throw new Error('Operation Failed!');
+            return false;
 
-        return repos.Seller.updateOne(
+        repos.Seller.updateOne(
             { _id: sellerId }, { approved: true });
+        return true;
     }
 
 }

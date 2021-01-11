@@ -14,19 +14,10 @@ export class UserController extends BaseController {
     }
 
     private async create(req: any) {
-        const id = await services.User.create(req.body);
-        const { role } = req.body;
-        const extension = { user: id, ...req.body };
-        if (role === 'rider')
-            await services.Rider.create(extension);
-        else if (role === 'seller')
-            await services.Seller
-                .create({ ...extension, approved: false });
-
+        await services.User.create(req.body);
         return { message: "success" }
     }
 
-    // TODO update seller or rider too
     private async update(req: any) {
         await services.User.updateOne(req.body, req.query);
         return { message: "success" }
@@ -39,11 +30,14 @@ export class UserController extends BaseController {
     }
 
     private async confirmPay(req: any) {
-        await approveSellerService.giveValue(
+        const res = await approveSellerService.giveValue(
             req.query.transaction_id,
             req.body.meta.sellerId
         );
 
-        return { message: "success" };
+        return {
+            type: 'redirect',
+            url: `${process.env.APP_URL}/dashboard?success=${res}`
+        };
     }
 }

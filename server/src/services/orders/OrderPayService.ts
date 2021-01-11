@@ -7,6 +7,10 @@ export class OrderPayService {
     async payOrder(orderId: string) {
         const order = await services.Order
             .findOne({ _id: orderId });
+
+        if (order.status !== 'pending')
+            throw new Error('Illegal Operation');
+        
         return paymentService.getPaymentLink({
             amount: order.amountSold,
             redirectUrl: `${process.env.URL}/orders/confirm-pay`,
@@ -18,9 +22,10 @@ export class OrderPayService {
     async giveValue(tranxId: string, orderId: string) {
         const isVerified = await paymentService.verify(tranxId, 100);
         if (!isVerified)
-            throw new Error('Operation Failed!');
+            return false;
 
-        return updateStatus("paid", orderId);
+        updateStatus("paid", orderId);
+        return true;
     }
 
 }

@@ -7,7 +7,7 @@ export class ProductController extends BaseController {
     constructor() {
         super();
         this.post('/', this.create);
-        this.get('/', this.getAll);
+        this.get('/', this.getMany);
         this.put('/', this.update);
     }
 
@@ -30,7 +30,7 @@ export class ProductController extends BaseController {
         return { message: "success" }
     }
 
-    private async getAll(req: any) {
+    private async getMany(req: any) {
         const products = await services.Product.findMany(req.query);
         return { message: "success", data: { products } };
     }

@@ -8,7 +8,7 @@ export class OrderController extends BaseController {
     constructor() {
         super();
         this.post('/', this.create);
-        this.get('/', this.getAll);
+        this.get('/', this.getMany);
         this.put('/', this.update);
         this.get('/pay', this.pay);
         this.post('/pay', this.createAndPay);
@@ -20,7 +20,7 @@ export class OrderController extends BaseController {
         return { message: "success" };
     }
 
-    private async getAll(req: any) {
+    private async getMany(req: any) {
         const orders = await services.Order.findMany(req.query);
         return { message: "success", data: { orders } };
     }
@@ -44,11 +44,16 @@ export class OrderController extends BaseController {
     }
 
     private async giveValue(req: any) {
-        await orderPayService
+        const orderId = req.body.meta._id;
+        const res = await orderPayService
             .giveValue(
                 req.query.transaction_id,
-                req.post.meta._id
-            )
-        return { message: "success" };
+                orderId
+            );
+        return {
+            type: 'redirect',
+            url: `${process.env.APP_URL}/purchase` +
+                `?orderId=${orderId}&success=${res}`
+        };
     }
 }

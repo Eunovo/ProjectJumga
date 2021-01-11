@@ -50,12 +50,14 @@ function use(router: Router, controller: BaseController) {
     handlers.forEach((handler, route) => {
         Object.keys(handler)
             .forEach((method: keyof Handler) => {
-                router[method](route, async (req, res, next) => {
+                router[method](route, async (req, res) => {
                     try {
                         const response = await handler[method](req);
 
                         if (response.type === 'file') {
                             res.sendFile(response.path)
+                        } else if (response.type === 'redirect') {
+                            res.redirect(response.url);
                         } else {
                             res.status(200).json(response);
                         }
