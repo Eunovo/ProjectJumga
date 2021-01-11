@@ -6,6 +6,8 @@ import {
     TableHead,
     TableRow
 } from "@material-ui/core";
+import Skeleton from '@material-ui/lab/Skeleton';
+
 
 export const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -45,16 +47,20 @@ export const FieldsTableHead: React.FC<any> = ({ fields, fieldsMap }) => (
     </TableHead>
 )
 
-export const FieldsTableRow: React.FC<any> = ({ row, fields, fieldsMap }) => (
+export const FieldsTableRow: React.FC<any> = ({
+    row, fields, fieldsMap, placeholder = false
+}) => (
     <StyledTableRow>
         {
             Object.keys(fields)
                 .map((key, i) => {
                     const { render, ...props } = fieldsMap[key]
+                    let view = <Skeleton />;
+                    if (!placeholder)
+                        view = render ? render(row[key]) : row[key];
+                    
                     return <StyledTableCell {...props} key={i}>
-                        {
-                            render ? render(row[key]) : row[key]
-                        }
+                        {view}
                     </StyledTableCell>
                 })
         }
