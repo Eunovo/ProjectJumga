@@ -6,12 +6,17 @@ import { useGetProducts } from '../../hooks/products';
 type Keys = "name" | "image" | "price" | "url";
 
 export const Home = () => {
-    const { data } = useGetProducts({ accessible: true });
+    const { data, loading } = useGetProducts({ accessible: true });
     const products = data?.products || [];
     return <Container>
 
         <Box marginY={8}>
-            <ProductGrid products={products} allowAddToCart />
+            <ProductGrid
+                products={products}
+                placeholder={loading}
+                placeholderLength={10}
+                allowAddToCart
+            />
         </Box>
 
     </Container>

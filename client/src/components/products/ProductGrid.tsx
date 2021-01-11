@@ -9,20 +9,33 @@ interface ProductGridProps {
     className?: string
     products: Pick<Product, Keys>[]
     allowAddToCart?: boolean
+    placeholder?: boolean
+    placeholderLength?: number
 }
 
 export const ProductGrid: React.FC<ProductGridProps> = ({
     className,
     products,
-    allowAddToCart
+    allowAddToCart,
+    placeholder,
+    placeholderLength
 }) => {
     const classes = useProductStyles();
+
+    let View = products.map((product, i) => (
+        <ProductCard key={i} product={product} addToCart={allowAddToCart} />
+    ));
+
+    if (placeholder && placeholderLength && products.length === 0) {
+        View = [];
+        for (let i = 0; i < placeholderLength; i++) {
+            View.push(<ProductCard key={i} addToCart={allowAddToCart} />)
+        }
+    }
     
     return <div className={clsx(classes.grid, className)}>
-        {
-            products.map((product, i) => (
-                <ProductCard key={i} product={product} addToCart={allowAddToCart} />
-            ))
-        }
+        {View}
     </div>
 }
+
+
