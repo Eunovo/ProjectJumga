@@ -26,5 +26,5 @@ export const useAddProduct = () => {
     return { addProduct, ...state };
 }
 
-export const useGetProducts = (params?: Partial<Pick<Product, "name" | "url">>) =>
+export const useGetProducts = (params?: Partial<Pick<Product, "accessible" | "name" | "url">>) =>
     useGet('/products/', { params });

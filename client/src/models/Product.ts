@@ -3,5 +3,6 @@ export interface Product {
     image: string
     price: number
     inStock: boolean
+    accessible?: boolean
     url: string
 }

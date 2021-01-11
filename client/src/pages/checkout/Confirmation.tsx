@@ -5,15 +5,23 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { SpinnerButton } from '../../components/forms';
 import { useCart } from '../../hooks/cart';
+import { useCreateAndPayOrder } from '../../hooks/orders';
+import { CheckoutForm } from './BuyerForm';
 
 
 interface ConfirmationProps {
+    form?: CheckoutForm
     backToCheckout: () => void
 }
 
-export const Confirmation: React.FC<ConfirmationProps> = ({ backToCheckout }) => {
+export const Confirmation: React.FC<ConfirmationProps> = ({
+    form,
+    backToCheckout
+}) => {
     const { cart } = useCart();
+    const { createAndPay, loading } = useCreateAndPayOrder();
     const history = useHistory();
     const theme = useTheme();
 
@@ -21,6 +29,26 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ backToCheckout }) =>
     const cartTotal = Object.values(cart)
         .reduce((prev, cur) => prev + (cur.quantity * cur.price), 0);
     const totalPrice = deliveryFee + cartTotal;
+
+    const submit = () => {
+        createAndPay({
+            customer: {
+                name: form?.fullName,
+                email: form?.email
+            },
+            deliveryAddress: {
+                country: form?.deliveryCountry,
+                state: form?.deliveryState,
+                city: form?.deliveryCity,
+                street: form?.deliveryStreet
+            },
+            sales: Object.keys(cart)
+                .map(key => {
+                    const { quantity, url } = cart[key];
+                    return { product: url, quantity };
+                })
+        });
+    };
 
     return <>
 
@@ -117,12 +145,14 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ backToCheckout }) =>
             marginY={6}
         >
 
-            <Button
+            <SpinnerButton
                 color='primary'
                 variant='contained'
+                onClick={submit}
+                loading={loading}
             >
                 continue to pay
-            </Button>
+            </SpinnerButton>
 
             <Button
                 onClick={() => backToCheckout()}

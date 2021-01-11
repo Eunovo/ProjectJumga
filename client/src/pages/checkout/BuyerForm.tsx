@@ -7,8 +7,9 @@ import { Formik, Form } from 'formik';
 import { Field, useFormStyles } from '../../components/forms';
 
 
-interface CheckoutForm {
+export interface CheckoutForm {
     fullName: string,
+    email: string,
     deliveryCountry: string,
     deliveryState: string,
     deliveryCity: string,
@@ -17,6 +18,7 @@ interface CheckoutForm {
 
 const validationSchema = yup.object({
     fullName: yup.string().max(100).required(),
+    email: yup.string().email().required(),
     deliveryCountry: yup.string().required(),
     deliveryState: yup.string().required(),
     deliveryCity: yup.string().required(),
@@ -24,15 +26,19 @@ const validationSchema = yup.object({
 });
 
 interface BuyerFormProps {
+    values?: CheckoutForm
     onSubmit: (form: CheckoutForm) => void
 }
 
-export const BuyerForm: React.FC<BuyerFormProps> = ({ onSubmit }) => {
+export const BuyerForm: React.FC<BuyerFormProps> = ({ values, onSubmit }) => {
     const history = useHistory();
     const form = useFormStyles();
-    const initialValues: CheckoutForm = {
-        fullName: '', deliveryCountry: '',
-        deliveryState: '', deliveryCity: '',
+    const initialValues: CheckoutForm = values || {
+        fullName: '',
+        email: '',
+        deliveryCountry: '',
+        deliveryState: '',
+        deliveryCity: '',
         deliveryStreet: ''
     };
 
@@ -55,6 +61,12 @@ export const BuyerForm: React.FC<BuyerFormProps> = ({ onSubmit }) => {
                     className={form.field}
                     name='fullName'
                     label='Full Name'
+                />
+
+                <Field
+                    className={form.field}
+                    name='email'
+                    label='Email'
                 />
 
                 <Box marginY={2}>
