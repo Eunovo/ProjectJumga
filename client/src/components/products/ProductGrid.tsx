@@ -11,7 +11,11 @@ interface ProductGridProps {
     allowAddToCart?: boolean
 }
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ className, products, allowAddToCart }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({
+    className,
+    products,
+    allowAddToCart
+}) => {
     const classes = useProductStyles();
     
     return <div className={clsx(classes.grid, className)}>
