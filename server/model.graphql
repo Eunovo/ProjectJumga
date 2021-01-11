@@ -101,6 +101,7 @@ type Product {
 """
 type Order {
     customer: CustomerDetails!
+    deliveryAddress: Address!
     sales: [Sale]!
     amountSold: Float!
     """
@@ -130,6 +131,10 @@ type Sale {
     """
     product: String!
     quantity: Int!
+    """
+    @ManyToOne(Seller, 'storeName')
+    """
+    store: String!
 }
 
 enum OrderStatus {

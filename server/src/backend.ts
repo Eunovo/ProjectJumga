@@ -28,7 +28,7 @@ services.User.post('create', async (args: any) => {
 });
 services.User.post('findOne', async (args: any) => {
     const { result } = args;
-    
+
     let extension = {};
     if (result.role === 'seller') {
         extension = await services.Seller.findOne({ user: result._id });
@@ -42,6 +42,25 @@ services.User.post('findOne', async (args: any) => {
 services.Product.pre('create', async (args: any) => {
     const { store } = args._foreign;
     args.input.accessible = store.approved;
-}); 
+});
+
+services.Order.pre('create', async (args: any) => {
+    const { sales } = args.input;
+    const promises = sales.map(
+        async (sale: any) => {
+            const product = await services.Product
+                .findOne({ url: sale.product });
+            
+            if (!product.accessible)
+                throw new Error('Unauthorised');
+
+            sale.store = product.store;
+            return product;
+        }
+    );
+    const products = await Promise.all(promises);
+    args.input.amountSold = products
+        .map((p: any) => p.price);
+});
 
 export { repos, services };
