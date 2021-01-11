@@ -12,7 +12,7 @@ type Keys = "name" | "image" | "price" | "url";
 export const StoreProducts = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { data } = useGetProducts();
+    const { data, loading } = useGetProducts();
 
     let products = data?.products || [];
     products = products.map((p: any) => ({ ...p, image: p.images[0] }));
@@ -41,7 +41,11 @@ export const StoreProducts = () => {
 
             </div>
 
-            <ProductGrid products={products} />
+            <ProductGrid
+                products={products}
+                placeholder={loading}
+                placeholderLength={10}    
+            />
 
         </>
     </StorePage>
