@@ -11,7 +11,7 @@ import {
 } from './types';
 
 
-const baseUrl = process.env.REACT_API_URL;
+const baseUrl = process.env.REACT_APP_API_URL;
 axios.interceptors.response.use(
     (response) => response, (error) => {
         if (!error.response) return Promise.reject(error);

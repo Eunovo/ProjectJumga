@@ -61,7 +61,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {
                 image ?
                     <img
-                        src={`${process.env.REACT_API_URL}/files/${image}`}
+                        src={`${process.env.REACT_APP_API_URL}/files/${image}`}
                         alt={name}
                     />
                     : <ImageSkeleton />
