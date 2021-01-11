@@ -16,8 +16,11 @@ export class ApproveSellerService {
         if (seller.approved)
             throw new Error('Illegal Operation');
 
+        const amount = (await services.Commission
+            .findOne({ key: 'storeapproval' })).value;
+
         return paymentService.getPaymentLink({
-            amount: 20,
+            amount,
             redirectUrl: `${process.env.URL}/users/confirm-pay`,
             customer: {
                 name: `${user.firstName} ${user.lastName}`,
@@ -30,10 +33,14 @@ export class ApproveSellerService {
     }
 
     async giveValue(tranxId: string, storeName: string) {
-        const isVerified = await paymentService.verify(tranxId, 20);
+        const amount = (await services.Commission
+            .findOne({ key: 'storeapproval' })).value;
+
+        const isVerified = await paymentService.verify(tranxId, amount);
         if (!isVerified)
             return false;
 
+        
         repos.Seller.updateOne(
             { storeName }, { approved: true });
         repos.Product.updateMany(

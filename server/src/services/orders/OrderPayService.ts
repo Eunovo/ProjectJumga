@@ -12,7 +12,7 @@ export class OrderPayService {
             throw new Error('Illegal Operation');
         
         return paymentService.getPaymentLink({
-            amount: order.amountSold,
+            amount: order.amountSold + order.deliveryFee,
             redirectUrl: `${process.env.URL}/orders/confirm-pay`,
             customer: order.customer,
             meta: { _id: order._id }
@@ -20,12 +20,24 @@ export class OrderPayService {
     }
 
     async giveValue(tranxId: string, orderId: string) {
-        const isVerified = await paymentService.verify(tranxId, 100);
+        const order = await services.Order.findOne({ _id: orderId });
+        const isVerified = await paymentService.verify(
+            tranxId, order.amountSold + order.deliveryFee);
         if (!isVerified)
             return false;
 
+        this.saveStoreEarnings(order);
+        this.saveRiderEarnings(order);
         updateStatus("paid", orderId);
         return true;
+    }
+
+    private async saveStoreEarnings(order: any) {
+
+    }
+
+    private async saveRiderEarnings(order: any) {
+
     }
 
 }

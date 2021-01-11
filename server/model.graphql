@@ -24,6 +24,12 @@ type User {
     password: String!
     address: Address!
     role: Role!
+    account: Account
+    """
+    Earnings since last payout
+    @default(0.00)
+    """
+    earnings: Float
     createdAt: Date!
 }
 
@@ -48,12 +54,6 @@ type Seller {
     @OneToOne('User', '_id')
     """
     user: User!
-    account: Account
-    """
-    Earnings since last payout
-    @default(0.00)
-    """
-    earnings: Float
     """
     @default(false)
     """
@@ -72,12 +72,6 @@ type Rider {
     @OneToOne('User', '_id')
     """
     user: User!
-    account: Account
-    """
-    Earnings since last payout
-    @default(0.00)
-    """
-    earnings: Float
 }
 
 """

@@ -53,4 +53,8 @@ export class PaymentService {
         return (status === 'success' && amount >= expectedAmount);
     }
 
+    async payout(accounts: any[]) {
+
+    }
+
 }

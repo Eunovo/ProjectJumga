@@ -59,8 +59,16 @@ services.Order.pre('create', async (args: any) => {
         }
     );
     const products = await Promise.all(promises);
+    const purchaseCommission = await services.Commission
+        .findOne({ key: 'purchase' });
+    const deliveryCommission = await services.Commission
+        .findOne({ key: 'delivery' });
+
     args.input.amountSold = products
         .map((p: any) => p.price);
+    args.input.purchaseCommission =
+        purchaseCommission.value * args.input.amountSold;
+    args.input.deliveryFee = 0;
 });
 
 export { repos, services };
