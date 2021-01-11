@@ -1,9 +1,9 @@
 import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
+import { Link } from 'react-router-dom';
 import { Field, SpinnerButton } from '../../../components/forms';
 import { useSignup } from '../../../hooks/users';
 import { AuthPage } from '../AuthPage';
@@ -148,5 +148,11 @@ export const StoreOwnerSignup = () => {
                 </SpinnerButton>
             </Form>
         </Formik>
+    
+        <Box marginY={3}>
+            <span>Already have an account?</span>
+            <Link to='/login/store'>Login</Link>
+        </Box>
+
     </AuthPage>
 }

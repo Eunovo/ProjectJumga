@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
+import { Link } from 'react-router-dom';
 import { Field, SpinnerButton } from '../../../components/forms';
 import { useLogin } from '../../../hooks/users';
 import { AuthPage } from "../AuthPage";
@@ -70,5 +71,14 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
             </Form>
 
         </Formik>
+
+        <Box
+            display={(userType === 'seller' ? 'block' : 'hidden' )}
+            marginY={3}
+        >
+            <span>Don't ave an account?</span>
+            <Link to='/signup/store'>Signup</Link>
+        </Box>
+
     </AuthPage>
 }
