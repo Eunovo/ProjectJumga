@@ -4,6 +4,7 @@ import {
     TableBody,
     TableContainer
 } from "@material-ui/core";
+import { useGetOrders } from "../../hooks/orders";
 import { Order, OrderStatus } from '../../models';
 import { FieldSelector } from '../../utils';
 import { FieldsTableHead, FieldsTableRow } from '../table';
@@ -13,19 +14,20 @@ interface OrdersTableProps {
         table?: string
     }
     fields: FieldSelector<Order>;
+    store?: string;
+    status?: OrderStatus;
 }
 
-const orders: Partial<Order>[] = [
-    {
-        _id: '1',
-        customerName: 'Novo Bob',
-        amountSold: 1000,
-        status: OrderStatus.pending,
-        createdAt: new Date()
-    }
-];
 
-export const OrdersTable: React.FC<OrdersTableProps> = ({ classes, fields }) => {
+export const OrdersTable: React.FC<OrdersTableProps> = ({
+    classes,
+    fields,
+    store,
+    ...params
+}) => {
+    const { data, loading } = useGetOrders(store, params);
+    const orders = data?.orders || [];
+
     const fieldsMap = {
         customerName: {
             component: "th",
@@ -47,19 +49,32 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({ classes, fields }) => 
         }
     }
 
+    let View = orders.map((order: any, i: number) => (
+        <FieldsTableRow
+            key={i} row={order}
+            fields={fields}
+            fieldsMap={fieldsMap}
+        />
+    ));
+    if (loading) {
+        View = [];
+        for (let i = 0; i < 10; i++) {
+            View.push(<FieldsTableRow
+                key={i}
+                fields={fields}
+                fieldsMap={fieldsMap}
+                placeholder
+            />)
+        }
+    }
+
     return <>
         <TableContainer component={Paper}>
             <Table className={classes?.table} aria-label="customized table">
                 <FieldsTableHead fields={fields} fieldsMap={fieldsMap} />
 
                 <TableBody>
-                    {orders.map((order, i) => (
-                        <FieldsTableRow
-                            key={i} row={order}
-                            fields={fields}
-                            fieldsMap={fieldsMap}
-                        />
-                    ))}
+                    {View}
                 </TableBody>
             </Table>
         </TableContainer>

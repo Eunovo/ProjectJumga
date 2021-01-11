@@ -68,6 +68,10 @@ type Rider {
     """
     user: User!
     account: Account
+    """
+    @OneToOne('Seller', 'storeName')
+    """
+    assignedStore: String!
 }
 
 """
@@ -132,7 +136,7 @@ type Sale {
     product: String!
     quantity: Int!
     """
-    @ManyToOne(Seller, 'storeName')
+    @ManyToOne('Seller', 'storeName')
     """
     store: String!
 }
@@ -149,6 +153,9 @@ enum OrderStatus {
 @model
 """
 type Payout {
+    """
+    @OneToOne('User', '_id')
+    """
     user: User!
     earningPeriod: EarningPeriod!
     paidOn: Date!

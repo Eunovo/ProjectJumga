@@ -21,4 +21,5 @@ export const useCreateAndPayOrder = () => {
     return { ...state, createAndPay };
 }
 
-export const useGetOrders = (params: any) => useGet('/orders/', { params });
+export const useGetOrders = (storeName?: string, params?: any) =>
+    useGet(`/orders/${storeName}`, { params });

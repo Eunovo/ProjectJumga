@@ -10,13 +10,16 @@ import { OrderStatus } from '../../../models';
 import { useStyles } from "../styles";
 import { StorePage } from "./StorePage";
 import { HorizontalOptionButtons } from '../../../components/forms';
+import { useCurrentUser } from '../../../state/AppState';
 
 
 export const StoreOrders = () => {
+    const { user } = useCurrentUser();
     const classes = useStyles();
     const [selected, setSelected] = useState('all');
 
     const statuses = ['all'].concat(Object.values(OrderStatus));
+    const currrentStatus = (selected === 'all' ? undefined : selected) as OrderStatus;
 
     return <StorePage selected='orders'>
         <>
@@ -42,6 +45,8 @@ export const StoreOrders = () => {
                         status: true,
                         createdAt: true
                     }}
+                    store={user.storeName}
+                    status={currrentStatus}
                 />
             </Box>
 

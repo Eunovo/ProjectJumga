@@ -4,6 +4,7 @@ import {
     TableBody,
     TableContainer
 } from "@material-ui/core";
+import { useGetPayouts } from "../../hooks/index.";
 import { Payout } from '../../models';
 import { FieldSelector } from '../../utils';
 import { FieldsTableHead, FieldsTableRow } from '../table';
@@ -13,23 +14,16 @@ interface PayoutsTableProps {
         table?: string
     }
     fields: FieldSelector<Payout>;
+    user?: string;
 }
 
 
-const payouts: Partial<Payout>[] = [
-    {
-        amount: 1000,
-        earningPeriod: { from: new Date(), to: new Date() },
-        paidOn: new Date()
-    },
-    {
-        amount: 1000,
-        earningPeriod: { from: new Date(), to: new Date() },
-        paidOn: new Date()
-    }
-];
+export const PayoutsTable: React.FC<PayoutsTableProps> = ({
+    classes, fields, ...params
+}) => {
+    const { data, loading } = useGetPayouts(params);
+    const payouts = data?.payouts || [];
 
-export const PayoutsTable: React.FC<PayoutsTableProps> = ({ classes, fields }) => {
     const fieldsMap = {
         earningPeriod: {
             component: "th",
@@ -48,19 +42,32 @@ export const PayoutsTable: React.FC<PayoutsTableProps> = ({ classes, fields }) =
         }
     }
 
+    let View = payouts.map((payout: any, i: number) => (
+        <FieldsTableRow
+            key={i} row={payout}
+            fields={fields}
+            fieldsMap={fieldsMap}
+        />
+    ));
+    if (loading) {
+        View = [];
+        for (let i = 0; i < 10; i++) {
+            View.push(<FieldsTableRow
+                key={i}
+                fields={fields}
+                fieldsMap={fieldsMap}
+                placeholder
+            />)
+        }
+    }
+
     return <>
         <TableContainer component={Paper}>
             <Table className={classes?.table} aria-label="customized table">
                 <FieldsTableHead fields={fields} fieldsMap={fieldsMap} />
 
                 <TableBody>
-                    {payouts.map((payout, i) => (
-                        <FieldsTableRow
-                            key={i} row={payout}
-                            fields={fields}
-                            fieldsMap={fieldsMap}
-                        />
-                    ))}
+                    {View}
                 </TableBody>
             </Table>
         </TableContainer>

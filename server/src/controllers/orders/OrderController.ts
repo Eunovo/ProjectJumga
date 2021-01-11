@@ -9,6 +9,7 @@ export class OrderController extends BaseController {
         super();
         this.post('/', this.create);
         this.get('/', this.getMany);
+        this.get('/:store', this.getStoreOrders);
         this.put('/', this.update);
         this.get('/pay', this.pay);
         this.post('/pay', this.createAndPay);
@@ -22,6 +23,20 @@ export class OrderController extends BaseController {
 
     private async getMany(req: any) {
         const orders = await services.Order.findMany(req.query);
+        return { message: "success", data: { orders } };
+    }
+
+    private async getStoreOrders(req: any) {
+        const store = req.params.store;
+        let orders = await services.Order
+            .findMany({ 'sales.store': store });
+        orders = orders.map((order: any) => {
+            return {
+                ...order,
+                sales: order.sales
+                    .filter((sale: any) => sale.store === store)
+            };
+        });
         return { message: "success", data: { orders } };
     }
 

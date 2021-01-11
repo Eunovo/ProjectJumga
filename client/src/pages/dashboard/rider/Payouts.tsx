@@ -5,11 +5,13 @@ import {
 import {
     PayoutsTable
 } from '../../../components/payouts';
+import { useCurrentUser } from "../../../state/AppState";
 import { useStyles } from "../styles";
 import { RiderPage } from "./RiderPage";
 
 
 export const RiderPayouts = () => {
+    const { user } = useCurrentUser();
     const classes = useStyles();
 
     return <RiderPage selected='payouts'>
@@ -23,7 +25,8 @@ export const RiderPayouts = () => {
                         earningPeriod: true,
                         amount: true,
                         paidOn: true
-                    }}    
+                    }}
+                    user={user._id}
                 />
             </Box>
 

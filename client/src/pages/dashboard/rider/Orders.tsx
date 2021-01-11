@@ -10,13 +10,16 @@ import { OrderStatus } from '../../../models';
 import { useStyles } from "../styles";
 import { RiderPage } from "./RiderPage";
 import { HorizontalOptionButtons } from '../../../components/forms';
+import { useCurrentUser } from '../../../state/AppState';
 
 
 export const RiderOrders = () => {
+    const { user } = useCurrentUser();
     const classes = useStyles();
     const [selected, setSelected] = useState('all');
 
     const statuses = ['all'].concat(Object.values(OrderStatus));
+    const currrentStatus = (selected === 'all' ? undefined : selected) as OrderStatus;
 
     return <RiderPage selected='orders'>
         <>
@@ -41,6 +44,8 @@ export const RiderOrders = () => {
                         status: true,
                         createdAt: true
                     }}
+                    store={user.assignedStore}
+                    status={currrentStatus}
                 />
             </Box>
 
