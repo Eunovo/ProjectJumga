@@ -24,18 +24,21 @@ export class ApproveSellerService {
                 email: user.email
             },
             meta: {
-                sellerId: seller._id
+                storeName: seller.storeName
             }
         });
     }
 
-    async giveValue(tranxId: string, sellerId: string) {
+    async giveValue(tranxId: string, storeName: string) {
         const isVerified = await paymentService.verify(tranxId, 20);
         if (!isVerified)
             return false;
 
         repos.Seller.updateOne(
-            { _id: sellerId }, { approved: true });
+            { storeName }, { approved: true });
+        repos.Product.updateMany(
+            { store: storeName }, { accessible: true }
+        );
         return true;
     }
 

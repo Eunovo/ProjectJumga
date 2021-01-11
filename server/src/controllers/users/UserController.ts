@@ -32,7 +32,7 @@ export class UserController extends BaseController {
     private async confirmPay(req: any) {
         const res = await approveSellerService.giveValue(
             req.query.transaction_id,
-            req.body.meta.sellerId
+            req.body.meta.storeName
         );
 
         return {
