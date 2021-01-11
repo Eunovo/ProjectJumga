@@ -8,6 +8,7 @@ import {
     ProductController,
     UserController,
     FileController,
+    CommissionController,
     Handler
 } from './controllers';
 
@@ -38,7 +39,8 @@ router.use((req: any, res, next) => {
     new PayoutController(),
     new ProductController(),
     new UserController(),
-    new FileController()
+    new FileController(),
+    new CommissionController()
 ].forEach((controller) => {
     use(router, controller);
 });
