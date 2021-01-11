@@ -40,7 +40,7 @@ services.User.post('findOne', async (args: any) => {
 });
 
 services.Product.pre('create', async (args: any) => {
-    const { store } = args;
+    const { store } = args._foreign;
     args.input.accessible = store.approved;
 }); 
 
