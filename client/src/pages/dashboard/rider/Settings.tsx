@@ -1,4 +1,4 @@
-import { Role, Rider } from '../../../models';
+import { useCurrentUser } from '../../../state/AppState';
 import {
     Settings,
     UserTab,
@@ -7,26 +7,13 @@ import {
 import { RiderPage } from './RiderPage';
 
 
-const user: Omit<Rider, "createdAt"> = {
-    firstName: 'Novo', lastName: 'Bob',
-    email: 'test@g.com',
-    address: {
-        country: 'Nigeria',
-        state: 'Lagos',
-        city: 'Lagos',
-        street: 'Badmus Street'
-    },
-    role: Role.rider,
-    accountName: 'Novo Bob',
-    accountNumber: '0177298559',
-    bank: 'Access Bank'
-};
-
 export const RiderSettings = () => {
+    const { user } = useCurrentUser();
+
     return <RiderPage selected='settings'>
         <Settings tabs={['General Information', 'Account Information']}>
             <UserTab user={user} index={0} />
-            <AccountTab user={user} index={1} />
+            <AccountTab user={user} account={user.account} index={1} />
         </Settings>
     </RiderPage>
 }

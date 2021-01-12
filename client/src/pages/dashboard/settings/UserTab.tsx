@@ -1,15 +1,17 @@
 import * as yup from 'yup';
-import { Typography, useTheme } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import { Box, Typography, useTheme } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { Formik, Form } from 'formik';
 import {
     CountryProvider,
     Field,
     SelectCountry,
     SelectState,
+    SpinnerButton,
     useFormStyles
 } from '../../../components/forms';
 import { User } from '../../../models';
+import { useUpdateUser } from '../../../hooks/users';
 import { TabPanelProps, TabPanel } from "./common";
 
 
@@ -35,6 +37,7 @@ const validationSchema = yup.object({
 
 
 export const UserTab: React.FC<UserTabProps> = ({ user, index }) => {
+    const { updateUser, loading, error } = useUpdateUser();
     const theme = useTheme();
     const formClasses = useFormStyles();
     const initialValues = {
@@ -46,11 +49,19 @@ export const UserTab: React.FC<UserTabProps> = ({ user, index }) => {
     };
 
     return <TabPanel index={index}>
+        {error?.message && <Box marginTop={2}>
+            <Alert severity='error'>{error.message}</Alert>
+        </Box>}
+
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
-
+            onSubmit={async (values, actions) => {
+                try {
+                    await updateUser(values, { email: user.email });
+                } catch (error) {
+                    actions.setErrors(error?.errors);
+                }
             }}
         >
             {
@@ -72,6 +83,8 @@ export const UserTab: React.FC<UserTabProps> = ({ user, index }) => {
                             className={formClasses.field}
                             name='email'
                             label='Email'
+                            helperText='This field is not editable'
+                            disabled
                         />
 
                         <Typography variant='h6' style={{ marginBlock: theme.spacing(2) }}>
@@ -103,12 +116,13 @@ export const UserTab: React.FC<UserTabProps> = ({ user, index }) => {
                             label='Street'
                         />
 
-                        <Button
+                        <SpinnerButton
                             className={formClasses.submitBtn}
                             color='primary'
                             variant='contained'
                             type='submit'
-                        >Submit</Button>
+                            loading={loading}
+                        >Submit</SpinnerButton>
                     </Form>
                 )
             }

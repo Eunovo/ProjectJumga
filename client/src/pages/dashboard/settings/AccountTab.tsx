@@ -1,13 +1,21 @@
 import * as yup from 'yup';
-import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import Box from '@material-ui/core/Box';
 import { Formik, Form } from 'formik';
 import { TabPanelProps, TabPanel } from "./common";
-import { Payable } from '../../../models';
-import { Field, SelectBank, useFormStyles } from '../../../components/forms';
+import { User } from '../../../models';
+import {
+    Field,
+    SelectBank,
+    SpinnerButton,
+    useFormStyles
+} from '../../../components/forms';
+import { useUpdateUser } from '../../../hooks/users';
 
 
 interface AccountTabProps extends Pick<TabPanelProps, "index"> {
-    user: Payable
+    user: User;
+    account: any;
 }
 
 const accountNumberRegex = /^0[0-9]{9}$/g
@@ -21,16 +29,37 @@ const validationSchema = yup.object({
 });
 
 
-export const AccountTab: React.FC<AccountTabProps> = ({ user, index }) => {
+export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) => {
+    const { updateUser, loading, error } = useUpdateUser();
     const formClasses = useFormStyles();
-    const initialValues = user;
+    const initialValues = {
+        accountName: account.name,
+        accountNumber: account.accountNumber,
+        bank: account.bank,
+        bankCode: ''
+    };
 
     return <TabPanel index={index}>
+        {error?.message && <Box marginTop={2}>
+            <Alert severity='error'>{error.message}</Alert>
+        </Box>}
+
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
-
+            onSubmit={async (values, actions) => {
+                try {
+                    await updateUser({
+                        account: {
+                            name: values.accountName,
+                            number: values.accountNumber,
+                            bank: values.bank,
+                            bankCode: values.bankCode
+                        }
+                    }, { email: user.email });
+                } catch (error) {
+                    actions.setErrors(error?.errors);
+                }
             }}
         >
             <Form className={formClasses.form}>
@@ -52,12 +81,13 @@ export const AccountTab: React.FC<AccountTabProps> = ({ user, index }) => {
                     label='Bank'
                 />
 
-                <Button
+                <SpinnerButton
                     className={formClasses.submitBtn}
                     color='primary'
                     type='submit'
                     variant='contained'
-                >Submit</Button>
+                    loading={loading}
+                >Submit</SpinnerButton>
             </Form>
         </Formik>
     </TabPanel>

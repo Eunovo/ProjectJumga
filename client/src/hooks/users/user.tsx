@@ -35,3 +35,12 @@ export const useSignup = () => {
 
     return { signup, ...state };
 }
+
+export const useUpdateUser = () => {
+    const { mutate, ...state } = useMutate('/user', 'put');
+
+    const updateUser = (data: any, filter: any) =>
+        mutate(data, { params: filter });
+
+    return { updateUser, ...state };
+}
