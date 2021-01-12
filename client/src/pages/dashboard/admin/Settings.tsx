@@ -1,5 +1,6 @@
 import { Role, Admin } from '../../../models';
 import {
+    AppSettings,
     Settings,
     UserTab
 } from '../settings';
@@ -20,8 +21,9 @@ const user: Omit<Admin, "createdAt"> = {
 
 export const AdminSettings = () => {
     return <AdminPage selected='settings'>
-        <Settings tabs={['General Information']}>
+        <Settings tabs={['General Information', 'App Commissions']}>
             <UserTab user={user} index={0} />
+            <AppSettings index={1} />
         </Settings>
     </AdminPage>
 }

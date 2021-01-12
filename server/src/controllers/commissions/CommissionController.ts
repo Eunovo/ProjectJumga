@@ -21,8 +21,16 @@ export class CommissionController extends BaseController {
     }
 
     async updateCommissions(req: any) {
-        await services.Commission
-            .updateMany(req.body, {});
+        const promises = req.body.map((update: any) => {
+            return services.Commission
+                .updateOne(
+                    { value: update.value },
+                    { key: update.key }
+                );
+        });
+
+        await Promise.all(promises);
+
         return { messsage: 'success' };
     }
 
