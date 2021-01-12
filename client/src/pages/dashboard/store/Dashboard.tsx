@@ -14,7 +14,11 @@ export const StoreDashboard = () => {
 
     return <StorePage selected='dashboard'>
         <>
-            <Typography className={classes.header} variant='h4'>
+            <Typography
+                align='center'
+                className={classes.header}
+                variant='h4'
+            >
                 Welcome {user?.firstName}!
             </Typography>
 
@@ -107,6 +111,9 @@ const ApprovedStore = () => {
             flexWrap='wrap'
             justifyContent='space-between'
             marginTop={-2}
+            width='100%'
+            maxWidth='60rem'
+            marginX='auto'
         >
 
             <div className={classes.infoBlock}>
