@@ -79,6 +79,7 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
                     className={formClasses.field}
                     name='bank'
                     label='Bank'
+                    country={user.address.country}
                 />
 
                 <SpinnerButton

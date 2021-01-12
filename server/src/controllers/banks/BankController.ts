@@ -1,3 +1,4 @@
+import { services } from "src/backend";
 import { paymentService } from "../../services";
 import { BaseController } from "../BaseController";
 
@@ -6,12 +7,14 @@ export class BankController extends BaseController {
 
     constructor() {
         super();
-        this.get("/", this.getAll);
+        this.get("/:country", this.getAll);
     }
 
 
-    async getAll() {
-        const banks = await paymentService.getBanks();
+    async getAll(req: any) {
+        const country = await services.Country
+            .findOne({ name: req.params.country });
+        const banks = await paymentService.getBanks(country.shortCode);
         return { message: "success", data: { banks } };
     }
 

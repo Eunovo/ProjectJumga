@@ -221,5 +221,6 @@ type Country {
     @unique
     """
     name: String!
+    shortCode: String!
     states: [String]!
 }

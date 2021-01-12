@@ -59,11 +59,11 @@ export const SelectState: React.FC<SelectStateProps> = ({
     </SelectField>
 }
 
-type SelectBankProps = SelectCountryProps;
+type SelectBankProps = SelectCountryProps & { country: string };
 
-export const SelectBank: React.FC<SelectBankProps> = ({ name, ...props }) => {
+export const SelectBank: React.FC<SelectBankProps> = ({ name, country, ...props }) => {
     const { values, setFieldValue } = useFormikContext();
-    const { data, loading } = useGet('/banks');
+    const { data, loading } = useGet(`/banks/${country}`);
     const banks = data?.banks || [];
 
     const selected = (values as any)[name];

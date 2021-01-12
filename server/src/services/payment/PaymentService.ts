@@ -57,8 +57,19 @@ export class PaymentService {
 
     }
 
-    async getBanks(): Promise<any[]> {
-        return [];
+    /**
+     * Country Short Code
+     * @param country 
+     * @returns
+     */
+    async getBanks(country: string) {
+        const response = await this.instance
+            .get(`/banks/${country}`);
+
+        if (response.data.status !== 'success')
+            throw new Error(`Failed to fetch banks: ${response.data.message}`);
+
+        return response.data.data;
     }
 
 }
