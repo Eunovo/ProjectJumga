@@ -30,9 +30,9 @@ export class PaymentService {
             redirect_url: redirectUrl,
             payment_options: "card",
             customizations: {
-               title: "Jumga Payments",
-               description: "Pay for your order",
-            //    logo: "https://assets.piedpiper.com/logo.png"
+                title: "Jumga Payments",
+                description: "Pay for your order",
+                //    logo: "https://assets.piedpiper.com/logo.png"
             }
         });
 
@@ -54,7 +54,23 @@ export class PaymentService {
     }
 
     async payout(accounts: any[]) {
+        const response = await this.instance
+            .post(`/bulk-transfers`, {
+                title: "Payout",
+                bulk_data: accounts.map((account: any) => {
+                    return {
+                        bank_code: account.bankCode,
+                        account_number: account.number,
+                        amount: account.amount,
+                        current: "USD",
+                        narration: "Earnings",
+                        reference: "akhlm-blktrnsfr-xx03"
+                    }
+                })
+            });
 
+        if (response.data.status !== 'success')
+            throw new Error(`Failed to queue bulk transfer: ${response.data.message}`);
     }
 
     /**
