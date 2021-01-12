@@ -4,7 +4,13 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Field, useFormStyles } from '../../components/forms';
+import {
+    CountryProvider,
+    Field,
+    SelectCountry,
+    SelectState,
+    useFormStyles
+} from '../../components/forms';
 
 
 export interface CheckoutForm {
@@ -55,72 +61,76 @@ export const BuyerForm: React.FC<BuyerFormProps> = ({ values, onSubmit }) => {
                 onSubmit(values);
             }}
         >
-            <Form className={form.form}>
+            {
+                ({ values }) => (
+                    <Form className={form.form}>
 
-                <Field
-                    className={form.field}
-                    name='fullName'
-                    label='Full Name'
-                />
+                        <Field
+                            className={form.field}
+                            name='fullName'
+                            label='Full Name'
+                        />
 
-                <Field
-                    className={form.field}
-                    name='email'
-                    label='Email'
-                />
+                        <Field
+                            className={form.field}
+                            name='email'
+                            label='Email'
+                        />
 
-                <Box marginY={2}>
-                    <Typography variant='h6'>Delivery Address</Typography>
-                </Box>
+                        <Box marginY={2}>
+                            <Typography variant='h6'>Delivery Address</Typography>
+                        </Box>
 
-                <Field
-                    className={form.field}
-                    name='deliveryCountry'
-                    label='Delivery Country'
-                />
+                        <CountryProvider>
+                            <SelectCountry
+                                className={form.field}
+                                name='deliveryCountry'
+                                label='Delivery Country'
+                            />
+                            <SelectState
+                                className={form.field}
+                                name='deliveryState'
+                                label='Delivery State'
+                                selectedCountry={values.deliveryCountry}
+                            />
+                        </CountryProvider>
 
-                <Field
-                    className={form.field}
-                    name='deliveryState'
-                    label='Delivery State'
-                />
+                        <Field
+                            className={form.field}
+                            name='deliveryCity'
+                            label='Delivery City'
+                        />
 
-                <Field
-                    className={form.field}
-                    name='deliveryCity'
-                    label='Delivery City'
-                />
+                        <Field
+                            className={form.field}
+                            name='deliveryStreet'
+                            label='Delivery Street'
+                        />
 
-                <Field
-                    className={form.field}
-                    name='deliveryStreet'
-                    label='Delivery Street'
-                />
+                        <Button
+                            className={form.submitBtn}
+                            color='primary'
+                            type='submit'
+                            variant='contained'
+                        >
+                            submit</Button>
 
-                <Button
-                    className={form.submitBtn}
-                    color='primary'
-                    type='submit'
-                    variant='contained'
-                >
-                    submit
-                </Button>
+                        <Box
+                            marginY={2}
+                            display='flex'
+                            justifyContent='center'
+                            alignItems='center'
+                        >
+                            <Button
+                                onClick={() => history.push('/cart')}
+                                type='button'
+                            >
+                                back to cart</Button>
+                        </Box>
 
-                <Box
-                    marginY={2}
-                    display='flex'
-                    justifyContent='center'
-                    alignItems='center'
-                >
-                    <Button
-                        onClick={() => history.push('/cart')}
-                        type='button'
-                    >
-                        back to cart
-                    </Button>
-                </Box>
-
-            </Form>
+                    </Form>
+                )
+            }
         </Formik>
     </>
 }

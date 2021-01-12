@@ -57,4 +57,8 @@ export class PaymentService {
 
     }
 
+    async getBanks(): Promise<any[]> {
+        return [];
+    }
+
 }

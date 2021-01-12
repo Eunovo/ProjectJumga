@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 import { TabPanelProps, TabPanel } from "./common";
 import { Payable } from '../../../models';
-import { Field, useFormStyles } from '../../../components/forms';
+import { Field, SelectBank, useFormStyles } from '../../../components/forms';
 
 
 interface AccountTabProps extends Pick<TabPanelProps, "index"> {
@@ -46,7 +46,7 @@ export const AccountTab: React.FC<AccountTabProps> = ({ user, index }) => {
                     label='Account Number'
                 />
 
-                <Field
+                <SelectBank
                     className={formClasses.field}
                     name='bank'
                     label='Bank'

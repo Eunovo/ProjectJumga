@@ -35,8 +35,9 @@ type User {
 
 type Account {
     name: String!
-    Float: String!
+    number: String!
     bank: String!
+    bankCode: String!
 }
 
 type Address {
@@ -212,3 +213,13 @@ type File {
     path: String!
 }
 
+"""
+@model
+"""
+type Country {
+    """
+    @unique
+    """
+    name: String!
+    states: [String]!
+}

@@ -4,12 +4,17 @@ import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
-import { Field, SpinnerButton } from '../../../components/forms';
+import {
+    CountryProvider,
+    Field,
+    SelectCountry,
+    SelectState,
+    SpinnerButton
+} from '../../../components/forms';
 import { useSignup } from '../../../hooks/users';
 import { AuthPage } from '../AuthPage';
 import { useStyles } from '../styles';
 
-// TODO countries?
 
 const validationSchema = yup.object({
     firstName: yup.string().required().min(3).max(50),
@@ -76,79 +81,86 @@ export const StoreOwnerSignup = () => {
                 }
             }}
         >
-            <Form className={classes.authForm}>
-                <Field
-                    className={classes.field}
-                    name='firstName'
-                    label='First Name'
-                />
-                <Field
-                    className={classes.field}
-                    name='lastName'
-                    label='Last Name'
-                />
-                <Field
-                    className={classes.field}
-                    name='email'
-                    label='Email'
-                    placeholder='test@gmail.com'
-                />
-                <Field
-                    className={classes.field}
-                    name='storeName'
-                    label='Store Name'
-                    helperText='Your store name cannot be changed'
-                />
-                <Field
-                    className={classes.field}
-                    name='password'
-                    label='Password'
-                    type='password'
-                />
-                <Field
-                    className={classes.field}
-                    name='confirmPassword'
-                    label='Confirm Password'
-                    type='password'
-                />
+            {
+                ({ values }) => (
+                    <Form className={classes.authForm}>
+                        <Field
+                            className={classes.field}
+                            name='firstName'
+                            label='First Name'
+                        />
+                        <Field
+                            className={classes.field}
+                            name='lastName'
+                            label='Last Name'
+                        />
+                        <Field
+                            className={classes.field}
+                            name='email'
+                            label='Email'
+                            placeholder='test@gmail.com'
+                        />
+                        <Field
+                            className={classes.field}
+                            name='storeName'
+                            label='Store Name'
+                            helperText='Your store name cannot be changed'
+                        />
+                        <Field
+                            className={classes.field}
+                            name='password'
+                            label='Password'
+                            type='password'
+                        />
+                        <Field
+                            className={classes.field}
+                            name='confirmPassword'
+                            label='Confirm Password'
+                            type='password'
+                        />
 
-                <Box marginTop={2}>
-                    <Typography variant='h6'>Address</Typography>
-                </Box>
+                        <Box marginTop={2}>
+                            <Typography variant='h6'>Address</Typography>
+                        </Box>
 
-                <Field
-                    className={classes.field}
-                    name='country'
-                    label='Country'
-                />
-                <Field
-                    className={classes.field}
-                    name='state'
-                    label='State'
-                />
-                <Field
-                    className={classes.field}
-                    name='city'
-                    label='City'
-                />
-                <Field
-                    className={classes.field}
-                    name='street'
-                    label='Street'
-                />
+                        <CountryProvider>
+                            <SelectCountry
+                                className={classes.field}
+                                name='country'
+                                label='Country'
+                            />
+                            <SelectState
+                                className={classes.field}
+                                name='state'
+                                label='State'
+                                selectedCountry={values.country}
+                            />
+                        </CountryProvider>
 
-                <SpinnerButton
-                    className={classes.submitBtn}
-                    type='submit'
-                    color='primary'
-                    variant='contained'
-                    loading={loading}
-                >
-                    signup
-                </SpinnerButton>
-            </Form>
+                        <Field
+                            className={classes.field}
+                            name='city'
+                            label='City'
+                        />
+                        <Field
+                            className={classes.field}
+                            name='street'
+                            label='Street'
+                        />
+
+                        <SpinnerButton
+                            className={classes.submitBtn}
+                            type='submit'
+                            color='primary'
+                            variant='contained'
+                            loading={loading}
+                        >
+                            signup</SpinnerButton>
+                    </Form>
+                )
+            }
         </Formik>
-    
+
         <Box marginY={3}>
             <span>Already have an account?</span>
             <Link to='/login/store'>Login</Link>

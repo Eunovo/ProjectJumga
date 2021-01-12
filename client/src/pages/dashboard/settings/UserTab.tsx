@@ -2,7 +2,13 @@ import * as yup from 'yup';
 import { Typography, useTheme } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
-import { Field, useFormStyles } from '../../../components/forms';
+import {
+    CountryProvider,
+    Field,
+    SelectCountry,
+    SelectState,
+    useFormStyles
+} from '../../../components/forms';
 import { User } from '../../../models';
 import { TabPanelProps, TabPanel } from "./common";
 
@@ -47,60 +53,65 @@ export const UserTab: React.FC<UserTabProps> = ({ user, index }) => {
 
             }}
         >
-            <Form className={formClasses.form}>
-                <Field
-                    className={formClasses.field}
-                    name='firstName'
-                    label='First Name'
-                />
+            {
+                ({ values }) => (
+                    <Form className={formClasses.form}>
+                        <Field
+                            className={formClasses.field}
+                            name='firstName'
+                            label='First Name'
+                        />
 
-                <Field
-                    className={formClasses.field}
-                    name='lastName'
-                    label='Last Name'
-                />
+                        <Field
+                            className={formClasses.field}
+                            name='lastName'
+                            label='Last Name'
+                        />
 
-                <Field
-                    className={formClasses.field}
-                    name='email'
-                    label='Email'
-                />
+                        <Field
+                            className={formClasses.field}
+                            name='email'
+                            label='Email'
+                        />
 
-                <Typography variant='h6' style={{ marginBlock: theme.spacing(2) }}>
-                    Address
-                </Typography>
+                        <Typography variant='h6' style={{ marginBlock: theme.spacing(2) }}>
+                            Address</Typography>
 
-                <Field
-                    className={formClasses.field}
-                    name='country'
-                    label='Country'
-                />
+                        <CountryProvider>
+                            <SelectCountry
+                                className={formClasses.field}
+                                name='country'
+                                label='Country'
+                            />
+                            <SelectState
+                                className={formClasses.field}
+                                name='state'
+                                label='State'
+                                selectedCountry={values.country}
+                            />
+                        </CountryProvider>
 
-                <Field
-                    className={formClasses.field}
-                    name='state'
-                    label='State'
-                />
+                        <Field
+                            className={formClasses.field}
+                            name='city'
+                            label='City'
+                        />
 
-                <Field
-                    className={formClasses.field}
-                    name='city'
-                    label='City'
-                />
+                        <Field
+                            className={formClasses.field}
+                            name='street'
+                            label='Street'
+                        />
 
-                <Field
-                    className={formClasses.field}
-                    name='street'
-                    label='Street'
-                />
-
-                <Button
-                    className={formClasses.submitBtn}
-                    color='primary'
-                    variant='contained'
-                    type='submit'
-                >Submit</Button>
-            </Form>
+                        <Button
+                            className={formClasses.submitBtn}
+                            color='primary'
+                            variant='contained'
+                            type='submit'
+                        >Submit</Button>
+                    </Form>
+                )
+            }
         </Formik>
     </TabPanel>
 }
