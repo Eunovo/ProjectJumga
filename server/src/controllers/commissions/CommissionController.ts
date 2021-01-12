@@ -7,6 +7,7 @@ export class CommissionController extends BaseController {
     constructor() {
         super();
         this.get('/', this.getMany);
+        this.put('/', this.updateCommissions);
     }
 
     async getMany(req: any) {
@@ -18,4 +19,11 @@ export class CommissionController extends BaseController {
             data: { commissions }
         }
     }
+
+    async updateCommissions(req: any) {
+        await services.Commission
+            .updateMany(req.body, {});
+        return { messsage: 'success' };
+    }
+
 }
