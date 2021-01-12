@@ -12,11 +12,14 @@ export class PayoutController extends BaseController {
     }
 
     private async triggerPayout(req: any) {
+        if (req.principal?.role !== 'admin')
+            throw new Error('Unauthorised');
+
         const users = await services.User
             .findMany({
                 $or: [{ role: 'seller' }, { role: 'rider' }]
             });
-        
+
         const accounts = users.map((user: any) => ({
             ...user.account,
             amount: user.earnings
@@ -30,7 +33,7 @@ export class PayoutController extends BaseController {
             { _id: { $in: ids } }
         );
 
-        return { message: "queued" }
+        return { message: "queued" };
     }
 
     private async getMany(req: any) {
