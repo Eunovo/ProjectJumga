@@ -118,6 +118,7 @@ type Order {
     @default([])
     """
     history: [OrderEvent]!
+    path: [String]!
     createdAt: Date!
 }
 

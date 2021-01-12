@@ -44,7 +44,8 @@ export const RiderOrders = () => {
                         status: true,
                         createdAt: true
                     }}
-                    store={user.assignedStore}
+                    type='rider'
+                    rider={user.riderId}
                     status={currrentStatus}
                 />
             </Box>

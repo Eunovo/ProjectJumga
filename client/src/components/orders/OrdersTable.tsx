@@ -14,7 +14,18 @@ interface OrdersTableProps {
         table?: string
     }
     fields: FieldSelector<Order>;
+    type: "rider" | "store";
+
+    /**
+     * The rider's riderId
+     */
+    rider?: string;
+
+    /**
+     * The store's name
+     */
     store?: string;
+
     status?: OrderStatus;
 }
 
@@ -22,10 +33,10 @@ interface OrdersTableProps {
 export const OrdersTable: React.FC<OrdersTableProps> = ({
     classes,
     fields,
-    store,
+    type,
     ...params
 }) => {
-    const { data, loading } = useGetOrders(store, params);
+    const { data, loading } = useGetOrders(type, params);
     const orders = data?.orders || [];
 
     const fieldsMap = {

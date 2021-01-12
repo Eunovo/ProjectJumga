@@ -45,6 +45,7 @@ export const StoreOrders = () => {
                         status: true,
                         createdAt: true
                     }}
+                    type='store'
                     store={user.storeName}
                     status={currrentStatus}
                 />

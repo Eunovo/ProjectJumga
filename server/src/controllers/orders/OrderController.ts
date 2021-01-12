@@ -9,7 +9,8 @@ export class OrderController extends BaseController {
         super();
         this.post('/', this.create);
         this.get('/', this.getMany);
-        this.get('/:store', this.getStoreOrders);
+        this.get('/store', this.getStoreOrders);
+        this.get('/rider', this.getRiderOrders);
         this.put('/', this.update);
         this.get('/pay', this.pay);
         this.post('/pay', this.createAndPay);
@@ -27,7 +28,7 @@ export class OrderController extends BaseController {
     }
 
     private async getStoreOrders(req: any) {
-        const store = req.params.store;
+        const store = req.query.store;
         let orders = await services.Order
             .findMany({ 'sales.store': store });
         orders = orders.map((order: any) => {
@@ -38,6 +39,16 @@ export class OrderController extends BaseController {
             };
         });
         return { message: "success", data: { orders } };
+    }
+
+    private async getRiderOrders(req: any) {
+        const rider = req.query.rider;
+        let orders = await services.Order
+            .findMany({ path: rider });
+        orders = orders.map(
+            (order: any) => ({ ...order, sales: undefined })
+        );
+        return  { message: 'success', data: { orders } };
     }
 
     private async update(req: any) {

@@ -29,14 +29,16 @@ services.User.post('create', async (args: any) => {
 services.User.post('findOne', async (args: any) => {
     const { result } = args;
 
-    let extension = {};
+    let extension: any = {};
     if (result.role === 'seller') {
         extension = await services.Seller.findOne({ user: result._id });
+        extension = { sellerId: extension._id, ...extension };
     } else if (result.role === 'rider') {
         extension = await services.Rider.findOne({ user: result._id });
+        extension = { riderId: extension._id, ...extension };
     }
 
-    args.result = { ...result, ...extension };
+    args.result = { ...extension, ...result };
 });
 
 services.Product.pre('create', async (args: any) => {
@@ -63,12 +65,19 @@ services.Order.pre('create', async (args: any) => {
         .findOne({ key: 'purchase' });
     const deliveryCommission = await services.Commission
         .findOne({ key: 'delivery' });
+    
+    const rider = await services.Rider.findOne({
+        'address.country': args.input.deliveryAddress.country,
+        'address.state': args.input.deliveryAddress.state,
+        'address.city': args.input.deliveryAddress.city,
+    });
 
     args.input.amountSold = products
         .map((p: any) => p.price);
     args.input.purchaseCommission =
         purchaseCommission.value * args.input.amountSold;
     args.input.deliveryFee = 0;
+    args.input.path = [rider._id];
 });
 
 export { repos, services };
