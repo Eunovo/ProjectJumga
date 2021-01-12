@@ -77,6 +77,8 @@ services.Order.pre('create', async (args: any) => {
     args.input.purchaseCommission =
         purchaseCommission.value * args.input.amountSold;
     args.input.deliveryFee = 0;
+    args.input.deliveryCommission =
+        deliveryCommission.value * args.input.deliveryCommission;
     args.input.path = [rider._id];
 });
 
