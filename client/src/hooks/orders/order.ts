@@ -1,6 +1,33 @@
 import { useSnackbar } from "notistack";
-import { useGet, useMutate } from "../../api";
+import { useGet, useLazyGet, useMutate } from "../../api";
 
+
+export const usePayOrder = () => {
+    const { get, ...state } = useLazyGet('/orders/pay');
+    const { enqueueSnackbar } = useSnackbar();
+
+    const payOrder = async (orderId: string) => {
+        try {
+            const response = await get({ params: { id: orderId } });
+            const link = response?.data?.paymentLink;
+
+            if (!link) {
+                enqueueSnackbar(
+                    `Could not complete payment`, { variant: 'error' });
+            }
+    
+            window.open(link, '_blank');
+        } catch (error) {
+            enqueueSnackbar(
+                `Could not complete payment: ${error.message}`,
+                { variant: 'error' }
+            );
+            throw error;
+        }
+    }
+
+    return { payOrder, ...state };
+}
 
 export const useCreateAndPayOrder = () => {
     const { enqueueSnackbar } = useSnackbar();

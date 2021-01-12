@@ -9,6 +9,7 @@ import {
     AdminRoutes
 } from './pages/dashboard';
 import { Home } from './pages/home/Home';
+import { Purchase } from './pages/purchase';
 import { useCurrentUser } from './state/AppState';
 
 
@@ -42,6 +43,7 @@ export const Routes = () => {
                     <Switch>
                         <Route path='/cart' component={Cart} />
                         <Route path='/checkout' component={Checkout} />
+                        <Route path='/purchase' component={Purchase} />
                         <Route exact path='/' component={Home} />
                         <Route path='*'>Not Found</Route>
                     </Switch>

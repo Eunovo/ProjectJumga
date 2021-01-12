@@ -20,7 +20,8 @@ type Cart<T = any> = {
 const CartContext = createContext<{
     cart: Cart,
     increment?: (product: ProductInfo, quantity: number) => void,
-    decrement?: (product: ProductInfo, quantity: number) => void
+    decrement?: (product: ProductInfo, quantity: number) => void,
+    clear?: () => void
 }>({
     cart: {}
 });
@@ -72,7 +73,8 @@ export const CartProvider: React.FC = ({ children }) => {
     return <CartContext.Provider value={{
         cart: cartOfProductsAboveZero,
         increment,
-        decrement
+        decrement,
+        clear: () => setCart({})
     }}>
         {children}
     </CartContext.Provider>
