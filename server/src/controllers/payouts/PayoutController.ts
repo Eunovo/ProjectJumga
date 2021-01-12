@@ -25,9 +25,10 @@ export class PayoutController extends BaseController {
         await paymentService.payout(accounts);
 
         const ids = users.map((user: any) => user._id);
-        // Can I subtract the earnings instead of setting to zero?
         services.User.updateMany(
-            { earnings: 0 }, { _id: { $in: ids } });
+            { $inc: { earnings: -users.earnings } },
+            { _id: { $in: ids } }
+        );
 
         return { message: "queued" }
     }
