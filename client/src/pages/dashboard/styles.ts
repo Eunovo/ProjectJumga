@@ -35,18 +35,6 @@ export const useStyles = makeStyles((theme: Theme) =>
         header: {
             marginBottom: theme.spacing(4)
         },
-        grid: {
-            marginInline: 'auto',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: theme.spacing(2),
-            rowGap: `${theme.spacing(2)}px`,
-            justifyItems: 'center',
-            // maxWidth: '45rem',
-            [theme.breakpoints.up('md')]: {
-                gridTemplateColumns: '1fr 1fr 1fr 1fr'
-            }
-        },
         row: {
             display: 'flex'
         },
@@ -78,6 +66,18 @@ export const useStyles = makeStyles((theme: Theme) =>
             }
         },
         infoBlockSub: {},
-        table: {}
+        table: {},
+        split: {
+            width: '100%',
+            marginBlock: theme.spacing(2),
+
+            [theme.breakpoints.up('sm')]: {
+                width: '48%',
+                marginBlock: 0
+            },
+            [theme.breakpoints.up('md')]: {
+                width: '45%'
+            }
+        }
     })
 );

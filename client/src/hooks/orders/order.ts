@@ -50,3 +50,21 @@ export const useCreateAndPayOrder = () => {
 
 export const useGetOrders = (type: "rider" | "store", params?: any) =>
     useGet(`/orders/${type}`, { params });
+
+export const useOrderDrop = () => {
+    const { enqueueSnackbar } = useSnackbar();
+    const { get, ...state } = useLazyGet('/orders/');
+
+    const dropOrder = async (orderId: string, userId: string) => {
+        try {
+            await get({ params: { orderId, userId } });
+        } catch (error) {
+            enqueueSnackbar(
+                `Operation Failed: ${error.message}`,
+                { variant: 'error' }
+            );
+        }
+    }
+
+    return { dropOrder, ...state };
+}

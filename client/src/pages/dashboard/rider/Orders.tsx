@@ -45,7 +45,7 @@ export const RiderOrders = () => {
                         createdAt: true
                     }}
                     type='rider'
-                    rider={user.riderId}
+                    rider={user._id}
                     status={currrentStatus}
                 />
             </Box>

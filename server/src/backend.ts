@@ -48,6 +48,12 @@ services.Product.pre('create', async (args: any) => {
 
 services.Order.pre('create', async (args: any) => {
     const { sales } = args.input;
+
+    const purchaseCommission = await services.Commission
+        .findOne({ key: 'purchase' });
+    const deliveryCommission = await services.Commission
+        .findOne({ key: 'delivery' });
+
     const promises = sales.map(
         async (sale: any) => {
             const product = await services.Product
@@ -57,14 +63,12 @@ services.Order.pre('create', async (args: any) => {
                 throw new Error('Unauthorised');
 
             sale.store = product.store;
-            return product;
+            sale.amount = product.price * sale.quantity;
+            sale.commission = purchaseCommission.value * sale.amount;
+            return sale.amount;
         }
     );
-    const products = await Promise.all(promises);
-    const purchaseCommission = await services.Commission
-        .findOne({ key: 'purchase' });
-    const deliveryCommission = await services.Commission
-        .findOne({ key: 'delivery' });
+    const saleTotals = await Promise.all(promises);
     
     const rider = await services.Rider.findOne({
         'address.country': args.input.deliveryAddress.country,
@@ -72,14 +76,12 @@ services.Order.pre('create', async (args: any) => {
         'address.city': args.input.deliveryAddress.city,
     });
 
-    args.input.amountSold = products
-        .map((p: any) => p.price);
-    args.input.purchaseCommission =
-        purchaseCommission.value * args.input.amountSold;
+    args.input.total = saleTotals.reduce(
+        (prev: number, cur: number) => prev + cur, 0);
     args.input.deliveryFee = 0;
     args.input.deliveryCommission =
         deliveryCommission.value * args.input.deliveryCommission;
-    args.input.path = [rider._id];
+    args.input.path = [rider.user];
 });
 
 export { repos, services };

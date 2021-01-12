@@ -1,6 +1,7 @@
 import { orderPayService } from "../../services/orders";
 import { services } from "../../backend";
 import { BaseController } from "../BaseController";
+import { updateStatus } from "../../services/orders/update_status";
 
 export class OrderController extends BaseController {
     public readonly baseRoute: string = '/orders';
@@ -15,6 +16,7 @@ export class OrderController extends BaseController {
         this.get('/pay', this.pay);
         this.post('/pay', this.createAndPay);
         this.post('/confirm-pay', this.giveValue);
+        this.get('/drop', this.orderDrop);
     }
 
     private async create(req: any) {
@@ -32,10 +34,15 @@ export class OrderController extends BaseController {
         let orders = await services.Order
             .findMany({ 'sales.store': store });
         orders = orders.map((order: any) => {
+            const sales = order.sales
+                .filter((sale: any) => sale.store === store);
             return {
                 ...order,
-                sales: order.sales
-                    .filter((sale: any) => sale.store === store)
+                amountSold: sales.reduce(
+                    (prev: number, sale: any) => (prev + sale.amount),
+                    0
+                ),
+                sales
             };
         });
         return { message: "success", data: { orders } };
@@ -48,7 +55,7 @@ export class OrderController extends BaseController {
         orders = orders.map(
             (order: any) => ({ ...order, sales: undefined })
         );
-        return  { message: 'success', data: { orders } };
+        return { message: 'success', data: { orders } };
     }
 
     private async update(req: any) {
@@ -81,5 +88,31 @@ export class OrderController extends BaseController {
             url: `${process.env.APP_URL}/purchase` +
                 `?orderId=${orderId}&success=${res}`
         };
+    }
+
+    private async orderDrop(req: any) {
+        const orderId = req.query.orderId;
+        const userId = req.query.userId;
+
+        const order = await services.Order.findOne({ _id: orderId });
+        await updateStatus('completed', orderId);
+
+        order.sales.forEach(async (sale: any) => {
+            const sellerEarnings = sale.amount - sale.commission;
+            const seller = await services.Seller
+                .findOne({ storeName: sale.store });
+            services.User.updateOne(
+                { $inc: { earnings: sellerEarnings } },
+                { _id: seller.user }
+            );
+        });
+
+        const riderEarnings = order.deliveryFee - order.deliveryCommission;
+        services.User.updateOne(
+            { $inc: { earnings: riderEarnings } },
+            { _id: userId }
+        );
+
+        return { message: 'success' };
     }
 }
