@@ -45,6 +45,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
             display='flex'
             justifyContent='space-between'
             alignItems='center'
+            marginY={3}
         >
 
             <Box>
