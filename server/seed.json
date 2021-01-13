@@ -1,0 +1,14 @@
+{
+    "Country": [
+        {
+            "name": "Nigeria",
+            "shortCode": "NG",
+            "states": [
+                "Abuja",
+                "Lagos",
+                "Edo",
+                "Delta"
+            ]
+        }
+    ]
+}
