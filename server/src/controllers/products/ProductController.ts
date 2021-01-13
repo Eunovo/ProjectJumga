@@ -9,6 +9,7 @@ export class ProductController extends BaseController {
         this.post('/', this.create);
         this.get('/', this.getMany);
         this.put('/', this.update);
+        this.get('/image', this.getImage);
     }
 
     private async create(req: any) {
@@ -39,4 +40,10 @@ export class ProductController extends BaseController {
         await services.Product.updateOne(req.body, req.query);
         return { message: "success" }
     }
+
+    private async getImage(req: any) {
+        const product = await services.Product.findOne(req.query);
+        return { type: 'redirect', url: `/${product.images[0]}` }
+    }
+
 }
