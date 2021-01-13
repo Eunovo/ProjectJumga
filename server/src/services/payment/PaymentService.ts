@@ -61,13 +61,14 @@ export class PaymentService {
             .post(`/bulk-transfers`, {
                 title: "Payout",
                 bulk_data: accounts.map((account: any) => {
+                    const reference = `payout-${generateUniqueRandomString()}`;
                     return {
                         bank_code: account.bankCode,
                         account_number: account.number,
                         amount: account.amount,
                         current: "USD",
                         narration: "Earnings",
-                        reference: "akhlm-blktrnsfr-xx03"
+                        reference
                     }
                 })
             });
