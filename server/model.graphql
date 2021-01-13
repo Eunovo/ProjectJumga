@@ -1,6 +1,7 @@
 scalar Date
 
 enum Role {
+    user
     seller
     rider
     admin
@@ -23,6 +24,9 @@ type User {
     """
     password: String!
     address: Address!
+    """
+    @default('user')
+    """
     role: Role!
     account: Account
     """

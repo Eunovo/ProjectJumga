@@ -16,12 +16,16 @@ const validationSchema = yup.object({
 });
 
 interface LoginProps {
-    userType: 'rider' | 'seller' | 'admin';
+    userType: 'user' | 'rider' | 'seller' | 'admin';
 }
 
 export const Login: React.FC<LoginProps> = ({ userType }) => {
     const classes = useStyles();
     const { error, login, loading } = useLogin();
+
+    let signUpRoute = undefined;
+    signUpRoute = userType === 'seller' && '/signup/store';
+    signUpRoute = userType === 'user' && '/signup' ;
 
     return <AuthPage>
 
@@ -73,11 +77,11 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
         </Formik>
 
         <Box
-            display={(userType === 'seller' ? 'block' : 'hidden' )}
+            display={signUpRoute ? 'block' : 'hidden'}
             marginY={3}
         >
             <span>Don't ave an account?</span>
-            <Link to='/signup/store'>Signup</Link>
+            <Link to={signUpRoute || ''}>Signup</Link>
         </Box>
 
     </AuthPage>

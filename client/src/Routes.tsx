@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { Header } from './components/header';
-import { Login, StoreOwnerSignup } from './pages/auth';
+import { CustomerSignup, Login, StoreOwnerSignup } from './pages/auth';
 import { Cart } from './pages/cart';
 import { Checkout } from './pages/checkout';
 import {
@@ -23,12 +23,13 @@ export const Routes = () => {
     }
 
     return <>
-        {/* TODO decide what routes to render if user is logged in */}
         <Router>
             <Switch>
+                <Route path='/login'><Login userType='user' /></Route>
                 <Route path='/login/store'><Login userType='seller' /></Route>
                 <Route path='/login/rider'><Login userType='rider' /></Route>
                 <Route path='/login/admin'><Login userType='admin' /></Route>
+                <Route path='/signup' component={CustomerSignup} />
                 <Route path='/signup/store' component={StoreOwnerSignup} />
 
                 <Route path='/dashboard'>
@@ -53,19 +54,21 @@ export const Routes = () => {
     </>
 };
 
-const DashboardRoutes: React.FC<{ routes: any }> = ({ routes }) => (
-    <Switch>
-        {
-            Object.keys(routes)
-                .map((key, i) => (
-                    <Route
-                        key={i}
-                        path={`/dashboard${key}`}
-                        exact
-                    >
-                        {routes[key]}
-                    </Route>
-                ))
-        }
-    </Switch>
+const DashboardRoutes: React.FC<{ routes?: any }> = ({ routes }) => (
+    routes ?
+        <Switch>
+            {
+                Object.keys(routes)
+                    .map((key, i) => (
+                        <Route
+                            key={i}
+                            path={`/dashboard${key}`}
+                            exact
+                        >
+                            {routes[key]}
+                        </Route>
+                    ))
+            }
+        </Switch>
+        : <Redirect to="/" />
 );

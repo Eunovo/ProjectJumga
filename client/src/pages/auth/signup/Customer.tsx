@@ -20,7 +20,6 @@ const validationSchema = yup.object({
     firstName: yup.string().required().min(3).max(50),
     lastName: yup.string().required().min(3).max(50),
     email: yup.string().email().required(),
-    storeName: yup.string().required().min(3).max(20),
     password: yup.string().required().min(8).max(20),
     confirmPassword: yup.string()
         .oneOf([yup.ref('password'), null], 'Passwords must match'),
@@ -30,7 +29,7 @@ const validationSchema = yup.object({
     street: yup.string().required()
 });
 
-export const StoreOwnerSignup = () => {
+export const CustomerSignup = () => {
     const classes = useStyles();
     const { signup, loading, error } = useSignup();
 
@@ -38,7 +37,6 @@ export const StoreOwnerSignup = () => {
         firstName: '',
         lastName: '',
         email: '',
-        storeName: '',
         password: '',
         confirmPassword: '',
         country: '',
@@ -53,7 +51,7 @@ export const StoreOwnerSignup = () => {
             Signup
         </Typography>
         <Typography variant='subtitle1'>
-            Create a Seller Account
+            Create an Account
         </Typography>
 
         {error?.message && <Box marginTop={2}>
@@ -68,7 +66,7 @@ export const StoreOwnerSignup = () => {
                 try {
                     await signup({
                         ...rest,
-                        role: 'seller',
+                        role: 'user',
                         address: {
                             country,
                             state,
@@ -99,12 +97,6 @@ export const StoreOwnerSignup = () => {
                             name='email'
                             label='Email'
                             placeholder='test@gmail.com'
-                        />
-                        <Field
-                            className={classes.field}
-                            name='storeName'
-                            label='Store Name'
-                            helperText='Your store name cannot be changed'
                         />
                         <Field
                             className={classes.field}
@@ -163,7 +155,7 @@ export const StoreOwnerSignup = () => {
 
         <Box marginY={3}>
             <span>Already have an account?</span>
-            <Link to='/login/store'>Login</Link>
+            <Link to='/login'>Login</Link>
         </Box>
 
     </AuthPage>
