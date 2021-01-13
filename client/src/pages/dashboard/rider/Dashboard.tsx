@@ -1,7 +1,9 @@
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../styles";
+import { SetupAccountAlert } from '../SetupAcccountAlert';
 import { RiderPage } from "./RiderPage";
+
 
 export const RiderDashboard = () => {
     const classes = useStyles();
@@ -10,6 +12,10 @@ export const RiderDashboard = () => {
         <Typography className={classes.header} align='center' variant='h4'>
             Welcome Rider!
         </Typography>
+
+        <Box marginBottom={2}>
+            <SetupAccountAlert />
+        </Box>
 
         <Box
             component='div'

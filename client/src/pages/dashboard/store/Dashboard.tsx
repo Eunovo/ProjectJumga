@@ -5,6 +5,7 @@ import { StorePage } from './StorePage';
 import { useCurrentUser } from '../../../state/AppState';
 import { useApproveStore } from '../../../hooks/users';
 import { SpinnerButton } from '../../../components/forms';
+import { SetupAccountAlert } from '../SetupAcccountAlert';
 
 
 export const StoreDashboard = () => {
@@ -21,6 +22,10 @@ export const StoreDashboard = () => {
             >
                 Welcome {user?.firstName}!
             </Typography>
+
+            <Box marginBottom={2}>
+                <SetupAccountAlert />
+            </Box>
 
             {
                 isApproved ? <ApprovedStore /> : <ApproveSection />
