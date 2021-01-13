@@ -33,10 +33,10 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
     const { updateUser, loading, error } = useUpdateUser();
     const formClasses = useFormStyles();
     const initialValues = {
-        accountName: account.name,
-        accountNumber: account.accountNumber,
-        bank: account.bank,
-        bankCode: ''
+        accountName: account?.name,
+        accountNumber: account?.number,
+        bank: account?.bank,
+        bankCode: account?.bankCode
     };
 
     return <TabPanel index={index}>
