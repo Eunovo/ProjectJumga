@@ -15,10 +15,15 @@ export class PayoutController extends BaseController {
         if (req.principal?.role !== 'admin')
             throw new Error('Unauthorised');
 
-        const users = await services.User
+        let users = await services.User
             .findMany({
                 $or: [{ role: 'seller' }, { role: 'rider' }]
             });
+
+        users = users.filter((user: any) => (
+            user.account?.name && user.account?.number
+            && user.account?.bankCode && user.earnings > 0
+        ));
 
         const accounts = users.map((user: any) => ({
             ...user.account,
