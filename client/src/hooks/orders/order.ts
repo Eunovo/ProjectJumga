@@ -48,12 +48,12 @@ export const useCreateAndPayOrder = () => {
     return { ...state, createAndPay };
 }
 
-export const useGetOrders = (type: "rider" | "store", params?: any) =>
+export const useGetOrders = (type?: "rider" | "store" | "", params?: any) =>
     useGet(`/orders/${type}`, { params });
 
 export const useOrderDrop = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const { get, ...state } = useLazyGet('/orders/');
+    const { get, ...state } = useLazyGet('/orders/drop');
 
     const dropOrder = async (orderId: string, userId: string) => {
         try {
@@ -67,4 +67,22 @@ export const useOrderDrop = () => {
     }
 
     return { dropOrder, ...state };
+}
+
+export const useCancelOrder = () => {
+    const { enqueueSnackbar } = useSnackbar();
+    const { get, ...state } = useLazyGet('/orders/cancel');
+
+    const cancelOrder = async (orderId: string) => {
+        try {
+            await get({ params: { orderId } });
+        } catch (error) {
+            enqueueSnackbar(
+                `Failed to cancel order: ${error.message}`,
+                { variant: 'error' }
+            );
+        }
+    }
+
+    return { cancelOrder, ...state };
 }

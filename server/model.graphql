@@ -109,6 +109,11 @@ type Product {
 @model
 """
 type Order {
+    """
+    @unique
+    @immutable
+    """
+    code: String!
     customer: CustomerDetails!
     deliveryAddress: Address!
     sales: [Sale]!
@@ -126,6 +131,10 @@ type Order {
     history: [OrderEvent]!
     path: [String]!
     createdAt: Date!
+    """
+    @ManyToOne('User', '_id')
+    """
+    createdBy: User!
 }
 
 type CustomerDetails {

@@ -10,6 +10,7 @@ import {
 } from './pages/dashboard';
 import { Home } from './pages/home/Home';
 import { Purchase } from './pages/purchase';
+import { Purchases } from './pages/purchases';
 import { useCurrentUser } from './state/AppState';
 
 
@@ -45,6 +46,7 @@ export const Routes = () => {
                         <Route path='/cart' component={Cart} />
                         <Route path='/checkout' component={Checkout} />
                         <Route path='/purchase' component={Purchase} />
+                        <Route path='/purchases' component={Purchases} />
                         <Route exact path='/' component={Home} />
                         <Route path='*'>Not Found</Route>
                     </Switch>

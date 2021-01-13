@@ -17,6 +17,7 @@ export class OrderController extends BaseController {
         this.post('/pay', this.createAndPay);
         this.post('/confirm-pay', this.giveValue);
         this.get('/drop', this.orderDrop);
+        this.get('/cancel', this.cancelOrder);
     }
 
     private async create(req: any) {
@@ -113,6 +114,19 @@ export class OrderController extends BaseController {
             { _id: userId }
         );
 
+        return { message: 'success' };
+    }
+
+    private async cancelOrder(req: any) {
+        const orderId = req.query.orderId;
+
+        const order = await services.Order.findOne({ _id: orderId });
+        await updateStatus('cancelled', orderId);
+
+        if (order.status === 'paid') {
+            // refund paid money
+        }
+    
         return { message: 'success' };
     }
 }

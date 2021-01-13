@@ -187,6 +187,12 @@ export const StoreOwnerHeader = () => {
             </StyledMenuItem>
 
             <StyledMenuItem onClick={() => {
+                history.push(`/purchases`);
+            }}>
+                Purchases
+            </StyledMenuItem>
+
+            <StyledMenuItem onClick={() => {
                 history.push(`/logout`);
             }}>
                 Logout

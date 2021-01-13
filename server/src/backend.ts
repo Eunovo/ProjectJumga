@@ -8,6 +8,7 @@ import {
 import {
     CreatedAtPlugin
 } from './plugins';
+import { generateUniqueRandomString } from './utils';
 
 const schemaPath = `${process.cwd()}/model.graphql`;
 const { repos, services } = buildServices(schemaPath, buildMongoRepo, [
@@ -75,7 +76,9 @@ services.Order.pre('create', async (args: any) => {
         'address.state': args.input.deliveryAddress.state,
         'address.city': args.input.deliveryAddress.city,
     });
-
+    
+    const prefix = generateUniqueRandomString();
+    args.input.code = `order-${prefix}`;
     args.input.total = saleTotals.reduce(
         (prev: number, cur: number) => prev + cur, 0);
     args.input.deliveryFee = 0;

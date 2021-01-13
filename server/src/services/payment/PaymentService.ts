@@ -1,4 +1,6 @@
 import axios from "axios";
+import { generateUniqueRandomString } from "../../utils";
+
 
 interface PaymentRequest {
     amount: number,
@@ -22,10 +24,11 @@ export class PaymentService {
 
     async getPaymentLink(request: PaymentRequest): Promise<string> {
         const { redirectUrl, ...rest } = request;
+        const tx_ref = `tranx-${generateUniqueRandomString()}`;
 
         const response = await this.instance.post('/payment', {
             ...rest,
-            tx_ref: "hooli-tx-1920bbtytty",
+            tx_ref,
             currency: "USD",
             redirect_url: redirectUrl,
             payment_options: "card",
@@ -83,9 +86,19 @@ export class PaymentService {
             .get(`/banks/${country}`);
 
         if (response.data.status !== 'success')
-            throw new Error(`Failed to fetch banks: ${response.data.message}`);
+            throw new Error(
+                `Failed to fetch banks: ${response.data.message}`);
 
         return response.data.data;
+    }
+
+    async chargeBack() {
+        const response = await this.instance
+            .get(``);
+
+        if (response.data.status !== 'success')
+            throw new Error(
+                `Failed to initiate charge back: ${response.data.message}`);
     }
 
 }
