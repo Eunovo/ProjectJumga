@@ -42,7 +42,7 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
                 const response = await axios.get(`${baseUrl}${route}`, {
                     ...options,
                     headers: {
-                        Authorization: `Bearer ${user?.token}`
+                        Authorization: `Bearer ${user?.token || ''}`
                     }
                 });
                 if (!isMounted) return;
@@ -98,7 +98,7 @@ export const useLazyGet = (route: string) => {
             const response = await axios.get(`${baseUrl}${route}`, {
                 ...options,
                 headers: {
-                    Authorization: `Bearer ${user?.token}`
+                    Authorization: `Bearer ${user?.token || ''}`
                 }
             });
 
@@ -147,7 +147,7 @@ export const useMutate = (route: string, method: Method): MutateReponse => {
                 data: body,
                 ...options,
                 headers: {
-                    Authorization: `Bearer ${user?.token}`
+                    Authorization: `Bearer ${user?.token || ''}`
                 }
             });
 
