@@ -26,18 +26,8 @@ export class OrderPayService {
         if (!isVerified)
             return false;
 
-        this.saveStoreEarnings(order);
-        this.saveRiderEarnings(order);
         updateStatus("paid", orderId);
         return true;
-    }
-
-    private async saveStoreEarnings(order: any) {
-
-    }
-
-    private async saveRiderEarnings(order: any) {
-
     }
 
 }
