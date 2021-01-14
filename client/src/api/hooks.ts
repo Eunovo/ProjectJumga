@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Reducer, useEffect, useReducer } from 'react';
+import { Reducer, useEffect, useReducer, useState } from 'react';
 import { useCurrentUser } from '../state/AppState';
 import { Action, ActionTypes, reducer, RequestState } from './reducer-utils';
 import {
@@ -30,11 +30,15 @@ axios.interceptors.response.use(
  * @param options the request options
  */
 export const useGet = (route: string, options?: RequestOptions): GetReponse => {
+    const [force, setForce] = useState(true);
     const [state, dispatch] = useReducer<Reducer<RequestState, Action>>(
         reducer, { loading: true, data: null, error: null });
     const { user } = useCurrentUser();
 
     const doGet = () => {
+        if (state.loading && !force) return;
+        if (force) setForce(false);
+
         let isMounted = true;
 
         (async () => {
@@ -66,7 +70,7 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
         return () => { isMounted = false; }
     }
 
-    useEffect(doGet, [route, options]);
+    useEffect(doGet, [force, route, ...Object.values((options?.params))]);
 
     return {
         ...state,
