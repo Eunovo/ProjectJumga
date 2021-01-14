@@ -70,7 +70,7 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
         return () => { isMounted = false; }
     }
 
-    useEffect(doGet, [force, route, ...Object.values((options?.params))]);
+    useEffect(doGet, [force, route, ...Object.values((options?.params || {}))]);
 
     return {
         ...state,
