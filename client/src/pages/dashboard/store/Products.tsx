@@ -29,7 +29,6 @@ export const StoreProducts = () => {
     return <StorePage selected='products'>
         <>
 
-
             <div className={classes.header} style={{
                 display: 'flex', alignItems: 'flex-end',
                 flexWrap: 'wrap'
