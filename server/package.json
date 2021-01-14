@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "seed": "npm build&node dist/seeder.js ./seed.json",
+    "seed": "npm run build&node dist/seeder.js ./seed.json",
     "start": "node dist/server.js",
     "start:dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
     "test": "jest",
