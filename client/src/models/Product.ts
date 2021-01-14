@@ -4,5 +4,6 @@ export interface Product {
     price: number
     inStock: boolean
     accessible?: boolean
+    store: string
     url: string
 }

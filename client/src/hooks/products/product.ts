@@ -1,5 +1,5 @@
 import { useSnackbar } from "notistack";
-import { useGet, useMutate } from "../../api";
+import { useGet, useLazyGet, useMutate } from "../../api";
 import { Product } from "../../models";
 import { useCurrentUser } from "../../state/AppState";
 import { objectToFormData } from "../../utils";
@@ -27,4 +27,13 @@ export const useAddProduct = () => {
 }
 
 export const useGetProducts = (params?: Partial<Pick<Product, "accessible" | "name" | "url">>) =>
-    useGet('/products/', { params });
+    useGet('/products', { params });
+
+
+export const useLazyGetProducts = () => {
+    const { get, ...state } = useLazyGet('/products');
+    const getProducts = (params?: Partial<Pick<Product, "accessible" | "name" | "url" | "store">>) => 
+        get({ params });
+    return { getProducts, ...state };
+}
+

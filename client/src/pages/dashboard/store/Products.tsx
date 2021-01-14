@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { Button, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { ProductGrid } from "../../../components/products";
-import { useGetProducts } from "../../../hooks/products";
-import { Product } from "../../../models";
+import { useLazyGetProducts } from "../../../hooks/products";
+import { useCurrentUser } from "../../../state/AppState";
 import { useStyles } from "../styles"
 import { StorePage } from "./StorePage"
 
@@ -12,7 +13,15 @@ type Keys = "name" | "image" | "price" | "url";
 export const StoreProducts = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { data, loading } = useGetProducts();
+    const { user, ready } = useCurrentUser();
+    const { getProducts, data, loading } = useLazyGetProducts();
+
+    useEffect(() => {
+        if (!ready || !user) return;
+    
+        getProducts({ store: user.storeName });
+    }, [user, ready]);
+
 
     let products = data?.products || [];
     products = products.map((p: any) => ({ ...p, image: p.images[0] }));
