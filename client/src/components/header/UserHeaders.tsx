@@ -61,6 +61,12 @@ export const GuestHeader = () => {
             onClose={handleMenuClose}
         >
             <StyledMenuItem onClick={() => {
+                history.push(`/${route}`);
+            }}>
+                User
+            </StyledMenuItem>
+
+            <StyledMenuItem onClick={() => {
                 history.push(`/${route}/store`);
             }}>
                 Seller
