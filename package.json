@@ -4,10 +4,10 @@
     "author": "Eunovo",
     "license": "MIT",
     "scripts": {
-        "build:client": "npm install&&npm run build",
-        "build:server": "npm install&&npm run build",
+        "build:client": "cd ./client&&npm install&&npm run build",
+        "build:server": "cd ./server&&npm install&&npm run build",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm",
-        "start": "cd ./client&&npm run build:client&&cd ../server&&npm run build:server&&npm run start"
+        "start": "npm run build:client&&cd ../&&npm run build:server&&npm run start"
     },
     "engines": {
         "node": "12.18.3"
