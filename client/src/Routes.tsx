@@ -26,11 +26,11 @@ export const Routes = () => {
     return <>
         <Router>
             <Switch>
-                <Route path='/login'><Login userType='user' /></Route>
+                <Route path='/login' exact><Login userType='user' /></Route>
                 <Route path='/login/store'><Login userType='seller' /></Route>
                 <Route path='/login/rider'><Login userType='rider' /></Route>
                 <Route path='/login/admin'><Login userType='admin' /></Route>
-                <Route path='/signup' component={CustomerSignup} />
+                <Route path='/signup' component={CustomerSignup} exact />
                 <Route path='/signup/store' component={StoreOwnerSignup} />
 
                 <Route path='/dashboard'>
