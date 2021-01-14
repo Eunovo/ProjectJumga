@@ -6,7 +6,7 @@
     "scripts": {
         "build:client": "cd ./client&&npm install&&npm run build",
         "build:server": "cd ./server&&npm install&&npm run build",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false&&npm run build:client&&cd ../&&npm run build:server",
+        "heroku-postbuild": "npm run build:client&&cd ../&&npm run build:server",
         "start": "npm run start"
     },
     "engines": {
