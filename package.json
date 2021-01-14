@@ -1,0 +1,13 @@
+{
+    "name": "jumga",
+    "version": "0.1.0",
+    "author": "Eunovo",
+    "license": "MIT",
+    "scripts": {
+        "build:client": "npm run build",
+        "build:server": "npm run build",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm &&cd ./client&&run build:client&&cd ../server&&run build:server",
+        "start": "npm run start"
+    }
+  }
+  
