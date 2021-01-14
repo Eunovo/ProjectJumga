@@ -4,9 +4,9 @@
     "author": "Eunovo",
     "license": "MIT",
     "scripts": {
-        "build:client": "npm run build",
-        "build:server": "npm run build",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm &&cd ./client&&run build:client&&cd ../server&&run build:server",
+        "build:client": "npm install&&npm run build",
+        "build:server": "npm install&&npm run build",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm &&cd ./client&&npm run build:client&&cd ../server&&npm run build:server",
         "start": "npm run start"
     },
     "engines": {
