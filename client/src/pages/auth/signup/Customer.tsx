@@ -154,7 +154,7 @@ export const CustomerSignup = () => {
         </Formik>
 
         <Box marginY={3}>
-            <span>Already have an account?</span>
+            <span>Already have an account?</span>{" "}
             <Link to='/login'>Login</Link>
         </Box>
 

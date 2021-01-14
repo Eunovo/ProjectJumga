@@ -162,7 +162,7 @@ export const StoreOwnerSignup = () => {
         </Formik>
 
         <Box marginY={3}>
-            <span>Already have an account?</span>
+            <span>Already have an account?</span>{" "}
             <Link to='/login/store'>Login</Link>
         </Box>
 

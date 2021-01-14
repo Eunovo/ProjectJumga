@@ -80,7 +80,7 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
             display={signUpRoute ? 'block' : 'hidden'}
             marginY={3}
         >
-            <span>Don't ave an account?</span>
+            <span>Don't ave an account?</span>{" "}
             <Link to={signUpRoute || ''}>Signup</Link>
         </Box>
 
