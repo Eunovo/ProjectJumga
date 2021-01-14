@@ -8,6 +8,9 @@
         "build:server": "npm run build",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm &&cd ./client&&run build:client&&cd ../server&&run build:server",
         "start": "npm run start"
+    },
+    "engines": {
+        "node": "12.18.3"
     }
   }
   
