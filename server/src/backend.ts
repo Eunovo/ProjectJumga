@@ -21,11 +21,16 @@ const { repos, services } = buildServices(schemaPath, buildMongoRepo, [
 services.User.post('create', async (args: any) => {
     const { role } = args.input;
     const extension = { user: args.id, ...args.input };
-    if (role === 'rider')
-        await services.Rider.create(extension);
-    else if (role === 'seller')
-        await services.Seller
-            .create({ ...extension, approved: false });
+    try {
+        if (role === 'rider')
+            await services.Rider.create(extension);
+        else if (role === 'seller')
+            await services.Seller
+                .create({ ...extension, approved: false });
+    } catch (error) {
+        services.User.removeOne({ _id: args.id });
+        throw error;
+    }
 });
 services.User.post('findOne', async (args: any) => {
     const { result } = args;
@@ -59,7 +64,7 @@ services.Order.pre('create', async (args: any) => {
         async (sale: any) => {
             const product = await services.Product
                 .findOne({ url: sale.product });
-            
+
             if (!product.accessible)
                 throw new Error('Unauthorised');
 
@@ -70,13 +75,13 @@ services.Order.pre('create', async (args: any) => {
         }
     );
     const saleTotals = await Promise.all(promises);
-    
+
     const rider = await services.Rider.findOne({
         'address.country': args.input.deliveryAddress.country,
         'address.state': args.input.deliveryAddress.state,
         'address.city': args.input.deliveryAddress.city,
     });
-    
+
     const prefix = generateUniqueRandomString();
     args.input.code = `order-${prefix}`;
     args.input.total = saleTotals.reduce(
