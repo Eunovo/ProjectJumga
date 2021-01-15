@@ -8,7 +8,7 @@ export const SetupAccountAlert = () => {
     const { user } = useCurrentUser();
     const history = useHistory();
 
-    if (user?.account || !user.approved) return <></>;
+    if (user?.account || !user.seller?.approved) return <></>;
 
     return <Alert
         severity='warning'

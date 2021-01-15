@@ -38,10 +38,10 @@ services.User.post('findOne', async (args: any) => {
     let extension: any = {};
     if (result.role === 'seller') {
         extension = await services.Seller.findOne({ user: result._id });
-        extension = { sellerId: extension._id, ...extension };
+        extension = { seller: extension };
     } else if (result.role === 'rider') {
         extension = await services.Rider.findOne({ user: result._id });
-        extension = { riderId: extension._id, ...extension };
+        extension = { rider: extension };
     }
 
     args.result = { ...extension, ...result };

@@ -10,10 +10,7 @@ export class ApproveSellerService {
         if (user.role !== 'seller')
             throw new Error('Illegal Operation');
 
-        const seller = await services.Seller
-            .findOne({ user: user._id });
-
-        if (seller.approved)
+        if (user.seller.approved)
             throw new Error('Illegal Operation');
 
         const amount = (await services.Commission
@@ -27,7 +24,7 @@ export class ApproveSellerService {
                 email: user.email
             },
             meta: {
-                storeName: seller.storeName
+                storeName: user.seller.storeName
             }
         });
     }

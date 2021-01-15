@@ -11,7 +11,7 @@ import { SetupAccountAlert } from '../SetupAcccountAlert';
 export const StoreDashboard = () => {
     const { user } = useCurrentUser();
     const classes = useStyles();
-    const isApproved = user.approved;
+    const isApproved = user.seller?.approved;
 
     return <StorePage selected='dashboard'>
         <>
