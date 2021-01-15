@@ -21,7 +21,7 @@
     "@types/jest": "^26.0.20"
   },
   "dependencies": {
-    "@eunovo/superbackend": "^0.1.3",
+    "@eunovo/superbackend": "^0.1.4",
     "@types/express-form-data": "^2.0.1",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
