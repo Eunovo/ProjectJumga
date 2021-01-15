@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { mongoose } from "@eunovo/superbackend";
 import { readFileSync } from "fs";
 import { repos } from "./backend";
 import './config';

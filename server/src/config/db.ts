@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { mongoose } from "@eunovo/superbackend";
 
 const DB_URL = process.env.DATABASE_URL;
 
