@@ -12,3 +12,7 @@ mongoose.connect(DB_URL, {
     }
     console.log("Database Connected");
 });
+
+mongoose.connection.on('disconnect', () => {
+    console.log("Database disconnected");
+});
