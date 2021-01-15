@@ -24,7 +24,7 @@ export const SelectCountry: React.FC<SelectCountryProps> = (props) => {
 
     return <SelectField {...props} displayEmpty>
         <MenuItem value="">
-            <em>{loading ? <CircularProgress /> : 'None'}</em>
+            <em>{loading ? <CircularProgress size='20px' /> : 'None'}</em>
         </MenuItem>
         {
             countries.map((country: any, i: number) => {
@@ -48,7 +48,7 @@ export const SelectState: React.FC<SelectStateProps> = ({
 
     return <SelectField {...props} displayEmpty>
         <MenuItem value="">
-            <em>{loading ? <CircularProgress /> : 'None'}</em>
+            <em>{loading ? <CircularProgress size='20px' /> : 'None'}</em>
         </MenuItem>
         {
             country?.states.map((state: string, i: number) => {
@@ -76,7 +76,7 @@ export const SelectBank: React.FC<SelectBankProps> = ({ name, country, ...props 
 
     return <SelectField name={name} {...props} displayEmpty>
         <MenuItem value="">
-            <em>{loading ? <CircularProgress /> : 'None'}</em>
+            <em>{loading ? <CircularProgress size='20px' /> : 'None'}</em>
         </MenuItem>
         {
             banks.map((bank: any, i: number) => {
