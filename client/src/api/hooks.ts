@@ -39,8 +39,6 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
         if (state.loading && !force) return;
         if (force) setForce(false);
 
-        let isMounted = true;
-
         (async () => {
             try {
                 const response = await axios.get(`${baseUrl}${route}`, {
@@ -49,7 +47,6 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
                         Authorization: `Bearer ${user?.token || ''}`
                     }
                 });
-                if (!isMounted) return;
 
                 dispatch({
                     type: ActionTypes.REQUEST_FINISH,
@@ -66,8 +63,6 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
                 });
             }
         })();
-
-        return () => { isMounted = false; }
     }
 
     useEffect(doGet, [force, route, ...Object.values((options?.params || {}))]);

@@ -36,7 +36,7 @@ export interface GetReponse extends RequestState {
      * @returns undefined if a request is already in progress
      * @returns a function to cancel the request
      */
-    execute(): (() => void) | undefined;
+    execute(): void;
 }
 
 export interface MutateReponse extends RequestState {
