@@ -190,6 +190,9 @@ type EarningPeriod {
 @model
 """
 type Commission {
+    """
+    @unique
+    """
     key: Fees
     value: Float!
 }

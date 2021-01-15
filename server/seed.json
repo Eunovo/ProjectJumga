@@ -10,5 +10,19 @@
                 "Delta"
             ]
         }
+    ],
+    "Commission": [
+        {
+            "key": "storeapproval",
+            "value": 20.00
+        },
+        {
+            "key": "purchase",
+            "value": 10.0
+        },
+        {
+            "key": "delivery",
+            "value": 10.0
+        }
     ]
 }

@@ -13,7 +13,13 @@ const seedDB = async () => {
         .map(async (key) => {
             const docs = seed[key];
             const promises = docs
-                .map((doc: any) => repos[key].create(doc));
+                .map(async (doc: any) => {
+                    try {
+                        await repos[key].create(doc) 
+                    } catch (error) {
+                        console.log(key, error.message);
+                    }
+                });
             return Promise.all(promises);
         });
     await Promise.all(promises);
