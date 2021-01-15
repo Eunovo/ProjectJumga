@@ -17,7 +17,7 @@ interface OrdersTableProps {
     type: "rider" | "store";
 
     /**
-     * The rider's riderId
+     * The rider's userId
      */
     rider?: string;
 
