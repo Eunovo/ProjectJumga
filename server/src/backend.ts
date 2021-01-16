@@ -8,6 +8,7 @@ import {
 import {
     CreatedAtPlugin
 } from './plugins';
+import { getUserExtension } from './services/users';
 import { generateUniqueRandomString } from './utils';
 
 const schemaPath = `${process.cwd()}/model.graphql`;
@@ -32,19 +33,17 @@ services.User.post('create', async (args: any) => {
         throw error;
     }
 });
+
 services.User.post('findOne', async (args: any) => {
     const { result } = args;
-
-    let extension: any = {};
-    if (result.role === 'seller') {
-        extension = await services.Seller.findOne({ user: result._id });
-        extension = { seller: extension };
-    } else if (result.role === 'rider') {
-        extension = await services.Rider.findOne({ user: result._id });
-        extension = { rider: extension };
-    }
-
+    const extension = await getUserExtension(result);
     args.result = { ...extension, ...result };
+});
+
+services.User.post('authenticate', async (args: any) => {
+    const { user } = args;
+    const extension = await getUserExtension(user);
+    args.user = { ...extension, ...user };
 });
 
 services.Product.pre('create', async (args: any) => {
