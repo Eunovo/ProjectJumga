@@ -18,6 +18,8 @@ export class EventController extends BaseController {
         const { event, data } = req.body;
         const eventType = event?.split('.')?.[0]?.toLowerCase();
 
+        console.info(`Event: ${event}, Status: ${data?.status}`);
+
         if (eventType === 'transfer') {
             handleTransferEvent(data);
         }
