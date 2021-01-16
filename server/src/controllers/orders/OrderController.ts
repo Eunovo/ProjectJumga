@@ -113,14 +113,14 @@ export class OrderController extends BaseController {
             const seller = await services.Seller
                 .findOne({ storeName: sale.store });
             services.User.updateOne(
-                { $inc: { earnings: sellerEarnings } },
+                { $inc: { wallet: sellerEarnings } },
                 { _id: seller.user }
             );
         });
 
         const riderEarnings = order.deliveryFee - order.deliveryCommission;
         services.User.updateOne(
-            { $inc: { earnings: riderEarnings } },
+            { $inc: { wallet: riderEarnings } },
             { _id: userId }
         );
 

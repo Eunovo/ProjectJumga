@@ -9,3 +9,4 @@ export * from './commissions';
 export * from './countries';
 export * from './banks';
 export * from './payments';
+export * from './events';

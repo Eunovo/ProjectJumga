@@ -31,10 +31,9 @@ type User {
     role: Role!
     account: Account
     """
-    Earnings since last payout
     @default(0.00)
     """
-    earnings: Float
+    wallet: Float
     createdAt: Date!
 }
 
@@ -175,16 +174,24 @@ enum OrderStatus {
 """
 type Payout {
     """
-    @OneToOne('User', '_id')
+    @ManyToOne('User', '_id')
     """
     user: User!
-    earningPeriod: EarningPeriod!
-    paidOn: Date!
+    amount: Float!
+    currency: String!
+    createdAt: Date!
+    paidOn: Date
+    """
+    @default('pending')
+    """
+    status: PayoutStatus!
+    reference: String!
 }
 
-type EarningPeriod {
-    from: Date!
-    to: Date!
+enum PayoutStatus {
+    pending
+    success
+    failed
 }
 
 """

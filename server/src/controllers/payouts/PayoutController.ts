@@ -1,4 +1,4 @@
-import { paymentService } from "../../services";
+import { requestPayout } from "../../services";
 import { services } from "../../backend";
 import { BaseController } from "../BaseController";
 
@@ -7,37 +7,19 @@ export class PayoutController extends BaseController {
 
     constructor() {
         super();
-        this.post('/', this.triggerPayout);
+        this.post('/', this.requestPayout);
         this.get('/', this.getMany);
     }
 
-    private async triggerPayout(req: any) {
-        if (req.principal?.role !== 'admin')
-            throw new Error('Unauthorised');
-
-        let users = await services.User
-            .findMany({
-                $or: [{ role: 'seller' }, { role: 'rider' }]
-            });
-
-        users = users.filter((user: any) => (
-            user.account?.name && user.account?.number
-            && user.account?.bankCode && user.earnings > 0
-        ));
-
-        const accounts = users.map((user: any) => ({
-            ...user.account,
-            amount: user.earnings
-        }));
-
-        await paymentService.payout(accounts);
-
-        const ids = users.map((user: any) => user._id);
-        services.User.updateMany(
-            { $inc: { earnings: -users.earnings } },
-            { _id: { $in: ids } }
-        );
-
+    /**
+     * This function tries to initiate a transfer of
+     * `req.body.amount` to a user's account.
+     * @param req 
+     * @returns
+     */
+    private async requestPayout(req: any) {
+        await requestPayout(
+            req.body.amount, { principal: req.principal });
         return { message: "queued" };
     }
 

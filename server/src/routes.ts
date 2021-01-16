@@ -12,6 +12,7 @@ import {
     CountryController,
     BankController,
     PaymentController,
+    EventController,
     Handler
 } from './controllers';
 
@@ -46,7 +47,8 @@ router.use((req: any, res, next) => {
     new CommissionController(),
     new CountryController(),
     new BankController(),
-    new PaymentController()
+    new PaymentController(),
+    new EventController()
 ].forEach((controller) => {
     use(router, controller);
 });

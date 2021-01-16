@@ -74,7 +74,7 @@ export class PaymentService {
         if (
             status === 'success'
             && amount >= expectedAmount
-            && currency === expectedCurrency    
+            && currency === expectedCurrency
         ) {
             services.Payment.updateOne({ _id: payment._id, status: 'verified' });
             return payment;
@@ -83,25 +83,23 @@ export class PaymentService {
         return null;
     }
 
-    async payout(accounts: any[]) {
+    async payout(account: any) {
+        const reference = `payout-${generateUniqueRandomString()}`;
         const response = await this.instance
-            .post(`/bulk-transfers`, {
-                title: "Payout",
-                bulk_data: accounts.map((account: any) => {
-                    const reference = `payout-${generateUniqueRandomString()}`;
-                    return {
-                        bank_code: account.bankCode,
-                        account_number: account.number,
-                        amount: account.amount,
-                        current: "USD",
-                        narration: "Earnings",
-                        reference
-                    }
-                })
+            .post(`/transfers`, {
+                account_bank: account.bankCode,
+                account_number: account.number,
+                amount: account.amount,
+                currency: "USD",
+                beneficiary_name: account.name,
+                narration: "Transfer",
+                reference
             });
 
         if (response.data.status !== 'success')
             throw new Error(`Failed to queue bulk transfer: ${response.data.message}`);
+    
+        return reference;
     }
 
     /**
