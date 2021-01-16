@@ -57,7 +57,7 @@ export const useCurrentUser = () => {
 
 const UpdateUser = () => {
     const { user, setUser } = useCurrentUser();
-    const { get } = useLazyGet('/me');
+    const { get } = useLazyGet('/users/me');
 
     useEffect(() => {
         if (!setUser) return;
