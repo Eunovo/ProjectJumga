@@ -12,6 +12,7 @@ export class OrderController extends BaseController {
         this.get('/', this.getMany);
         this.get('/store', this.getStoreOrders);
         this.get('/rider', this.getRiderOrders);
+        this.get('/tx-ref/:tranxRef', this.getByTranxRef);
         this.put('/', this.update);
         this.get('/pay', this.pay);
         this.post('/pay', this.createAndPay);
@@ -57,6 +58,15 @@ export class OrderController extends BaseController {
             (order: any) => ({ ...order, sales: undefined })
         );
         return { message: 'success', data: { orders } };
+    }
+
+    private async getByTranxRef(req: any) {
+        const tranxRef = req.query.tranxRef;
+        const payment = await services.Payment
+            .findOne({ transactionRef: tranxRef });
+        const order = await services.Order
+            .findOne({ _id: payment.meta?.orderId });
+        return { message: 'success', data: order };
     }
 
     private async update(req: any) {
