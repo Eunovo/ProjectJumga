@@ -17,7 +17,7 @@ export class PaymentService {
     constructor() {
         this.instance = axios.create({
             baseURL: this.baseURL,
-            timeout: 1000,
+            timeout: 10000,
             headers: { 'Authorization': `Bearer ${this.secretKey}` }
         });
     }
@@ -26,7 +26,7 @@ export class PaymentService {
         const { redirectUrl, ...rest } = request;
         const tx_ref = `tranx-${generateUniqueRandomString()}`;
 
-        const response = await this.instance.post('/payment', {
+        const response = await this.instance.post('/payments', {
             ...rest,
             tx_ref,
             currency: "USD",
@@ -34,12 +34,9 @@ export class PaymentService {
             payment_options: "card",
             customizations: {
                 title: "Jumga Payments",
-                description: "Pay for your order",
-                //    logo: "https://assets.piedpiper.com/logo.png"
+                description: "Pay for your order"
             }
         });
-
-        console.log(response.status, response.data);
 
         if (response.data.status !== "success")
             throw new Error(`Failed to initialize payment: ${response.data.message}`);
