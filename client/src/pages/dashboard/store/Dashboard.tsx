@@ -23,7 +23,7 @@ export const StoreDashboard = () => {
                 Welcome {user?.firstName}!
             </Typography>
 
-            <Box marginBottom={2}>
+            <Box marginBottom={4}>
                 <SetupAccountAlert />
             </Box>
 

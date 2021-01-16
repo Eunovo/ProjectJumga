@@ -16,7 +16,7 @@ export const RiderDashboard = () => {
             Welcome Rider!
         </Typography>
 
-        <Box marginBottom={2}>
+        <Box marginBottom={4}>
             <SetupAccountAlert />
         </Box>
 
