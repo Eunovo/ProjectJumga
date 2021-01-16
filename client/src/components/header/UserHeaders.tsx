@@ -62,12 +62,14 @@ export const GuestHeader = () => {
         >
             <StyledMenuItem onClick={() => {
                 history.push(`/${route}`);
+                handleMenuClose();
             }}>
                 User
             </StyledMenuItem>
 
             <StyledMenuItem onClick={() => {
                 history.push(`/${route}/store`);
+                handleMenuClose();
             }}>
                 Seller
             </StyledMenuItem>
@@ -75,6 +77,7 @@ export const GuestHeader = () => {
                 route === 'login' && (
                     <StyledMenuItem onClick={() => {
                         history.push(`/${route}/rider`);
+                        handleMenuClose();
                     }}>
                         Rider
                     </StyledMenuItem>
