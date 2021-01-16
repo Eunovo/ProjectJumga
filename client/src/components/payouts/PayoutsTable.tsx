@@ -9,7 +9,7 @@ import { Payout } from '../../models';
 import { FieldSelector } from '../../utils';
 import { FieldsTableHead, FieldsTableRow } from '../table';
 
-interface PayoutsTableProps {
+interface PayoutsTableProps extends Partial<Pick<Payout, "status">> {
     classes?: {
         table?: string
     }
@@ -25,20 +25,23 @@ export const PayoutsTable: React.FC<PayoutsTableProps> = ({
     const payouts = data?.payouts || [];
 
     const fieldsMap = {
-        earningPeriod: {
-            component: "th",
-            scope: "row",
-            title: 'Earning Period',
-            render: ({ from, to }: any) => `${from.toDateString()} to ${to.toDateString()}`
-        },
         amount: {
             align: 'right',
             title: '($) Amount'
         },
+        createdAt: {
+            align: 'right',
+            title: 'Created At',
+            render: (value: Date) => value.toDateString()
+        },
+        status: {
+            align: 'center',
+            title: 'Status'
+        },
         paidOn: {
             align: 'right',
             title: 'Paid On',
-            render: (value: Date) => value.toDateString()
+            render: (value: Date) => value?.toDateString() || ''
         }
     }
 
