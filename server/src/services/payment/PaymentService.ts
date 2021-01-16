@@ -43,16 +43,22 @@ export class PaymentService {
         if (response.data.status !== "success")
             throw new Error(`Failed to initialize payment: ${response.data.message}`);
 
-        services.Payment.create({
-            paidBy: rest.customer,
-            transactionRef: tx_ref,
-            currency: "USD",
-            amount: rest.amount,
-            meta: rest.meta,
-            narration,
-            status: 'pending',
-            gateway: 'Flutterwave'
-        });
+        (async () => {
+            try {
+                await services.Payment.create({
+                    paidBy: rest.customer,
+                    transactionRef: tx_ref,
+                    currency: "USD",
+                    amount: rest.amount,
+                    meta: rest.meta,
+                    narration,
+                    status: 'pending',
+                    gateway: 'Flutterwave'
+                })
+            } catch (error) {
+                console.dir(error);
+            }
+        })();
 
         return response.data.data.link;
     }
