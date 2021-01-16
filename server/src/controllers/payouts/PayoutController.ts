@@ -1,4 +1,4 @@
-import { paymentService } from "../..//services";
+import { paymentService } from "../../services";
 import { services } from "../../backend";
 import { BaseController } from "../BaseController";
 
