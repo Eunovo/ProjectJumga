@@ -4,6 +4,7 @@ import {
     useEffect,
     useState
 } from 'react';
+import { useLazyGet } from '../api';
 import { getByKey, saveOrUpdate } from './Storage';
 
 
@@ -45,10 +46,29 @@ export const CurrentUserProvider: React.FC = ({ children }) => {
     }, [user, ready, setUser, setReady]);
 
     return <context.Provider value={{ ready, user, setUser }}>
+        <UpdateUser />
         {children}
     </context.Provider>
 }
 
 export const useCurrentUser = () => {
     return useContext(context);
+}
+
+const UpdateUser = () => {
+    const { user, setUser } = useCurrentUser();
+    const { get } = useLazyGet('/me');
+
+    useEffect(() => {
+        if (!setUser) return;
+
+        (async () => {
+            try {
+                const response = await get();
+                setUser({ ...user, ...response.data })                
+            } catch (error) {}
+        })();
+    }, [setUser]);
+
+    return <></>;
 }
