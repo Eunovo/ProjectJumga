@@ -39,7 +39,7 @@ export const SetupAccountAlert = () => {
             <Button
                 color="primary"
                 size="small"
-                onClick={() => history.push('/settings')}
+                onClick={() => history.push('/dashboard/settings')}
             >
                 setup your account
             </Button>
