@@ -1,4 +1,5 @@
 scalar Date
+scalar Mixed
 
 enum Role {
     user
@@ -217,6 +218,32 @@ type Transaction {
 enum TransactionType {
     credit
     debit
+}
+
+"""
+@model
+"""
+type Payment {
+    paidBy: CustomerDetails!
+    """
+    @unique
+    """
+    transactionRef: String!
+    currency: String!
+    amount: String!
+    """
+    @default('pending')
+    """
+    status: PaymentStatus!
+    narration: String!
+    meta: Mixed!
+    gateway: String!
+    createdAt: Date!
+}
+
+enum PaymentStatus {
+    pending
+    verified
 }
 
 """

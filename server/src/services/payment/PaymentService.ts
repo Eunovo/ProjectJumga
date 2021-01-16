@@ -1,4 +1,5 @@
 import axios from "axios";
+import { services } from "../../backend";
 import { generateUniqueRandomString } from "../../utils";
 
 
@@ -6,7 +7,8 @@ interface PaymentRequest {
     amount: number,
     redirectUrl: string,
     customer: any,
-    meta: any
+    meta: any,
+    narration: string
 }
 
 export class PaymentService {
@@ -23,7 +25,7 @@ export class PaymentService {
     }
 
     async getPaymentLink(request: PaymentRequest): Promise<string> {
-        const { redirectUrl, ...rest } = request;
+        const { redirectUrl, narration, ...rest } = request;
         const tx_ref = `tranx-${generateUniqueRandomString()}`;
 
         const response = await this.instance.post('/payments', {
@@ -41,18 +43,44 @@ export class PaymentService {
         if (response.data.status !== "success")
             throw new Error(`Failed to initialize payment: ${response.data.message}`);
 
+        services.Payment.create({
+            paidBy: rest.customer,
+            transactionRef: tx_ref,
+            currency: "USD",
+            amount: rest.amount,
+            meta: rest.meta,
+            narration,
+            status: 'pending',
+            gateway: 'Flutterwave'
+        });
+
         return response.data.data.link;
     }
 
-    async verify(tranxId: string, expectedAmount: number) {
-        const response = await this.instance
-            .get(`/transactions/${tranxId}/verify`);
+    async verify(tranxId: string, tranxRef: string) {
+        const [response, payment] = await Promise.all([
+            this.instance
+                .get(`/transactions/${tranxId}/verify`),
+            services.Payment.findOne({ transactionRef: tranxRef })
+        ]);
 
         if (response.data.status !== 'success')
             throw new Error(`Failed to verify transaction: ${response.data.message}`);
 
-        const { status, amount } = response.data.data;
-        return (status === 'success' && amount >= expectedAmount);
+        const { status, currency, amount } = response.data.data;
+        const expectedAmount = payment.amount;
+        const expectedCurrency = payment.currency;
+
+        if (
+            status === 'success'
+            && amount >= expectedAmount
+            && currency === expectedCurrency    
+        ) {
+            services.Payment.updateOne({ _id: payment._id, status: 'verified' });
+            return payment;
+        }
+
+        return null;
     }
 
     async payout(accounts: any[]) {

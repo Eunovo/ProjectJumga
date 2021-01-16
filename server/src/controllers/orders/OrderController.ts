@@ -15,7 +15,7 @@ export class OrderController extends BaseController {
         this.put('/', this.update);
         this.get('/pay', this.pay);
         this.post('/pay', this.createAndPay);
-        this.post('/confirm-pay', this.giveValue);
+        this.get('/confirm-pay', this.giveValue);
         this.get('/drop', this.orderDrop);
         this.get('/cancel', this.cancelOrder);
     }
@@ -78,16 +78,16 @@ export class OrderController extends BaseController {
     }
 
     private async giveValue(req: any) {
-        const orderId = req.body.meta._id;
-        const res = await orderPayService
+        await orderPayService
             .giveValue(
                 req.query.transaction_id,
-                orderId
+                req.query.tx_ref
             );
+
         return {
             type: 'redirect',
             url: `${process.env.APP_URL}/purchase` +
-                `?orderId=${orderId}&success=${res}`
+                `?tx_ref=${req.query.tx_ref}`
         };
     }
 

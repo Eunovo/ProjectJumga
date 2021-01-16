@@ -15,19 +15,30 @@ export class OrderPayService {
             amount: order.amountSold + order.deliveryFee,
             redirectUrl: `${process.env.URL}/orders/confirm-pay`,
             customer: order.customer,
-            meta: { _id: order._id }
+            meta: { orderId: order._id },
+            narration: "Order payment"
         });
     }
 
-    async giveValue(tranxId: string, orderId: string) {
+    /**
+     * Tries to verify payment for an order
+     * and update the order status
+     * @param tranxId 
+     * @param tranxRef 
+     * @returns `null` if the payment could not be verified
+     * or the paid order id the payment was successfully verified
+     */
+    async giveValue(tranxId: string, tranxRef: string) {
+        const payment = await paymentService.verify(
+            tranxId, tranxRef);
+        if (!payment)
+            return null;
+
+        const { orderId } = payment.meta;
         const order = await services.Order.findOne({ _id: orderId });
-        const isVerified = await paymentService.verify(
-            tranxId, order.amountSold + order.deliveryFee);
-        if (!isVerified)
-            return false;
 
         updateStatus("paid", orderId);
-        return true;
+        return order;
     }
 
 }

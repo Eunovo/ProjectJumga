@@ -25,19 +25,25 @@ export class ApproveSellerService {
             },
             meta: {
                 storeName: user.seller.storeName
-            }
+            },
+            narration: "One-time Store Approval fee"
         });
     }
 
-    async giveValue(tranxId: string, storeName: string) {
-        const amount = (await services.Commission
-            .findOne({ key: 'storeapproval' })).value;
-
-        const isVerified = await paymentService.verify(tranxId, amount);
-        if (!isVerified)
+    /**
+     * Tries to verify the payment of the store one-time approval fee
+     * and approve the store
+     * @param tranxId 
+     * @param tranxRef 
+     * @returns `true` if the store has been approved or
+     * `false` if the payment could not be verified
+     */
+    async giveValue(tranxId: string, tranxRef: string) {
+        const payment = await paymentService.verify(tranxId, tranxRef);
+        if (!payment)
             return false;
 
-        
+        const { storeName } = payment.meta;
         repos.Seller.updateOne(
             { storeName }, { approved: true });
         repos.Product.updateMany(

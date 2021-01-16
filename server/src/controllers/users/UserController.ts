@@ -10,7 +10,7 @@ export class UserController extends BaseController {
         this.post('/', this.create);
         this.put('/', this.update);
         this.get('/approve', this.approveSeller);
-        this.post('/confirm-pay', this.confirmPay);
+        this.get('/confirm-pay', this.confirmPay);
     }
 
     private async create(req: any) {
@@ -32,7 +32,7 @@ export class UserController extends BaseController {
     private async confirmPay(req: any) {
         const res = await approveSellerService.giveValue(
             req.query.transaction_id,
-            req.body.meta.storeName
+            req.query.tx_ref
         );
 
         return {
