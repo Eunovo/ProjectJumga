@@ -39,6 +39,8 @@ export class PaymentService {
             }
         });
 
+        console.log(response.status, response.data);
+
         if (response.data.status !== "success")
             throw new Error(`Failed to initialize payment: ${response.data.message}`);
 

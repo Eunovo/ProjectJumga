@@ -3,6 +3,7 @@
         {
             "name": "Nigeria",
             "shortCode": "NG",
+            "currency": "NGN",
             "states": [
                 "Abuja",
                 "Lagos",

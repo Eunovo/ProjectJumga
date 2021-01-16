@@ -237,6 +237,7 @@ type Country {
     @unique
     """
     name: String!
+    currency: String!
     shortCode: String!
     states: [String]!
 }
