@@ -60,6 +60,7 @@ const UpdateUser = () => {
     const { get } = useLazyGet('/users/me');
 
     useEffect(() => {
+        if (!user?.token) return;
         if (!setUser) return;
 
         (async () => {
@@ -68,7 +69,7 @@ const UpdateUser = () => {
                 setUser({ ...user, ...response.data })                
             } catch (error) {}
         })();
-    }, [setUser]);
+    }, [user?.token, setUser]);
 
     return <></>;
 }
