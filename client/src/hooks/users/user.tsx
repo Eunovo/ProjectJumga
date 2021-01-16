@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutate } from "../../api";
+import { useCurrentUser } from '../../state/AppState';
 import { useLogin } from "./login";
 
 
@@ -37,10 +38,19 @@ export const useSignup = () => {
 }
 
 export const useUpdateUser = () => {
-    const { mutate, ...state } = useMutate('/user', 'put');
+    const { setUser } = useCurrentUser();
+    const { mutate, ...state } = useMutate('/users', 'put');
 
-    const updateUser = (data: any, filter: any) =>
-        mutate(data, { params: filter });
+    const updateUser = async (data: any, filter: any) => {
+        if (!setUser) return;
+
+        try {
+            await mutate(data, { params: filter });
+            setUser((user: any) => ({ ...user, ...data }));
+        } catch (error) {
+            throw error;
+        }
+    }
 
     return { updateUser, ...state };
 }
