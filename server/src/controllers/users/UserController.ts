@@ -9,6 +9,7 @@ export class UserController extends BaseController {
         super();
         this.post('/', this.create);
         this.put('/', this.update);
+        this.get('/me', this.getPrincipal);
         this.get('/approve', this.approveSeller);
         this.get('/confirm-pay', this.confirmPay);
     }
@@ -21,6 +22,15 @@ export class UserController extends BaseController {
     private async update(req: any) {
         await services.User.updateOne(req.body, req.query);
         return { message: "success" }
+    }
+
+    private async getPrincipal(req: any) {
+        if (!req.principal) throw new Error('Unauthorised');
+
+        const { email } = req.principal;
+        const user = await services.User.findOne({ email });
+
+        return { message: "success", data: user };
     }
 
     private async approveSeller(req: any) {
