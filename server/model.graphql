@@ -237,7 +237,7 @@ type Payment {
     """
     transactionRef: String!
     currency: String!
-    amount: String!
+    amount: Float!
     """
     @default('pending')
     """
