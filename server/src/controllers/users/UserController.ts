@@ -7,11 +7,17 @@ export class UserController extends BaseController {
 
     constructor() {
         super();
+        this.get('/', this.getMany);
         this.post('/', this.create);
         this.put('/', this.update);
         this.get('/me', this.getPrincipal);
         this.get('/approve', this.approveSeller);
         this.get('/confirm-pay', this.confirmPay);
+    }
+
+    private async getMany(req: any) {
+        const users = services.User.findMany(req.query);
+        return { message: "success", data: { users } };
     }
 
     private async create(req: any) {

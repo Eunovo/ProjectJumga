@@ -7,6 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { useGetUsers } from '../../../hooks';
 import { Rider } from '../../../models';
 import { FieldsTableHead, FieldsTableRow } from '../../../components/table';
 import { useStyles } from '../styles';
@@ -21,23 +22,11 @@ const AddRiderButton = withStyles({
 
 type Keys = "firstName" | "lastName" | "email" | "address" | "createdAt"
 
-const riders: Pick<Rider, Keys>[] = [
-    {
-        firstName: 'Novo', lastName: 'Bob',
-        email: 'test@g.com',
-        address: {
-            country: 'Nigeria',
-            state: 'Lagos',
-            city: 'Lagos',
-            street: 'Badmus Street'
-        },
-        createdAt: new Date()
-    }
-];
-
 export const Riders = () => {
     const classes = useStyles();
     const history = useHistory();
+    const { data, loading } = useGetUsers({ role: 'rider' });
+    const riders: Pick<Rider, Keys>[] = data?.users || [];
 
     const fieldsMap = {
         firstName: {
@@ -64,6 +53,26 @@ export const Riders = () => {
     const fields = Object.keys(fieldsMap).reduce(
         (prev: any, cur: string) => ({ ...prev, [cur]: true }), {});
 
+    let View = riders.map((rider, i) => (
+        <FieldsTableRow
+            key={i} row={rider}
+            fields={fields}
+            fieldsMap={fieldsMap}
+        />
+    ));
+
+    if (loading) {
+        View = [];
+        for (let i = 0; i < 10; i++) {
+            View.push(<FieldsTableRow
+                key={i}
+                fields={fields}
+                fieldsMap={fieldsMap}
+                placeholder
+            />)
+        }
+    }
+
     return <AdminPage selected='riders'>
 
         <Box
@@ -88,13 +97,7 @@ export const Riders = () => {
                     <FieldsTableHead fields={fields} fieldsMap={fieldsMap} />
 
                     <TableBody>
-                        {riders.map((rider, i) => (
-                            <FieldsTableRow
-                                key={i} row={rider}
-                                fields={fields}
-                                fieldsMap={fieldsMap}
-                            />
-                        ))}
+                        {View}
                     </TableBody>
                 </Table>
             </TableContainer>

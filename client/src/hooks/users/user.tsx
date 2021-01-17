@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutate } from "../../api";
+import { useGet, useMutate } from "../../api";
 import { useCurrentUser } from '../../state/AppState';
 import { useLogin } from "./login";
 
@@ -8,6 +8,8 @@ export const useAddUser = () => {
     const { mutate, ...state } = useMutate('/users', 'post');
     return { addUser: mutate, ...state };
 }
+
+export const useGetUsers = (params?: any) => useGet('/users', { params });
 
 export const useSignup = () => {
     const [state, setState] = useState<any>({
