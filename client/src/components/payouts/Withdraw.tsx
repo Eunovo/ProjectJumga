@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Alert from '@material-ui/lab/Alert';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -49,7 +51,7 @@ export const WithdrawButton: React.FC<Pick<WithdrawProps, "handleOpen"> & Button
 
 export const WithdrawDialog: React.FC<WithdrawProps> = ({ open, handleClose }) => {
     const { user } = useCurrentUser();
-    const { withdraw, loading } = useRequestPayout();
+    const { withdraw, loading, error } = useRequestPayout();
 
     const validationSchema = yup.object({
         amount: yup.string()
@@ -68,6 +70,10 @@ export const WithdrawDialog: React.FC<WithdrawProps> = ({ open, handleClose }) =
         aria-labelledby="withdraw-dialog-title"
     >
         <DialogTitle id="withdraw-dialog-title">Withdraw</DialogTitle>
+
+        {error?.message && <Box marginTop={2}>
+            <Alert severity='error'>{error.message}</Alert>
+        </Box>}
 
         <Formik
             initialValues={{ amount: '0' }}
