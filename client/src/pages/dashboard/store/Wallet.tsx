@@ -1,5 +1,6 @@
 import {
     Box,
+    Paper,
     Typography
 } from "@material-ui/core";
 import { useState } from "react";
@@ -16,7 +17,7 @@ import { useStyles } from "../styles";
 import { StorePage } from "./StorePage";
 
 
-export const StorePayouts = () => {
+export const StoreWallet = () => {
     const { user } = useCurrentUser();
     const withdrawProps = useWithdraw();
     const classes = useStyles();
@@ -25,15 +26,36 @@ export const StorePayouts = () => {
     const statuses = ['all'].concat(Object.values(PayoutStatus));
     const currentStatus = (selected === 'all' ? undefined : selected) as PayoutStatus;
 
-    return <StorePage selected='payouts'>
+    return <StorePage selected='wallet'>
         <>
             <Box className={classes.header} style={{
                 display: 'flex', alignItems: 'flex-end',
                 flexWrap: 'wrap'
             }}>
-                <Typography variant='h4'>Payouts</Typography>
+                <Typography variant='h4'>Wallet</Typography>
 
                 <WithdrawButton {...withdrawProps} style={{ marginLeft: '1rem' }} />
+            </Box>
+
+            <Box marginBottom={4}>
+                <Paper variant='outlined' style={{
+                    marginInline: 'auto',
+                    maxWidth: '60rem'
+                }}>
+                    <Box
+                        display='flex'
+                        flexDirection='column'
+                        padding={2}
+                    >
+                        <Typography variant='caption'>Balance</Typography>
+                        <Typography variant='inherit' style={{ fontSize: '3rem' }}>
+                            $ {user.wallet}</Typography>
+                    </Box>
+                </Paper>
+            </Box>
+
+            <Box marginBottom={2}>
+                <Typography variant='h6'>Withdrawals</Typography>
             </Box>
 
             <div style={{

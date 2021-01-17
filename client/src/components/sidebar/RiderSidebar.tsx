@@ -2,13 +2,13 @@ import React from 'react';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
 import OrdersIcon from '@material-ui/icons/ShoppingBasketOutlined';
 import ProductsIcon from '@material-ui/icons/StorefrontOutlined';
-import PayoutsIcon from '@material-ui/icons/MoneyOutlined';
+import PayoutsIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import { Nav, Navigation } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
 
-export type RiderSideBarItems = 'dashboard' | 'orders' | 'payouts' | 'settings';
+export type RiderSideBarItems = 'dashboard' | 'orders' | 'wallet' | 'settings';
 
 interface SideBarProps {
     classes?: {
@@ -37,9 +37,9 @@ export const RiderSidebar: React.FC<SideBarProps> = ({ classes, selected }) => {
             route: '/dashboard/orders'
         },
         {
-            name: 'payouts',
+            name: 'wallet',
             icon: <PayoutsIcon className={sidebarClasses.icon} />,
-            route: '/dashboard/payouts'
+            route: '/dashboard/wallet'
         },
         {
             name: 'settings',
