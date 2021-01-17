@@ -9,6 +9,7 @@ import { Payout } from '../../models';
 import { FieldSelector } from '../../utils';
 import { FieldsTableHead, FieldsTableRow } from '../table';
 
+
 interface PayoutsTableProps extends Partial<Pick<Payout, "status">> {
     classes?: {
         table?: string
@@ -16,7 +17,6 @@ interface PayoutsTableProps extends Partial<Pick<Payout, "status">> {
     fields: FieldSelector<Payout>;
     user?: string;
 }
-
 
 export const PayoutsTable: React.FC<PayoutsTableProps> = ({
     classes, fields, ...params
