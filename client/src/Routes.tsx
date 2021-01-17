@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 import { Header } from './components/header';
 import { CustomerSignup, Login, StoreOwnerSignup } from './pages/auth';
 import { Cart } from './pages/cart';
@@ -44,9 +44,9 @@ export const Routes = () => {
                     <Header />
                     <Switch>
                         <Route path='/cart' component={Cart} />
-                        <Route path='/checkout' component={Checkout} />
-                        <Route path='/purchase' component={Purchase} />
-                        <Route path='/purchases' component={Purchases} />
+                        <AuthRoute path='/checkout' component={Checkout} />
+                        <AuthRoute path='/purchase' component={Purchase} />
+                        <AuthRoute path='/purchases' component={Purchases} />
                         <Route exact path='/' component={Home} />
                         <Route path='*'>Not Found</Route>
                     </Switch>
@@ -74,3 +74,11 @@ const DashboardRoutes: React.FC<{ routes?: any }> = ({ routes }) => (
         </Switch>
         : <Redirect to="/" />
 );
+
+const AuthRoute: React.FC<RouteProps> = (props) => {
+    const { user, ready } = useCurrentUser();
+    if (!ready) return <></>;
+    if (!user) return <Redirect to={`/login?from=${props.path}`} />;
+
+    return <Route {...props} />;
+}

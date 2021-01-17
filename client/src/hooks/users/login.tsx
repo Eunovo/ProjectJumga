@@ -7,14 +7,14 @@ export const useLogin = () => {
     const { setUser } = useCurrentUser();
     const { mutate, ...state } = useMutate('/auth/login', 'post');
 
-    const login = async (data: any) => {
+    const login = async (data: any, redirectTo?: string) => {
         const response = await mutate(data);
         if (!response || !setUser)
             throw new Error('An unexpected error occurred');
 
         const { token, user } = response.data;
         setUser({ ...user, token });
-        history.push('/dashboard');
+        history.push(redirectTo || '/dashboard');
     };
 
     return { login, ...state };
