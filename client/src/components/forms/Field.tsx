@@ -25,6 +25,35 @@ export const Field: React.FC<FieldProps> = ({ name, helperText, ...props }) => {
     )
 }
 
+export const AmountField: React.FC<FieldProps> = ({ name, helperText, ...props }) => {
+    const [field, meta, action] = useField(name);
+
+    const isError = meta.touched && meta.error ? true : false;
+    if (isError) helperText = meta.error;
+
+    const formatter = new Intl
+        .NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    return (
+        <TextField
+            error={isError}
+            helperText={helperText}
+            {...field} {...props}
+            onBlur={() => {
+                if (!field.value) {
+                    action.setValue('0.00');
+                    return;
+                }
+
+                const parsed = parseFloat(field.value.replaceAll(',', ''));
+                const formattedValue = formatter.format(parsed);
+
+                action.setValue(formattedValue);
+            }}
+        />
+    )
+}
+
 export interface SelectProps {
     className?: string;
     name: string;

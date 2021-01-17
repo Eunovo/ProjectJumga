@@ -11,7 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { ButtonProps } from '@material-ui/core/Button';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { Field, SpinnerButton } from '../../components/forms';
+import { AmountField, SpinnerButton } from '../../components/forms';
 import { useRequestPayout } from '../../hooks/payouts';
 import { useCurrentUser } from '../../state/AppState';
 
@@ -55,12 +55,20 @@ export const WithdrawDialog: React.FC<WithdrawProps> = ({ open, handleClose }) =
 
     const validationSchema = yup.object({
         amount: yup.string()
-            .matches(/[0-9]/g, 'amount must be a number')
+            .matches(
+                /[0-9]*\.?[0-9]{0,2}/g,
+                'amount must be a number with no more than two decimal digits'
+            )
             .required()
             .test(
                 'amount',
+                'amount must be greater than 0',
+                (value) => Number.parseFloat(value as string) > 0
+            )
+            .test(
+                'amount',
                 'You cannot withdraw more than you have in your wallet',
-                (value) => user.wallet >= Number.parseInt(value as string)
+                (value) => user.wallet >= Number.parseFloat(value as string)
             )
     });
 
@@ -94,7 +102,7 @@ export const WithdrawDialog: React.FC<WithdrawProps> = ({ open, handleClose }) =
                         Your withdrawal will be complete within the next 7 working days.
                     </DialogContentText>
 
-                    <Field
+                    <AmountField
                         autoFocus
                         margin="dense"
                         id="amount"

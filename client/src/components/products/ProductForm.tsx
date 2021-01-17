@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import ImageUploader from 'react-images-upload';
 import { Box, Typography } from '@material-ui/core';
 import { Formik, Form, FormikHelpers, useField } from 'formik';
-import { Field, SpinnerButton, useFormStyles } from '../forms';
+import { AmountField, Field, SpinnerButton, useFormStyles } from '../forms';
 
 interface ProductFormValues {
     name: string
@@ -19,7 +19,15 @@ const validationSchema = yup.object({
     name: yup.string().min(3).max(20).required(),
     url: yup.string().min(3).max(10),
     price: yup.string()
-        .matches(/[0-9]*/g, 'Price must be a number')
+        .matches(
+            /[0-9]*\.?[0-9]{0,2}/g,
+            'Price must be a number with no more than two decimal digits'
+        )
+        .test(
+            'price',
+            'price must be greater than 0',
+            (value) => Number.parseFloat(value as string) > 0
+        )
         .required(),
     images: yup.array()
         .min(1, 'Your product should have at least one image')
@@ -65,7 +73,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     label='Product URL'
                     helperText="A short title for product's url"
                 />
-                <Field
+                <AmountField
                     className={form.field}
                     name='price'
                     label='Price ($)'
