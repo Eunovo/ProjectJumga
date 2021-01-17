@@ -57,7 +57,7 @@ export const FieldsTableRow: React.FC<any> = ({
                     const { render, ...props } = fieldsMap[key]
                     let view = <Skeleton />;
                     if (!placeholder)
-                        view = render ? render(row[key]) : row[key];
+                        view = render ? render(row[key], row) : row[key];
                     
                     return <StyledTableCell {...props} key={i}>
                         {view}

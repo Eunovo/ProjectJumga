@@ -5,18 +5,19 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Typography from '@material-ui/core/Typography';
-import { useHistory } from 'react-router-dom';
 import { FieldsTableHead, FieldsTableRow } from '../../../components/table';
 import { useStyles } from '../styles';
 import { AdminPage } from './AdminPage';
-import { HorizontalOptionButtons } from '../../../components/forms';
-import { useGetRefunds } from '../../../hooks';
+import {
+    HorizontalOptionButtons,
+    SpinnerButton
+} from '../../../components/forms';
+import { useGetRefunds, useRefundAction } from '../../../hooks';
 import { RefundStatus } from '../../../models';
 
 
 export const Refunds = () => {
     const classes = useStyles();
-    const history = useHistory();
     const [selected, setSelected] = useState('all');
 
     const statuses = ['all'].concat(Object.values(RefundStatus));
@@ -39,11 +40,20 @@ export const Refunds = () => {
             align: 'right',
             title: 'Created At',
             render: (value: Date) => value?.toDateString() || ''
+        },
+        actions: {
+            align: 'center',
+            title: 'Actions',
+            render: (_: any, row: any) => <RefundActions id={row.id} />
         }
     }
 
-    const fields = Object.keys(fieldsMap).reduce(
-        (prev: any, cur: string) => ({ ...prev, [cur]: true }), {});
+    let fields = Object.keys(fieldsMap).reduce(
+        (prev: any, cur: string) => (
+            { ...prev, [cur]: true }),
+        {}
+    );
+    fields = { ...fields, actions: true };
 
     let View = refunds.map((refund: any, i: number) => (
         <FieldsTableRow
@@ -100,3 +110,38 @@ export const Refunds = () => {
 
     </AdminPage>
 }
+
+
+const RefundActions: React.FC<{ id: string }> = ({ id }) => {
+    const { execute: accept, loading: accepting } =
+        useRefundAction(id, 'accept');
+    const { execute: decline, loading: declining } =
+        useRefundAction(id, 'decline');
+
+    return <Box display='flex' alignItems='center' justifyContent='center'>
+
+        <SpinnerButton
+            onClick={decline}
+            loading={declining}
+            variant='contained'
+            size='small'
+            disabled={(accepting || declining)}
+        >
+            decline
+        </SpinnerButton>
+
+        <Box marginX={1}></Box>
+
+        <SpinnerButton
+            onClick={accept}
+            loading={accepting}
+            color='primary'
+            variant='contained'
+            size='small'
+            disabled={(accepting || declining)}
+        >
+            accept
+        </SpinnerButton>
+
+    </Box>
+} 

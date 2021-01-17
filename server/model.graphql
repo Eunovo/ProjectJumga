@@ -177,6 +177,9 @@ type Refund {
     @OneToOne('Order', 'code')
     """
     order: String!;
+    """
+    @default('pending')
+    """
     status: RefundStatus!;
     createdAt: Date!;
 }

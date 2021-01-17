@@ -134,7 +134,8 @@ export class OrderController extends BaseController {
         await updateStatus('cancelled', orderId);
 
         if (order.status === 'paid') {
-            // refund paid money
+            // request refund of paid money
+            services.Refund.create({ order: order.code });
         }
     
         return { message: 'success' };
