@@ -18,9 +18,9 @@ export async function requestPayout(amount: number, context: any) {
             .findOne({ email: principal?.email });
 
         if (
-            user.account?.name
-            && user.account?.number
-            && user.account?.bankCode
+            !user.account?.name
+            || !user.account?.number
+            || !user.account?.bankCode
         ) throw new Error('Missing Account Details');
 
         // ensure that amount deducted was not more than
