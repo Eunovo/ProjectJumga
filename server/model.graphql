@@ -172,6 +172,24 @@ enum OrderStatus {
 """
 @model
 """
+type Refund {
+    """
+    @OneToOne('Order', 'code')
+    """
+    order: String!;
+    status: RefundStatus!;
+    createdAt: Date!;
+}
+
+enum RefundStatus {
+    pending
+    accepted
+    declined
+}
+
+"""
+@model
+"""
 type Payout {
     """
     @ManyToOne('User', '_id')

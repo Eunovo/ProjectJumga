@@ -9,7 +9,7 @@ import { HorizontalOptionButtons, SpinnerButton } from '../../components/forms';
 import { useCancelOrder, useGetOrders } from '../../hooks/orders';
 import { OrderStatus } from '../../models';
 import { useCurrentUser } from '../../state/AppState';
-import { useGetProducts } from '../../hooks/index.';
+import { useGetProducts } from '../../hooks';
 
 
 export const Purchases = () => {

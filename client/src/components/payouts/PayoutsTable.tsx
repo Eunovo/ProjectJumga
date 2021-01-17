@@ -4,7 +4,7 @@ import {
     TableBody,
     TableContainer
 } from "@material-ui/core";
-import { useGetPayouts } from "../../hooks/index.";
+import { useGetPayouts } from "../../hooks";
 import { Payout } from '../../models';
 import { FieldSelector } from '../../utils';
 import { FieldsTableHead, FieldsTableRow } from '../table';

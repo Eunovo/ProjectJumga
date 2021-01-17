@@ -1,12 +1,13 @@
 import React from 'react';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
 import RidersIcon from '@material-ui/icons/DriveEtaOutlined';
+import RefundsIcon from '@material-ui/icons/RefreshOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import { Nav, Navigation } from './Sidebar';
 import { useSideBarStyles } from './styles';
 
 
-export type AdminNavigationItems = 'dashboard' | 'riders' | 'settings';
+export type AdminNavigationItems = 'dashboard' | 'riders' | 'refunds' | 'settings';
 
 interface SideBarProps {
     classes?: {
@@ -33,6 +34,11 @@ export const AdminNavigation: React.FC<SideBarProps> = ({ classes, selected }) =
             name: 'riders',
             icon: <RidersIcon className={sidebarClasses.icon} />,
             route: '/dashboard/riders'
+        },
+        {
+            name: 'refunds',
+            icon: <RefundsIcon className={sidebarClasses.icon} />,
+            route: '/dashboard/refunds'
         },
         {
             name: 'settings',
