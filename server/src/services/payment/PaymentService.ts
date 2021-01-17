@@ -78,7 +78,7 @@ export class PaymentService {
         const expectedCurrency = payment.currency;
 
         if (
-            status === 'success'
+            status === 'successful'
             && amount >= expectedAmount
             && currency === expectedCurrency
         ) {
