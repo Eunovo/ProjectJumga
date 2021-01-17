@@ -82,7 +82,8 @@ export class PaymentService {
             && amount >= expectedAmount
             && currency === expectedCurrency
         ) {
-            services.Payment.updateOne({ _id: payment._id, status: 'verified' });
+            services.Payment.updateOne(
+                { status: 'verified' }, { _id: payment._id });
             return payment;
         }
 
