@@ -64,7 +64,7 @@ const RiderForm: React.FC<RiderFormProps> =
         return <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
+            onSubmit={async (values, actions) => {
                 try {
                     await onSubmit(values);
                 } catch (error) {
