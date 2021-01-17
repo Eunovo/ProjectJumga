@@ -8,7 +8,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            flexWrap: 'wrap'
+            flexWrap: 'wrap',
+            maxWidth: '65rem',
+            marginInline: 'auto'
         },
         icon: {
             width: 'auto'
@@ -19,7 +21,13 @@ const useStyles = makeStyles((theme: Theme) =>
         action: {
             width: '100%',
             margin: 0,
-            padding: 0
+            padding: 0,
+            [theme.breakpoints.up('lg')]: {
+                width: 'auto',
+                flex: 'auto',
+                display: 'flex',
+                justifyContent: 'flex-end'
+            }
         }
     })
 );
