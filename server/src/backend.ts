@@ -38,8 +38,10 @@ services.User.post('create', async (args: any) => {
 
 services.User.post('findOne', async (args: any) => {
     const { result } = args;
-    const extension = await getUserExtension(result);
-    args.result = { ...extension, ...result };
+    try {
+        const extension = await getUserExtension(result);
+        args.result = { ...extension, ...result };
+    } catch (error) {}
 });
 
 services.User.post('authenticate', async (args: any) => {
