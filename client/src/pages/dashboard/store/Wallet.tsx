@@ -4,6 +4,7 @@ import {
     Typography
 } from "@material-ui/core";
 import { useState } from "react";
+import { Amount } from '../../../components/Utils';
 import { HorizontalOptionButtons } from '../../../components/forms';
 import {
     PayoutsTable,
@@ -49,7 +50,8 @@ export const StoreWallet = () => {
                     >
                         <Typography variant='caption'>Balance</Typography>
                         <Typography variant='inherit' style={{ fontSize: '3rem' }}>
-                            $ {user.wallet}</Typography>
+                            <Amount amount={user.wallet} currency='USD' sign />
+                        </Typography>
                     </Box>
                 </Paper>
             </Box>

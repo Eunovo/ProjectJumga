@@ -4,8 +4,9 @@ import Button from '@material-ui/core/Button';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { withStyles } from '@material-ui/core';
 import { Product } from '../../models';
-import { useProductStyles } from './styles';
 import { useCart } from '../../hooks/cart';
+import { Amount } from '../Utils';
+import { useProductStyles } from './styles';
 
 
 type Keys = "name" | "image" | "url";
@@ -79,7 +80,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <div className={classes.price}>
             {
-                price !== undefined ? `$ ${price}`
+                price !== undefined ?
+                    <Amount amount={price} currency='USD' sign />
                     : <PriceSkeleton />
             }
         </div>

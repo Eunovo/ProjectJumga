@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { SpinnerButton } from '../../components/forms';
+import { Amount } from '../../components/Utils';
 import { useCart } from '../../hooks/cart';
 import { useCreateAndPayOrder } from '../../hooks/orders';
 import { CheckoutForm } from './BuyerForm';
@@ -85,7 +86,11 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
                         <Grid item xs>{item.quantity}</Grid>
                         <Grid item xs>
                             <Typography align='right'>
-                                ${item.quantity * item.price}
+                                <Amount
+                                    amount={item.quantity * item.price}
+                                    currency='USD'
+                                    sign
+                                />
                             </Typography>
                         </Grid>
                     </Grid>
@@ -108,7 +113,11 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
 
                 <Grid item xs>
                     <Typography align='right'>
-                        ${deliveryFee}
+                        <Amount
+                            amount={deliveryFee}
+                            currency='USD'
+                            sign
+                        />
                     </Typography>
                 </Grid>
 

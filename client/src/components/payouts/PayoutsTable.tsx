@@ -7,6 +7,7 @@ import {
 import { useGetPayouts } from "../../hooks";
 import { Payout } from '../../models';
 import { FieldSelector } from '../../utils';
+import { Amount } from "../Utils";
 import { FieldsTableHead, FieldsTableRow } from '../table';
 
 
@@ -27,7 +28,8 @@ export const PayoutsTable: React.FC<PayoutsTableProps> = ({
     const fieldsMap = {
         amount: {
             align: 'right',
-            title: '($) Amount'
+            title: '($) Amount',
+            render: (amount: number) => <Amount amount={amount} currency='USD' />
         },
         createdAt: {
             align: 'right',

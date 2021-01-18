@@ -7,6 +7,7 @@ import {
 import { useGetOrders } from "../../hooks/orders";
 import { Order, OrderStatus } from '../../models';
 import { FieldSelector } from '../../utils';
+import { Amount } from "../Utils";
 import { FieldsTableHead, FieldsTableRow } from '../table';
 
 interface OrdersTableProps {
@@ -47,7 +48,8 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
         },
         amountSold: {
             align: 'right',
-            title: '($) Amount'
+            title: '($) Amount',
+            render: (amount: number) => <Amount amount={amount} currency='USD' />
         },
         status: {
             align: 'right',

@@ -11,6 +11,7 @@ import IncrementIcon from '@material-ui/icons/Add';
 import DecrementIcon from '@material-ui/icons/Remove';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { Amount } from '../../components/Utils';
 import { CartItem, useCart } from '../../hooks/cart';
 import { useCartStyles } from './styles';
 
@@ -52,7 +53,8 @@ export const Cart = () => {
 
                 <Box marginRight={5}>
                     <Typography style={{ fontWeight: 'bold' }}>
-                        Total Price: ${cartTotal}
+                        Total Price:{' '}
+                        <Amount amount={cartTotal} currency='USD' sign />
                     </Typography>
                 </Box>
 
@@ -126,7 +128,11 @@ const CartItemCard: React.FC<CartItemProps> = ({ product }) => {
                 <div className={classes.grow}></div>
 
                 <Typography className={classes.price}>
-                    ${product.price * product.quantity}
+                    <Amount
+                        amount={product.price * product.quantity}
+                        currency='USD'
+                        sign
+                    />
                 </Typography>
             </div>
 

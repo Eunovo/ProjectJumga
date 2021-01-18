@@ -1,10 +1,17 @@
-import { Box, Button, Paper, Typography } from '@material-ui/core';
+import {
+    Box,
+    CircularProgress,
+    Paper,
+    Typography
+} from '@material-ui/core';
 import { useStyles } from '../styles';
-import { HorizontalProductsView } from '../../../components/products';
 import { StorePage } from './StorePage';
 import { useCurrentUser } from '../../../state/AppState';
 import { useApproveStore } from '../../../hooks/users';
+import { Amount } from '../../../components/Utils';
 import { SpinnerButton } from '../../../components/forms';
+import { HorizontalProductsView } from '../../../components/products';
+import { useGetCommissions } from '../../../hooks';
 import { SetupAccountAlert } from '../SetupAcccountAlert';
 
 
@@ -37,6 +44,9 @@ export const StoreDashboard = () => {
 
 const ApproveSection = () => {
     const { approveStore, loading } = useApproveStore();
+    const { data, loading: fetching } =
+        useGetCommissions({ key: 'storeapproval' });
+    const storeApprovalFee = data?.commissions?.[0] || 0;
 
     return <Box
         width='100%'
@@ -45,36 +55,52 @@ const ApproveSection = () => {
     >
         <Paper variant='outlined'>
 
-            <Box
-                padding={4}
-            >
-                <Box marginBottom={2}>
-                    <Typography align='center' variant='h6'>
-                        Your account is not active!
-                </Typography>
-                </Box>
-
-                <Typography align='center' variant='body1'>
-                    Customers will not be able to see or purchase your products
-                    on our platform until you activate your account.
-                    You have to pay a one-time fee of $20 to activate your account
-                </Typography>
-
-                <Box
-                    width='fit-content'
-                    marginX={'auto'}
-                    marginTop={3}
-                >
-                    <SpinnerButton
-                        color='primary'
-                        variant='contained'
-                        onClick={approveStore}
-                        loading={loading}
+            {
+                fetching ?
+                    <Box
+                        display='flex'
+                        justifyContent='center'
+                        alignItems='center'
+                        width='100%'
+                        height='100%'
                     >
-                        pay $20 now to activate your account
-                    </SpinnerButton>
-                </Box>
-            </Box>
+                        <CircularProgress />
+                    </Box>
+                    : <Box
+                        padding={4}
+                    >
+                        <Box marginBottom={2}>
+                            <Typography align='center' variant='h6'>
+                                Your account is not active!
+                            </Typography>
+                        </Box>
+
+                        <Typography align='center' variant='body1'>
+                            Customers will not be able to see or purchase your products
+                            on our platform until you activate your account.
+                            You have to pay a one-time fee of{' '}
+                            <Amount amount={storeApprovalFee} currency='USD' sign />
+                            {' '}to activate your account
+                        </Typography>
+
+                        <Box
+                            width='fit-content'
+                            marginX={'auto'}
+                            marginTop={3}
+                        >
+                            <SpinnerButton
+                                color='primary'
+                                variant='contained'
+                                onClick={approveStore}
+                                loading={loading}
+                            >
+                                pay{' '}
+                                <Amount amount={storeApprovalFee} currency='USD' sign />
+                                {' '}now to activate your account
+                            </SpinnerButton>
+                        </Box>
+                    </Box>
+            }
 
         </Paper>
     </Box>
