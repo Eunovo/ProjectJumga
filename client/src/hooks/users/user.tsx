@@ -18,7 +18,7 @@ export const useSignup = () => {
     const { login } = useLogin();
     const { mutate } = useMutate('/users', 'post');
 
-    const signup = async (data: any) => {
+    const signup = async (data: any, redirectTo?: string) => {
         if (state.loading || state.signupComplete) return;
         
         try {
@@ -28,7 +28,7 @@ export const useSignup = () => {
             await login({
                 email: data.email,
                 password: data.password
-            });
+            }, redirectTo);
             setState((s: any) => ({ ...s, loading: false }));
         } catch (error) {
             setState((s: any) => ({ ...s, loading: false, error }));

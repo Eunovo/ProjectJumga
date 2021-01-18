@@ -27,8 +27,8 @@ export const Login: React.FC<LoginProps> = ({ userType }) => {
     const from = queryParams.get('from') || '';
 
     let signUpRoute = undefined;
-    signUpRoute = userType === 'seller' && '/signup/store';
-    signUpRoute = userType === 'user' && '/signup' ;
+    signUpRoute = userType === 'seller' && `/signup/store?from=${from}`;
+    signUpRoute = userType === 'user' && `/signup?from=${from}` ;
 
     return <AuthPage>
 
