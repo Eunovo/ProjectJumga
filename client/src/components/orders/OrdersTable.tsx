@@ -58,7 +58,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
             render: (amount: number) => <Amount amount={amount} currency='USD' />
         },
         status: {
-            align: 'right',
+            align: 'center',
             title: 'status'
         },
         createdAt: {
