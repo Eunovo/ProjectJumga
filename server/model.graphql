@@ -180,8 +180,8 @@ type Refund {
     """
     @default('pending')
     """
-    status: RefundStatus!;
-    createdAt: Date!;
+    status: RefundStatus!
+    createdAt: Date!
 }
 
 enum RefundStatus {
