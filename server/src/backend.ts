@@ -72,7 +72,7 @@ services.Order.pre('create', async (args: any) => {
                 throw new Error('Unauthorised');
 
             sale.store = product.store;
-            sale.amount = product.price * sale.quantity;
+            sale.amount = parseFloat(product.price) * parseInt(sale.quantity);
             sale.commission = purchaseCommission.value * sale.amount;
             return sale.amount;
         }
@@ -87,8 +87,8 @@ services.Order.pre('create', async (args: any) => {
         (prev: number, cur: number) => prev + cur, 0);
     args.input.deliveryFee = 0;
     args.input.deliveryCommission =
-        deliveryCommission.value * args.input.deliveryCommission;
-    args.input.path = [rider.user];
+        deliveryCommission.value * args.input.deliveryFee;
+    args.input.path = [rider._id];
 });
 
 export { repos, services };

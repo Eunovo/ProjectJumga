@@ -12,7 +12,7 @@ export class OrderPayService {
             throw new Error('Illegal Operation');
         
         return paymentService.getPaymentLink({
-            amount: order.amountSold + order.deliveryFee,
+            amount: order.total + order.deliveryFee,
             redirectUrl: `${process.env.URL}/orders/confirm-pay`,
             customer: order.customer,
             meta: { orderId: order._id },

@@ -119,7 +119,6 @@ type Order {
     sales: [Sale]!
     total: Float!
     deliveryFee: Float!
-    purchaseCommission: Float!
     deliveryCommission: Float!
     """
     @default('pending')
