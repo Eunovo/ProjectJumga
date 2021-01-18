@@ -40,7 +40,10 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
 
     const doGet = () => {
         if (state.loading && !force) return;
-        if (force) setForce(false);
+        if (force)
+            setForce(false);
+        else
+            dispatch({ type: ActionTypes.REQUEST_START });
 
         (async () => {
             try {
@@ -72,11 +75,7 @@ export const useGet = (route: string, options?: RequestOptions): GetReponse => {
 
     return {
         ...state,
-        execute: () => {
-            if (state.loading) return;
-            dispatch({ type: ActionTypes.REQUEST_START });
-            return doGet();
-        }
+        execute: doGet
     }
 }
 
