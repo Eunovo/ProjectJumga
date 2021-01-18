@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../../hooks/cart';
 import { SpinnerButton } from '../../components/forms';
 import { usePayOrder, useGetOrderByTxRef } from '../../hooks/orders';
@@ -13,8 +13,8 @@ import { OrderStatus } from '../../models';
 export const Purchase = () => {
     const { clear } = useCart();
     const { payOrder, loading } = usePayOrder();
-    const match = useRouteMatch();
-    const queryParams = new URLSearchParams(match.url);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
     const tranxRef = queryParams.get('tx_ref') || '';
     const { data, loading: fetching } = useGetOrderByTxRef(tranxRef);
 

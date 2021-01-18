@@ -71,7 +71,7 @@ export const useGetOrders = (type?: "rider" | "store" | "", params?: any) =>
     useGet(`/orders/${type}`, { params });
 
 export const useGetOrderByTxRef = (txRef: string) =>
-    useGet(`/order/tx-ref/${txRef}`);
+    useGet(`/orders/tx-ref/${txRef}`);
 
 export const useOrderDrop = () => {
     const { enqueueSnackbar } = useSnackbar();

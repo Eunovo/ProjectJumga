@@ -61,7 +61,7 @@ export class OrderController extends BaseController {
     }
 
     private async getByTranxRef(req: any) {
-        const tranxRef = req.query.tranxRef;
+        const tranxRef = req.params.tranxRef;
         const payment = await services.Payment
             .findOne({ transactionRef: tranxRef });
         const order = await services.Order
