@@ -3,6 +3,7 @@ import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Formik, Form } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { Field, useFormStyles, SpinnerButton } from '../../../components/forms';
 import { useStyles } from '../styles';
 import { AdminPage } from './AdminPage';
@@ -11,6 +12,7 @@ import { useAddUser } from '../../../hooks';
 
 export const AddRider = () => {
     const classes = useStyles();
+    const history = useHistory();
     const { addUser, loading, error } = useAddUser();
 
     return <AdminPage selected='riders'>
@@ -19,14 +21,18 @@ export const AddRider = () => {
             Add Rider
         </Typography>
 
-        {error?.message && <Box marginTop={2}>
-            <Alert severity='error'>{error.message}</Alert>
-        </Box>}
+        {
+            error?.message &&
+            <Box marginY={3} marginX='auto' maxWidth='40rem'>
+                <Alert severity='error'>{error.message}</Alert>
+            </Box>
+        }
 
         <RiderForm
             loading={loading}
             onSubmit={async (values: any) => {
                 await addUser({ ...values, role: 'rider' });
+                history.push('/dashboard/riders');
             }}
         />
 
@@ -66,7 +72,15 @@ const RiderForm: React.FC<RiderFormProps> =
             validationSchema={validationSchema}
             onSubmit={async (values, actions) => {
                 try {
-                    await onSubmit(values);
+                    await onSubmit({
+                        ...values,
+                        address: {
+                            country: values.country,
+                            state: values.state,
+                            city: values.city,
+                            street: values.street
+                        }
+                    });
                 } catch (error) {
                     actions.setErrors(error?.errors)
                 }
@@ -88,12 +102,6 @@ const RiderForm: React.FC<RiderFormProps> =
                     name='email'
                     label='Email'
                     placeholder='test@gmail.com'
-                />
-                <Field
-                    className={classes.field}
-                    name='storeName'
-                    label='Store Name'
-                    helperText='Your store name cannot be changed'
                 />
                 <Field
                     className={classes.field}
