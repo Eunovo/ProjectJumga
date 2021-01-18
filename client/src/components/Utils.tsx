@@ -11,8 +11,11 @@ export const Amount: React.FC<AmountProps> = ({ amount = 0, currency, sign }) =>
             {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-                style: 'currency',
-                ...(sign ? { currency } : {})
+                ...(sign ? {
+                    style: 'currency',
+                    currency,
+                    currencyDisplay: 'narrowSymbol'
+                } : {})
             }
         );
 
