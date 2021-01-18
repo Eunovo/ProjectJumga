@@ -5,13 +5,14 @@ export interface Response {
     data: any;
 }
 
-export class FormError {
-    public message: string = 'An error occured';
+export class FormError extends Error {
     public readonly errors: any;
 
     constructor(
+        message: string = 'An error occured',
         errors: InputError[] = []
     ) {
+        super(message);
         this.errors = errors.reduce((prev, cur) => ({
             ...prev,
             [cur.name]: cur.message

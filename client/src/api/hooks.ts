@@ -15,9 +15,12 @@ const baseUrl = process.env.REACT_APP_API_URL;
 axios.interceptors.response.use(
     (response) => response, (error) => {
         if (!error.response) return Promise.reject(error);
+        
+        const message = error.response.data.message || 'An error occurred';
+
         if (error.response.status === 400)
             return Promise.reject(
-                new FormError(error.response.data.errors));
+                new FormError(message, error.response.data.errors));
 
         return Promise.reject(error);
     });

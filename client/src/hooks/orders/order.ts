@@ -49,7 +49,6 @@ export const useCreateAndPayOrder = () => {
                 `Could not complete payment: ${error.message}`,
                 { variant: 'error' }
             );
-            throw error;
         }
     }
 
