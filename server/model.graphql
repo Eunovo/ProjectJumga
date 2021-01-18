@@ -176,7 +176,7 @@ type Refund {
     """
     @OneToOne('Order', 'code')
     """
-    order: String!;
+    order: String!
     """
     @default('pending')
     """
