@@ -4,6 +4,7 @@ import {
     TableBody,
     TableContainer
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { useGetOrders } from "../../hooks/orders";
 import { Order, OrderStatus } from '../../models';
 import { FieldSelector } from '../../utils';
@@ -41,6 +42,10 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
     const orders = data?.orders || [];
 
     const fieldsMap = {
+        code: {
+            tilte: 'Order No.',
+            render: (code: string) => <Link to={`/dashboard/order/${code}`}>{code}</Link>
+        },
         customer: {
             component: "th",
             scope: "row",

@@ -7,7 +7,7 @@ import { RiderSettings } from "./Settings";
 export const RiderRoutes: any = {
     '/': <RiderDashboard />,
     '/orders': <RiderOrders />,
-    '/order/:orderId': <Order />,
+    '/order/:code': <Order />,
     '/wallet': <RiderWallet />,
     '/settings': <RiderSettings />
 }

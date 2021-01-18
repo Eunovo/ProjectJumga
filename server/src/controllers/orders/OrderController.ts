@@ -105,11 +105,11 @@ export class OrderController extends BaseController {
     }
 
     private async orderDrop(req: any) {
-        const orderId = req.query.orderId;
+        const code = req.query.orderCode;
         const userId = req.query.userId;
 
-        const order = await services.Order.findOne({ _id: orderId });
-        await updateStatus('completed', orderId);
+        const order = await services.Order.findOne({ code });
+        await updateStatus('completed', order._id);
 
         order.sales.forEach(async (sale: any) => {
             const sellerEarnings = sale.amount - sale.commission;

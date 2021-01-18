@@ -8,64 +8,89 @@ import { useGetOrders, useOrderDrop } from "../../../hooks/orders";
 import { useCurrentUser } from "../../../state/AppState";
 import { useStyles } from "../styles";
 import { RiderPage } from "./RiderPage";
+import { OrderStatus } from "../../../models";
 
 export const Order = () => {
     const classes = useStyles();
-    const { orderId } = useParams<{ orderId: string }>();
+    const { code } = useParams<{ code: string }>();
     const { user } = useCurrentUser();
-    const { data, loading, error } = useGetOrders("rider", { _id: orderId });
+    const { data, loading, error } = useGetOrders("", { code });
 
-    const order = data?.[0];
+    const order = data?.orders?.[0];
     const customer = order?.customer;
     const deliveryAddress = order?.deliveryAddress;
 
+    const color = 'black';
+
     return <RiderPage selected='orders'>
 
-        <Typography className={classes.header} variant='h4'>
-            Order
-        </Typography>
-
         <Box
+            className={classes.header}
             display='flex'
-            marginY={2}
+            justifyContent='space-between'
+            alignItems='center'
+            flexWrap='wrap'
         >
-            <MarkDeliveredButton orderId={orderId} userId={user._id} />
+            <Typography variant='h4'>
+                {code}
+            </Typography>
+            <Typography variant='h6' component='span'
+                style={{ color, textTransform: 'uppercase' }}>
+                {order?.status}
+            </Typography>
         </Box>
 
-        <Box display='flex' justifyContent='space-between' flexWrap='wrap'>
+        {
+            order?.status === OrderStatus.paid &&
+            <Box
+                display='flex'
+                marginBottom={3}
+            >
+                <MarkDeliveredButton code={code} userId={user._id} />
+            </Box>
+        }
 
-            <Paper elevation={0}>
+        <Box>
 
-                <Typography variant='h5'>Customer Detail loading={loading}
-                </Typography>
+            <Box marginY={2} width='100%'>
+                <Paper variant='outlined'>
 
-                <Detail loading={loading}
-                    label='Full Name' value={customer.name} />
+                    <Box padding={2}>
+                        <Typography variant='h5'>Customer</Typography>
 
-                <Detail loading={loading}
-                    label='Email' value={customer.email} />
+                        <Detail loading={loading}
+                            label='Full Name' value={customer?.name} />
 
-            </Paper>
+                        <Detail loading={loading}
+                            label='Email' value={customer?.email} />
+                    </Box>
 
-            <Paper elevation={0}>
+                </Paper>
+            </Box>
 
-                <Typography variant='h5'>
-                    Delivery Address
-                </Typography>
+            <Box marginY={2} width='100%'>
+                <Paper variant='outlined'>
 
-                <Detail loading={loading}
-                    label='Street' value={deliveryAddress.street} />
+                    <Box padding={2}>
+                        <Typography variant='h5'>
+                            Delivery Address
+                        </Typography>
 
-                <Detail loading={loading}
-                    label='City' value={deliveryAddress.city} />
+                        <Detail loading={loading}
+                            label='Street' value={deliveryAddress?.street} />
 
-                <Detail loading={loading}
-                    label='State' value={deliveryAddress.state} />
+                        <Detail loading={loading}
+                            label='City' value={deliveryAddress?.city} />
 
-                <Detail loading={loading}
-                    label='Country' value={deliveryAddress.country} />
+                        <Detail loading={loading}
+                            label='State' value={deliveryAddress?.state} />
 
-            </Paper>
+                        <Detail loading={loading}
+                            label='Country' value={deliveryAddress?.country} />
+                    </Box>
+
+                </Paper>
+            </Box>
 
         </Box>
 
@@ -76,18 +101,18 @@ export const Order = () => {
 
 
 interface MarkDeliveredButtonProps {
-    orderId: string;
+    code: string;
     userId: string;
 }
 
 const MarkDeliveredButton: React.FC<MarkDeliveredButtonProps> =
-    ({ orderId, userId }) => {
+    ({ code, userId }) => {
         const { dropOrder, loading } = useOrderDrop();
 
         return <SpinnerButton
             color='primary'
             variant='contained'
-            onClick={() => dropOrder(orderId, userId)}
+            onClick={() => dropOrder(code, userId)}
             loading={loading}
         >
             Mark Delivered

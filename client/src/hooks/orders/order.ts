@@ -84,9 +84,13 @@ export const useOrderDrop = () => {
     const { enqueueSnackbar } = useSnackbar();
     const { get, ...state } = useLazyGet('/orders/drop');
 
-    const dropOrder = async (orderId: string, userId: string) => {
+    const dropOrder = async (orderCode: string, userId: string) => {
         try {
-            await get({ params: { orderId, userId } });
+            await get({ params: { orderCode, userId } });
+            enqueueSnackbar(
+                `Order ${orderCode} has been dropped!`,
+                { variant: 'success' }
+            );
         } catch (error) {
             enqueueSnackbar(
                 `Operation Failed: ${error.message}`,

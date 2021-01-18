@@ -40,6 +40,7 @@ export const RiderOrders = () => {
                 <OrdersTable
                     classes={classes}
                     fields={{
+                        code: true,
                         customer: true,
                         status: true,
                         createdAt: true

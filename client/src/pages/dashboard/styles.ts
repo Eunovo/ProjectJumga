@@ -33,7 +33,8 @@ export const useStyles = makeStyles((theme: Theme) =>
             }
         },
         header: {
-            marginBottom: theme.spacing(4)
+            marginBottom: theme.spacing(4),
+            textTransform: 'capitalize'
         },
         row: {
             display: 'flex'

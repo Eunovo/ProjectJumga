@@ -2,6 +2,7 @@ import { Product } from "./Product";
 
 export interface Order {
     _id: string,
+    code: string,
     customer: {
         name: string
     },
