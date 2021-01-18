@@ -16,7 +16,7 @@ export class UserController extends BaseController {
     }
 
     private async getMany(req: any) {
-        const users = services.User.findMany(req.query);
+        const users = await services.User.findMany(req.query);
         return { message: "success", data: { users } };
     }
 
