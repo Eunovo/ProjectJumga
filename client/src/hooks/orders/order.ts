@@ -106,9 +106,13 @@ export const useCancelOrder = () => {
     const { enqueueSnackbar } = useSnackbar();
     const { get, ...state } = useLazyGet('/orders/cancel');
 
-    const cancelOrder = async (orderId: string) => {
+    const cancelOrder = async (orderId: string, orderCode: string) => {
         try {
             await get({ params: { orderId } });
+            enqueueSnackbar(
+                `Order ${orderCode} has been cancelled!`,
+                { variant: 'success' }
+            );
         } catch (error) {
             enqueueSnackbar(
                 `Failed to cancel order: ${error.message}`,

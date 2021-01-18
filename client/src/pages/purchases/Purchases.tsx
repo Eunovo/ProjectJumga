@@ -95,7 +95,9 @@ const Order: React.FC<OrderProps> = ({ order, placeholder }) => {
 
                                     {
                                         (order?.status === OrderStatus.pending || order?.status === OrderStatus.paid)
-                                        && <Box marginLeft={4}><CancelButton orderId={order?._id} /></Box>
+                                        && <Box marginLeft={4}>
+                                            <CancelButton orderId={order?._id} orderCode={order?.code} />
+                                        </Box>
                                     }
                                 </Box>
                             </>
@@ -108,19 +110,20 @@ const Order: React.FC<OrderProps> = ({ order, placeholder }) => {
     </Box>
 }
 
-const CancelButton: React.FC<{ orderId: string }> = ({ orderId }) => {
-    const { cancelOrder, loading } = useCancelOrder();
+const CancelButton: React.FC<{ orderId: string, orderCode: string }> =
+    ({ orderId, orderCode }) => {
+        const { cancelOrder, loading } = useCancelOrder();
 
-    return <SpinnerButton
-        variant='contained'
-        color='primary'
-        loading={loading}
-        onClick={() => cancelOrder(orderId)}
-        size='small'
-    >
-        cancel
-    </SpinnerButton>;
-}
+        return <SpinnerButton
+            variant='contained'
+            color='primary'
+            loading={loading}
+            onClick={() => cancelOrder(orderId, orderCode)}
+            size='small'
+        >
+            cancel
+        </SpinnerButton>;
+    }
 
 interface SaleProps {
     sale?: any
