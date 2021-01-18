@@ -12,7 +12,7 @@ import { OrderStatus } from '../../models';
 
 export const Purchase = () => {
     const { clear } = useCart();
-    const { payOrder, loading } = usePayOrder();
+    const { payOrder, successful, loading } = usePayOrder();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const tranxRef = queryParams.get('tx_ref') || '';
@@ -26,12 +26,20 @@ export const Purchase = () => {
         clear();
     }, [clear]);
 
-    let view = <>
+    let view = <Box
+        display='flex'
+        flexDirection='column'
+        justifyContent='center'
+        alignItems='center'
+        height='100%'
+        fontSize='2rem'
+        textAlign='center'
+    >
         {
             success ?
-                <Typography align='center'>Your payment was completed successfully!</Typography>
+                <Typography variant='inherit'>Your payment was completed successfully!</Typography>
                 : <>
-                    <Typography>Could not complete your order</Typography>
+                    <Typography variant='inherit'>Could not complete your order</Typography>
 
                     <Box marginTop={2}>
                         <SpinnerButton
@@ -40,20 +48,22 @@ export const Purchase = () => {
                             onClick={() => payOrder(orderId)}
                             loading={loading}
                         >
-                            try again
+                            {
+                                successful ? 'open link'
+                                    : 'try again'
+                            }
                         </SpinnerButton>
                     </Box>
                 </>
         }
 
         <Box
-            display='block'
-            marginTop={2}
-            marginX='auto'
+            marginTop={4}
+            fontSize='1.5rem'
         >
             <Link to='/'>Go Home</Link>
         </Box>
-    </>;
+    </Box>;
 
     if (fetching)
         view = <Box
@@ -63,8 +73,8 @@ export const Purchase = () => {
             width='100%'
             height='100%'
         >
-            <CircularProgress />
+            <CircularProgress size='4rem' />
         </Box>;
 
-    return <Container>{view}</Container>
+    return <Container style={{ height: '80vh' }}>{view}</Container>
 }

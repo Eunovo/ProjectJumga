@@ -3,10 +3,17 @@ import { useGet, useLazyGet, useMutate } from "../../api";
 
 
 export const usePayOrder = () => {
-    const { get, ...state } = useLazyGet('/orders/pay');
+    const { get, data, ...state } = useLazyGet('/orders/pay');
     const { enqueueSnackbar } = useSnackbar();
 
+    const successful = Boolean(data?.paymentLink);
+
     const payOrder = async (orderId: string) => {
+        if (successful) {
+            window.open(data.paymentLink, '_blank');
+            return;
+        }
+
         try {
             const response = await get({ params: { id: orderId } });
             const link = response?.data?.paymentLink;
@@ -26,7 +33,7 @@ export const usePayOrder = () => {
         }
     }
 
-    return { payOrder, ...state };
+    return { payOrder, successful, ...state };
 }
 
 export const useCreateAndPayOrder = () => {
