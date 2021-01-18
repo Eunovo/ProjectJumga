@@ -58,7 +58,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
         createdAt: {
             align: 'right',
             title: 'Created At',
-            render: (value: Date) => value.toDateString()
+            render: (value: string) => new Date(value).toDateString()
         }
     }
 

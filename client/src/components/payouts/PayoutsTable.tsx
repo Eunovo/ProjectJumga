@@ -34,7 +34,7 @@ export const PayoutsTable: React.FC<PayoutsTableProps> = ({
         createdAt: {
             align: 'right',
             title: 'Created At',
-            render: (value: Date) => value.toDateString()
+            render: (value: string) => new Date(value).toDateString()
         },
         status: {
             align: 'center',
