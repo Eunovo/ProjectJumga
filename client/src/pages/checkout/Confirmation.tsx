@@ -138,7 +138,11 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
 
                     <Grid item xs>
                         <Typography align='right' style={{ fontWeight: 'bold' }}>
-                            ${totalPrice}
+                            <Amount
+                                amount={totalPrice}
+                                currency='USD'
+                                sign
+                            />
                         </Typography>
                     </Grid>
                 </Grid>
