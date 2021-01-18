@@ -8,7 +8,8 @@ interface Address {
 
 export async function getNearestRider(address: Address) {
     const riders = await services.User.findMany({
-        "address.country": address.country
+        "address.country": address.country,
+        role: 'rider'
     });
 
     let nearestRider = riders?.[0] || null;
