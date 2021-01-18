@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Field, SpinnerButton } from '../../../components/forms';
 import { useLogin } from '../../../hooks/users';
 import { AuthPage } from "../AuthPage";
@@ -22,8 +22,8 @@ interface LoginProps {
 export const Login: React.FC<LoginProps> = ({ userType }) => {
     const classes = useStyles();
     const { error, login, loading } = useLogin();
-    const match = useRouteMatch();
-    const queryParams = new URLSearchParams(match.url);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
     const from = queryParams.get('from') || '';
 
     let signUpRoute = undefined;

@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
     CountryProvider,
     Field,
@@ -32,8 +32,8 @@ const validationSchema = yup.object({
 export const CustomerSignup = () => {
     const classes = useStyles();
     const { signup, loading, error } = useSignup();
-    const match = useRouteMatch();
-    const queryParams = new URLSearchParams(match.url);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
     const from = queryParams.get('from') || '';
 
     const initialValues = {

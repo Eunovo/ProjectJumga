@@ -10,6 +10,7 @@ import { Amount } from '../../components/Utils';
 import { useCart } from '../../hooks/cart';
 import { useCreateAndPayOrder } from '../../hooks/orders';
 import { CheckoutForm } from './BuyerForm';
+import { useCurrentUser } from '../../state/AppState';
 
 
 interface ConfirmationProps {
@@ -21,6 +22,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
     form,
     backToCheckout
 }) => {
+    const { user } = useCurrentUser();
     const { cart } = useCart();
     const { createAndPay, loading } = useCreateAndPayOrder();
     const history = useHistory();
@@ -47,7 +49,8 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
                 .map(key => {
                     const { quantity, url } = cart[key];
                     return { product: url, quantity };
-                })
+                }),
+            createdBy: user?._id
         });
     };
 
