@@ -5,9 +5,11 @@ import { useAddProduct } from "../../../hooks/products";
 import { useStyles } from "../styles"
 import { StorePage } from "./StorePage"
 import { useHistory } from 'react-router-dom';
+import { useCurrentUser } from '../../../state/AppState';
 
 
 export const StoreAddProduct = () => {
+    const { user } = useCurrentUser();
     const { addProduct, loading, error } = useAddProduct();
     const history = useHistory();
     const classes = useStyles();
@@ -31,7 +33,9 @@ export const StoreAddProduct = () => {
                 loading={loading}
                 onSubmit={async (values, actions) => {
                     try {
-                        await addProduct(values);
+                        await addProduct({
+                            ...values, store: user?.seller?.storeName
+                        });
                         history.push('/dashboard/products');
                     } catch (error) {
                         actions.setErrors(error?.errors);

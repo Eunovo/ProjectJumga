@@ -3,6 +3,7 @@ import {
     buildMongoRepo,
     buildServices,
     CRUDPlugin,
+    RelationshipPlugin,
     UsernamePasswordAuthPlugin
 } from '@eunovo/superbackend';
 import {
@@ -14,6 +15,7 @@ import { generateUniqueRandomString } from './utils';
 const schemaPath = `${process.cwd()}/model.graphql`;
 const { repos, services } = buildServices(schemaPath, buildMongoRepo, [
     new CRUDPlugin(),
+    new RelationshipPlugin(),
     new UsernamePasswordAuthPlugin(),
     new AuthorizationPlugin(),
     new CreatedAtPlugin()
