@@ -41,10 +41,11 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
     const orders = data?.orders || [];
 
     const fieldsMap = {
-        customerName: {
+        customer: {
             component: "th",
             scope: "row",
-            title: 'Customer Name'
+            title: 'Customer Name',
+            render: (value: any) => value.name
         },
         amountSold: {
             align: 'right',
@@ -71,7 +72,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
     ));
     if (loading) {
         View = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             View.push(<FieldsTableRow
                 key={i}
                 fields={fields}

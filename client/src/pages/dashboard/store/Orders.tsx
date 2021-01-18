@@ -40,7 +40,7 @@ export const StoreOrders = () => {
                 <OrdersTable
                     classes={classes}
                     fields={{
-                        customerName: true,
+                        customer: true,
                         amountSold: true,
                         status: true,
                         createdAt: true

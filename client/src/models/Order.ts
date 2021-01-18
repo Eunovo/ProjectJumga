@@ -2,7 +2,9 @@ import { Product } from "./Product";
 
 export interface Order {
     _id: string,
-    customerName: string,
+    customer: {
+        name: string
+    },
     sales: { product: Partial<Product>, quantity: number}[],
     amountSold: number,
     status: OrderStatus,

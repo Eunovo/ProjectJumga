@@ -40,7 +40,7 @@ export const RiderOrders = () => {
                 <OrdersTable
                     classes={classes}
                     fields={{
-                        customerName: true,
+                        customer: true,
                         status: true,
                         createdAt: true
                     }}

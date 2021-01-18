@@ -32,9 +32,9 @@ export class OrderController extends BaseController {
     }
 
     private async getStoreOrders(req: any) {
-        const store = req.query.store;
+        const { store, ...query } = req.query;
         let orders = await services.Order
-            .findMany({ 'sales.store': store });
+            .findMany({ 'sales.store': store, ...query });
         orders = orders.map((order: any) => {
             const sales = order.sales
                 .filter((sale: any) => sale.store === store);
@@ -51,9 +51,9 @@ export class OrderController extends BaseController {
     }
 
     private async getRiderOrders(req: any) {
-        const rider = req.query.rider;
+        const { rider, ...query } = req.query;
         let orders = await services.Order
-            .findMany({ path: rider });
+            .findMany({ path: rider, ...query });
         orders = orders.map(
             (order: any) => ({ ...order, sales: undefined })
         );
