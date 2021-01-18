@@ -15,7 +15,7 @@ export const usePayOrder = () => {
                 enqueueSnackbar(
                     `Could not complete payment`, { variant: 'error' });
             }
-    
+
             window.open(link, '_blank');
         } catch (error) {
             enqueueSnackbar(
@@ -34,15 +34,23 @@ export const useCreateAndPayOrder = () => {
     const { mutate, ...state } = useMutate('/orders/pay', 'post');
 
     const createAndPay = async (data: any) => {
-        const response = await mutate(data);
-        const link = response?.data?.paymentLink;
-        
-        if (!link) {
-            enqueueSnackbar(
-                `Could not complete payment`, { variant: 'error' });
-        }
+        try {
+            const response = await mutate(data);
+            const link = response?.data?.paymentLink;
 
-        window.open(link, '_blank');
+            if (!link) {
+                enqueueSnackbar(
+                    `Could not complete payment`, { variant: 'error' });
+            }
+
+            window.open(link, '_blank');
+        } catch (error) {
+            enqueueSnackbar(
+                `Could not complete payment: ${error.message}`,
+                { variant: 'error' }
+            );
+            throw error;
+        }
     }
 
     return { ...state, createAndPay };
