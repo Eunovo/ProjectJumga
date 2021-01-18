@@ -62,7 +62,8 @@ interface OrderProps {
     placeholder?: boolean
 }
 
-const Order: React.FC<OrderProps> = ({ order, placeholder }) => {
+const Order: React.FC<OrderProps> = ({ order: initialOrder, placeholder }) => {
+    const [order, setOrder] = useState(initialOrder);
     const sales = order?.sales || [];
 
     const View = placeholder ? [
@@ -96,7 +97,11 @@ const Order: React.FC<OrderProps> = ({ order, placeholder }) => {
                                     {
                                         (order?.status === OrderStatus.pending || order?.status === OrderStatus.paid)
                                         && <Box marginLeft={4}>
-                                            <CancelButton orderId={order?._id} orderCode={order?.code} />
+                                            <CancelButton
+                                                orderId={order?._id}
+                                                orderCode={order?.code}
+                                                onSuccess={() => setOrder((o: any) => ({ ...o, status: OrderStatus.cancelled }))}
+                                            />
                                         </Box>
                                     }
                                 </Box>
@@ -110,15 +115,20 @@ const Order: React.FC<OrderProps> = ({ order, placeholder }) => {
     </Box>
 }
 
-const CancelButton: React.FC<{ orderId: string, orderCode: string }> =
-    ({ orderId, orderCode }) => {
+const CancelButton: React.FC<{ orderId: string, orderCode: string, onSuccess: () => void }> =
+    ({ orderId, orderCode, onSuccess }) => {
         const { cancelOrder, loading } = useCancelOrder();
 
         return <SpinnerButton
             variant='contained'
             color='primary'
             loading={loading}
-            onClick={() => cancelOrder(orderId, orderCode)}
+            onClick={async () => {
+                try {
+                    await cancelOrder(orderId, orderCode);
+                    onSuccess();
+                } catch (error) {}
+            }}
             size='small'
         >
             cancel
