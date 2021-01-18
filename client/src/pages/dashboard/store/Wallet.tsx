@@ -30,7 +30,7 @@ export const StoreWallet = () => {
     return <StorePage selected='wallet'>
         <>
             <Box className={classes.header} style={{
-                display: 'flex', alignItems: 'flex-end',
+                display: 'flex', alignItems: 'center',
                 flexWrap: 'wrap'
             }}>
                 <Typography variant='h4'>Wallet</Typography>
