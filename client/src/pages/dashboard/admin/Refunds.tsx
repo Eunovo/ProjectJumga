@@ -19,6 +19,7 @@ import { RefundStatus } from '../../../models';
 export const Refunds = () => {
     const classes = useStyles();
     const [selected, setSelected] = useState('all');
+    const [updates, setUpdates] = useState<any>({});
 
     const statuses = ['all'].concat(Object.values(RefundStatus));
     const currrentStatus = (selected === 'all' ? undefined : selected) as RefundStatus;
@@ -39,12 +40,18 @@ export const Refunds = () => {
         createdAt: {
             align: 'right',
             title: 'Created At',
-            render: (value: Date) => value?.toDateString() || ''
+            render: (value: string) => new Date(value).toDateString()
         },
         actions: {
             align: 'center',
             title: 'Actions',
-            render: (_: any, row: any) => <RefundActions id={row.id} />
+            render: (_: any, row: any) => row.status === RefundStatus.pending ?
+                <RefundActions
+                    id={row._id}
+                    onSuccess={(status: string) =>
+                        setUpdates((u: any) => ({ ...u, [row._id]: { status } }))
+                    }
+                /> : <></>
         }
     }
 
@@ -55,13 +62,19 @@ export const Refunds = () => {
     );
     fields = { ...fields, actions: true };
 
-    let View = refunds.map((refund: any, i: number) => (
-        <FieldsTableRow
-            key={i} row={refund}
-            fields={fields}
-            fieldsMap={fieldsMap}
-        />
-    ));
+    let View = refunds
+        .map((refund: any) => {
+            if (updates[refund._id])
+                return { ...refund, ...updates[refund._id] };
+            return refund;
+        })
+        .map((refund: any, i: number) => (
+            <FieldsTableRow
+                key={i} row={refund}
+                fields={fields}
+                fieldsMap={fieldsMap}
+            />
+        ));
 
     if (loading) {
         View = [];
@@ -112,36 +125,46 @@ export const Refunds = () => {
 }
 
 
-const RefundActions: React.FC<{ id: string }> = ({ id }) => {
-    const { execute: accept, loading: accepting } =
-        useRefundAction(id, 'accept');
-    const { execute: decline, loading: declining } =
-        useRefundAction(id, 'decline');
+const RefundActions: React.FC<{ id: string, onSuccess: (status: string) => void }> =
+    ({ id, onSuccess }) => {
+        const { execute: accept, loading: accepting } =
+            useRefundAction(id, 'accept');
+        const { execute: decline, loading: declining } =
+            useRefundAction(id, 'decline');
 
-    return <Box display='flex' alignItems='center' justifyContent='center'>
+        const handleSuccess = (operation: () => Promise<any>, status: string) => {
+            return async () => {
+                try {
+                    await operation();
+                    onSuccess(status)
+                } catch (error) { }
+            }
+        }
 
-        <SpinnerButton
-            onClick={decline}
-            loading={declining}
-            variant='contained'
-            size='small'
-            disabled={(accepting || declining)}
-        >
-            decline
+        return <Box display='flex' alignItems='center' justifyContent='center'>
+
+            <SpinnerButton
+                onClick={handleSuccess(decline, RefundStatus.declined)}
+                loading={declining}
+                variant='contained'
+                size='small'
+                disabled={(accepting || declining)}
+            >
+                decline
         </SpinnerButton>
 
-        <Box marginX={1}></Box>
+            <Box marginX={1}></Box>
 
-        <SpinnerButton
-            onClick={accept}
-            loading={accepting}
-            color='primary'
-            variant='contained'
-            size='small'
-            disabled={(accepting || declining)}
-        >
-            accept
+            <SpinnerButton
+                onClick={handleSuccess(accept, RefundStatus.accepted)}
+                loading={accepting}
+                color='primary'
+                variant='contained'
+                size='small'
+                disabled={(accepting || declining)}
+            >
+                accept
         </SpinnerButton>
 
-    </Box>
-} 
+        </Box>
+    } 
