@@ -1,6 +1,6 @@
 import { mongoose } from "@eunovo/superbackend";
 import { readFileSync } from "fs";
-import { repos } from "./backend";
+import { services } from "./backend";
 import './config';
 
 
@@ -15,9 +15,10 @@ const seedDB = async () => {
             const promises = docs
                 .map(async (doc: any) => {
                     try {
-                        await repos[key].create(doc) 
+                        await services[key].create(doc) 
                     } catch (error) {
                         console.log(key, error.message);
+                        error?.errors && console.log(error?.errors);
                     }
                 });
             return Promise.all(promises);

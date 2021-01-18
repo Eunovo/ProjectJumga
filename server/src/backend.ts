@@ -22,16 +22,16 @@ const { repos, services } = buildServices(schemaPath, buildMongoRepo, [
 ]);
 
 services.User.post('create', async (args: any) => {
-    const { role } = args.input;
-    const extension = { user: args.id, ...args.input };
+    const { role, storeName } = args.input;
+    const userId = args.id;
     try {
         if (role === 'rider')
-            await services.Rider.create(extension);
+            await services.Rider.create({ user: userId });
         else if (role === 'seller')
             await services.Seller
-                .create({ ...extension, approved: false });
+                .create({ user: userId, storeName, approved: false });
     } catch (error) {
-        services.User.removeOne({ _id: args.id });
+        await services.User.removeOne({ _id: args.id });
         throw error;
     }
 });
@@ -82,6 +82,8 @@ services.Order.pre('create', async (args: any) => {
         'address.state': args.input.deliveryAddress.state,
         'address.city': args.input.deliveryAddress.city,
     });
+
+    console.log(rider);
 
     const prefix = generateUniqueRandomString();
     args.input.code = `order-${prefix}`;

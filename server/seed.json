@@ -25,5 +25,60 @@
             "key": "delivery",
             "value": 10.0
         }
+    ],
+    "User": [
+        {
+            "firstName": "Oghenovo",
+            "lastName": "Usiwoma",
+            "email": "admin@gmail.com",
+            "password": "password",
+            "address": {
+                "country": "Nigeria",
+                "state": "Lagos",
+                "city": "Lagos",
+                "street": "203, Elephant Street"
+            },
+            "role": "admin"
+        },
+        {
+            "firstName": "Oghenovo",
+            "lastName": "Usiwoma",
+            "email": "rider@gmail.com",
+            "password": "password",
+            "address": {
+                "country": "Nigeria",
+                "state": "Lagos",
+                "city": "Lagos",
+                "street": "203, Elephant Street"
+            },
+            "role": "rider"
+        },
+        {
+            "firstName": "Oghenovo",
+            "lastName": "Usiwoma",
+            "email": "seller@gmail.com",
+            "password": "password",
+            "address": {
+                "country": "Nigeria",
+                "state": "Lagos",
+                "city": "Lagos",
+                "street": "203, Elephant Street"
+            },
+            "role": "seller",
+            "storeName": "SampleStore"
+        },
+        {
+            "firstName": "Oghenovo",
+            "lastName": "Usiwoma",
+            "email": "user@gmail.com",
+            "password": "password",
+            "address": {
+                "country": "Nigeria",
+                "state": "Lagos",
+                "city": "Lagos",
+                "street": "203, Elephant Street"
+            },
+            "role": "user"
+        }
     ]
 }
