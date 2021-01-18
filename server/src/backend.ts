@@ -9,7 +9,7 @@ import {
 import {
     CreatedAtPlugin
 } from './plugins';
-import { getUserExtension } from './services/users';
+import { getNearestRider, getUserExtension } from './services/users';
 import { generateUniqueRandomString } from './utils';
 
 const schemaPath = `${process.cwd()}/model.graphql`;
@@ -77,13 +77,7 @@ services.Order.pre('create', async (args: any) => {
     );
     const saleTotals = await Promise.all(promises);
 
-    const rider = await services.Rider.findOne({
-        'address.country': args.input.deliveryAddress.country,
-        'address.state': args.input.deliveryAddress.state,
-        'address.city': args.input.deliveryAddress.city,
-    });
-
-    console.log(rider);
+    const rider = await getNearestRider(args.input.deliveryAddress);
 
     const prefix = generateUniqueRandomString();
     args.input.code = `order-${prefix}`;
