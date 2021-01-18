@@ -24,7 +24,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
 }) => {
     const { user } = useCurrentUser();
     const { cart } = useCart();
-    const { createAndPay, loading } = useCreateAndPayOrder();
+    const { createAndPay, successful, loading } = useCreateAndPayOrder();
     const history = useHistory();
     const theme = useTheme();
 
@@ -167,7 +167,10 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
                 onClick={submit}
                 loading={loading}
             >
-                continue to pay
+                {
+                    successful ? 'open link'
+                        : 'continue to pay'
+                }
             </SpinnerButton>
 
             <Button

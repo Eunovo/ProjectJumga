@@ -84,7 +84,10 @@ export class OrderController extends BaseController {
         const id = await services.Order.create(req.body);
         const paymentLink = await orderPayService
             .payOrder(id);
-        return { message: "success", data: { paymentLink } };
+        return {
+            message: "success",
+            data: { orderId: id,  paymentLink }
+        };
     }
 
     private async giveValue(req: any) {
