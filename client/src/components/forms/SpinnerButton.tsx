@@ -12,6 +12,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({ children, loading,
         <Box
             display='flex'
             alignItems='center'
+            justifyContent='center'
         >
             {children}
             {
