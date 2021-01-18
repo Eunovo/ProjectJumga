@@ -76,20 +76,28 @@ const Order: React.FC<OrderProps> = ({ order, placeholder }) => {
                 <Box
                     display='flex'
                     justifyContent='space-between'
+                    alignItems='center'
+                    flexWrap='wrap'
+                    marginBottom={2}
                 >
                     {
                         placeholder ? <>
                             <Skeleton style={{ width: '8rem' }} />
                             <Skeleton style={{ width: '5rem' }} />
                         </> : <>
-                                <Typography variant='h6'>{order?.code}</Typography>
+                                <Typography variant='h6' style={{
+                                    width: '100%', maxWidth: '30rem', textTransform: 'capitalize'
+                                }}>
+                                    {order?.code}</Typography>
 
-                                <Typography>{order?.status?.toUpperCase()}</Typography>
+                                <Box display='flex' alignItems='center'>
+                                    <Typography variant='body2'>{order?.status?.toUpperCase()}</Typography>
 
-                                {
-                                    order?.status !== 'completed' || order?.status !== 'cancelled'
-                                    && <CancelButton orderId={order?._id} />
-                                }
+                                    {
+                                        (order?.status === OrderStatus.pending || order?.status === OrderStatus.paid)
+                                        && <Box marginLeft={4}><CancelButton orderId={order?._id} /></Box>
+                                    }
+                                </Box>
                             </>
                     }
                 </Box>
@@ -108,6 +116,7 @@ const CancelButton: React.FC<{ orderId: string }> = ({ orderId }) => {
         color='primary'
         loading={loading}
         onClick={() => cancelOrder(orderId)}
+        size='small'
     >
         cancel
     </SpinnerButton>;
