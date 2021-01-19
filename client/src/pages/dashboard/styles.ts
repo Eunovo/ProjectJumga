@@ -18,6 +18,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             minHeight: '20rem',
             maxHeight: '30rem',
             width: '10vw',
+            maxWidth: '15rem',
             marginRight: theme.spacing(3),
             [theme.breakpoints.up('md')]: {
                 width: '20vw'
@@ -35,11 +36,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         content: {
             padding: theme.spacing(),
             flexGrow: 1,
-            marginBottom: '8vh',
-            width: '100%',
-            [theme.breakpoints.up('md')]: {
-                width: `calc(80vw - ${theme.spacing(3)}px)`
-            }
+            marginBottom: '8vh'
         },
         header: {
             marginBottom: theme.spacing(4),
