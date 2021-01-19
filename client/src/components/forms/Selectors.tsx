@@ -61,28 +61,63 @@ export const SelectState: React.FC<SelectStateProps> = ({
 
 type SelectBankProps = SelectCountryProps & { country: string };
 
-export const SelectBank: React.FC<SelectBankProps> = ({ name, country, ...props }) => {
-    const { values, setFieldValue } = useFormikContext();
-    const { data, loading } = useGet(`/banks/${country}`);
-    const banks = data?.banks || [];
+export const SelectBank: React.FC<SelectBankProps> =
+    ({ name, country, ...props }) => {
+        const { values, setFieldValue } = useFormikContext();
+        const { data, loading } = useGet(`/banks/${country}`);
+        const banks = data?.banks || [];
 
-    const selected = (values as any)[name];
+        const selected = (values as any)[name];
 
-    useEffect(() => {
-        const selectedBank = banks
-            .find((bank: any) => bank.name === selected);
-        setFieldValue(`${name}Code`, selectedBank?.code);
-    }, [selected]);
+        useEffect(() => {
+            const selectedBank = banks
+                .find((bank: any) => bank.name === selected);
 
-    return <SelectField name={name} {...props} displayEmpty>
-        <MenuItem value="">
-            <em>{loading ? <CircularProgress size='20px' /> : 'None'}</em>
-        </MenuItem>
-        {
-            banks.map((bank: any, i: number) => {
-                return <MenuItem key={i} value={bank.name}>
-                    {bank.name}</MenuItem>
-            })
-        }
-    </SelectField>
-}
+            setFieldValue(`${name}Id`, selectedBank?.id);
+            setFieldValue(`${name}Code`, selectedBank?.code);
+        }, [selected]);
+
+        return <SelectField name={name} {...props} displayEmpty>
+            <MenuItem value="">
+                <em>{loading ? <CircularProgress size='20px' /> : 'None'}</em>
+            </MenuItem>
+            {
+                banks.map((bank: any, i: number) => {
+                    return <MenuItem key={i} value={bank.name}>
+                        {bank.name}</MenuItem>
+                })
+            }
+        </SelectField>
+    }
+
+type SelectBankBranchProps = SelectCountryProps & { bankId: string };
+
+export const SelectBankBranch: React.FC<SelectBankBranchProps> =
+    ({ name, bankId, ...props }) => {
+        const { values, setFieldValue } = useFormikContext();
+        const { data, loading } = useGet(`/banks/${bankId}/branches`);
+        const branches = data?.branches || [];
+
+        const selected = (values as any)[name];
+
+        useEffect(() => {
+            const selectedBranch = branches
+                .find((branch: any) => branch.branch_name === selected);
+            setFieldValue(`${name}Code`, selectedBranch?.branch_code);
+            setFieldValue(`${name}Id`, selectedBranch?.id);
+            setFieldValue(`${name}SwiftCode`, selectedBranch?.swift_code);
+            setFieldValue(`${name}Bic`, selectedBranch?.bic);
+        }, [selected]);
+
+        return <SelectField name={name} {...props} displayEmpty>
+            <MenuItem value="">
+                <em>{loading ? <CircularProgress size='20px' /> : 'None'}</em>
+            </MenuItem>
+            {
+                branches.map((branch: any, i: number) => {
+                    return <MenuItem key={i} value={branch.branch_name}>
+                        {branch.branch_name}</MenuItem>
+                })
+            }
+        </SelectField>
+    }

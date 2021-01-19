@@ -8,6 +8,7 @@ export class BankController extends BaseController {
     constructor() {
         super();
         this.get("/:country", this.getAll);
+        this.get("/:id/branches", this.getBranches);
     }
 
 
@@ -16,6 +17,12 @@ export class BankController extends BaseController {
             .findOne({ name: req.params.country });
         const banks = await paymentService.getBanks(country.shortCode);
         return { message: "success", data: { banks } };
+    }
+
+    async getBranches(req: any) {
+        const bankId = req.params.id;
+        const branches = await paymentService.getBankBranches(bankId);
+        return { message: "success", data: { branches } };
     }
 
 }

@@ -19,7 +19,7 @@ export class PaymentService {
     constructor() {
         this.instance = axios.create({
             baseURL: this.baseURL,
-            timeout: 10000,
+            timeout: 50000,
             headers: { 'Authorization': `Bearer ${this.secretKey}` }
         });
     }
@@ -90,7 +90,7 @@ export class PaymentService {
         return null;
     }
 
-    async payout(account: any) {
+    async payout(account: any, address: any) {
         const reference = `payout-${generateUniqueRandomString()}`;
         const response = await this.instance
             .post(`/transfers`, {
@@ -99,13 +99,24 @@ export class PaymentService {
                 amount: account.amount,
                 currency: "USD",
                 beneficiary_name: account.name,
+                destination_branch_code: account.branchCode,
                 narration: "Transfer",
-                reference
+                reference,
+                meta: [
+                    {
+                        AccountNumber: account.number,
+                        SwiftCode: account.swiftCode,
+                        BankName: account.bank,
+                        BeneficiaryName: account.name,
+                        BeneficiaryAddress: `${address.stree}, ${address.city}, ${address.state}`,
+                        BeneficiayCountry: address.country
+                    }
+                ]
             });
 
         if (response.data.status !== 'success')
             throw new Error(`Failed to queue bulk transfer: ${response.data.message}`);
-    
+
         return reference;
     }
 
@@ -124,6 +135,30 @@ export class PaymentService {
 
         return response.data.data;
     }
+
+    /**
+     * Bank id
+     * @param id
+     * @returns
+     */
+    async getBankBranches(id: string) {
+        try {
+            const response = await this.instance
+                .get(`/banks/${id}/branches`);
+
+            if (response.data.status !== 'success')
+                throw new Error(
+                    `Failed to fetch banks: ${response.data.message}`);
+
+            return response.data.data;
+        } catch (error) {
+            if (error?.response?.status === 404) {
+                return [];
+            }
+            throw error;
+        }
+    }
+
 
     async chargeBack() {
         const response = await this.instance

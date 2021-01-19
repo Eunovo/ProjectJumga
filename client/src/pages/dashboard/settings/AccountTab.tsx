@@ -7,6 +7,7 @@ import { User } from '../../../models';
 import {
     Field,
     SelectBank,
+    SelectBankBranch,
     SpinnerButton,
     useFormStyles
 } from '../../../components/forms';
@@ -33,10 +34,16 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
     const { updateUser, loading, error } = useUpdateUser();
     const formClasses = useFormStyles();
     const initialValues = {
-        accountName: account?.name,
-        accountNumber: account?.number,
-        bank: account?.bank,
-        bankCode: account?.bankCode
+        accountName: account?.name || '',
+        accountNumber: account?.number || '',
+        bank: account?.bank || '',
+        bankId: account?.bankId || '',
+        bankCode: account?.bankCode || '',
+        branchId: account?.branchId || '',
+        branchName: account?.branchName || '',
+        branchCode: account?.branchCode || '',
+        branchBic: account?.branchBic || '',
+        branchSwiftCode: account?.swiftCode || ''
     };
 
     return <TabPanel index={index}>
@@ -54,7 +61,13 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
                             name: values.accountName,
                             number: values.accountNumber,
                             bank: values.bank,
-                            bankCode: values.bankCode
+                            bankCode: values.bankCode,
+                            bankId: values.bankId,
+                            branchId: values.branchId,
+                            branchName: values.branchName,
+                            branchCode: values.branchCode,
+                            branchBic: values.branchBic,
+                            swiftCode: values.branchSwiftCode
                         }
                     }, { email: user.email });
                 } catch (error) {
@@ -62,34 +75,45 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
                 }
             }}
         >
-            <Form className={formClasses.form}>
-                <Field
-                    className={formClasses.field}
-                    name='accountName'
-                    label='Account Name'
-                />
+            {
+                ({  values }) => (
+                    <Form className={formClasses.form}>
+                        <Field
+                            className={formClasses.field}
+                            name='accountName'
+                            label='Account Name'
+                        />
 
-                <Field
-                    className={formClasses.field}
-                    name='accountNumber'
-                    label='Account Number'
-                />
+                        <Field
+                            className={formClasses.field}
+                            name='accountNumber'
+                            label='Account Number'
+                        />
 
-                <SelectBank
-                    className={formClasses.field}
-                    name='bank'
-                    label='Bank'
-                    country={user.address.country}
-                />
+                        <SelectBank
+                            className={formClasses.field}
+                            name='bank'
+                            label='Bank'
+                            country={user.address.country}
+                        />
 
-                <SpinnerButton
-                    className={formClasses.submitBtn}
-                    color='primary'
-                    type='submit'
-                    variant='contained'
-                    loading={loading}
-                >Submit</SpinnerButton>
-            </Form>
+                        <SelectBankBranch
+                            className={formClasses.field}
+                            name='branch'
+                            label='Branch'
+                            bankId={values.bankId}
+                        />
+
+                        <SpinnerButton
+                            className={formClasses.submitBtn}
+                            color='primary'
+                            type='submit'
+                            variant='contained'
+                            loading={loading}
+                        >Submit</SpinnerButton>
+                    </Form>
+                )
+            }
         </Formik>
     </TabPanel>
 }

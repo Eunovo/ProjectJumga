@@ -41,7 +41,13 @@ type Account {
     name: String!
     number: String!
     bank: String!
+    bankId: String!
     bankCode: String!
+    branchId: String
+    branchName: String
+    branchCode: String
+    branchBic: String
+    swiftCode: String
 }
 
 type Address {

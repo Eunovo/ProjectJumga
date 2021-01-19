@@ -28,9 +28,10 @@ export async function requestPayout(amount: number, context: any) {
         if (user.wallet < 0)
             throw new Error('Balance Insufficient');
 
-        const reference = await paymentService.payout({
-            ...user.account, amount
-        });
+        const reference = await paymentService.payout(
+            { ...user.account, amount },
+            user.address
+        );
 
         services.Payout.create({
             user: user._id,
