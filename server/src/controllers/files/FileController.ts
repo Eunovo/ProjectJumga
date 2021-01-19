@@ -1,5 +1,6 @@
-import { services } from "../../backend";
+import { fileService } from "../../services";
 import { BaseController } from "../BaseController";
+
 
 export class FileController extends BaseController {
 
@@ -12,9 +13,8 @@ export class FileController extends BaseController {
 
     private async getFileById(req: any) {
         const fileId = req.params.id;
-        let file = await services.File
-            .findOne({ _id: fileId });
-        return { type: 'file', path: file.path };
+        let file = await fileService.getFile({ _id: fileId });
+        return { type: 'redirect', url: file };
     }
 
 }

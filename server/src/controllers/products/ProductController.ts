@@ -1,4 +1,5 @@
 import { services } from "../../backend";
+import { fileService } from "../../services";
 import { BaseController } from "../BaseController";
 
 export class ProductController extends BaseController {
@@ -18,10 +19,7 @@ export class ProductController extends BaseController {
         (async () => {
             // obtain file ids for each image
             let images = [req.files.images]
-                .map((file) => {
-                    const id = services.File.create({ path: file.path });
-                    return id;
-                });
+                .map((file) => fileService.saveFile(file));
                 
             images = await Promise.all(images);
 
