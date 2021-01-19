@@ -10,6 +10,8 @@ Jumga operates in these countries;
 
 Jumga operates in US Dollars but it can pay sellers, riders in its target countries and accept payments from its target countries using Flutterwave. 
 
+**[The PaymentService file](https://github.com/Eunovo/ProjectJumga/blob/main/server/src/services/payment/PaymentService.ts) houses all the Flutterwave related logic.**
+
 ## Features
 This project supports the following features;
 
@@ -76,17 +78,22 @@ Login to a sample user account using these details.
 
 
 ### One-time Store Fee payment
-Sellers pay a one-time fee to approve their store after registration.
+Sellers pay a one-time fee to approve their store after registration.  
+Find the code for this [here](https://github.com/Eunovo/ProjectJumga/blob/main/server/src/services/users/ApproveSellerService.ts);
 
 ### Order Payment
 Users can create an order and pay using Flutterwave gateway. Jumga holds this money paid until the order is delivered.
-When the order is delivered **Jumga allocates seller and rider earnings and it's own commissions too**.
+When the order is delivered **Jumga allocates seller and rider earnings and it's own commissions too**.  
+You can see this [here](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/orders/OrderController.ts#L114-L138).  
+The purchase and delivery commissions are calculated on [Order creation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/backend.ts#L59-L93) and saved for later use.  
+Riders can mark orders found on the [Orders page](https://pure-crag-32381.herokuapp.com/dashboard/orders) as "delivered". Simply, select an Order and click the "Mark Delivered" button on its page.
 
 ### Order Cancellation and Refund
 User can vist [the purchases page](https://pure-crag-32381.herokuapp.com/purchases) and cancel their orders that have not been completed.  
-Upon order cancellation, a **Refund Request** is created for `admins` to review.  
+Upon [order cancellation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/orders/OrderController.ts#L140-L153), a **Refund Request** is created for `admins` to review.  
 Admins can fufill these refunds manually on through the FlutterWave dashboard.
 
 ### Withdrawals
 Riders and Sellers can withdraw from their earnings at anytime by visiting [the wallet page](https://pure-crag-32381.herokuapp.com/dashboard/wallet).
-**Jumga uses FlutterWave's Transfer** api to make transfers to user bank accounts.
+**Jumga uses FlutterWave's Transfer** api to make transfers to user bank accounts.  
+See how I do this [here](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/payouts/PayoutController.ts#L20-L24) and [here](https://github.com/Eunovo/ProjectJumga/blob/main/server/src/services/payouts/requestPayout.ts)
