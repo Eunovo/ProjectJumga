@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Button, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Box, Button, Typography } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
 import { ProductGrid } from "../../../components/products";
 import { useLazyGetProducts } from "../../../hooks/products";
 import { useCurrentUser } from "../../../state/AppState";
@@ -18,7 +18,7 @@ export const StoreProducts = () => {
 
     useEffect(() => {
         if (!ready || !user) return;
-    
+
         getProducts({ store: user.seller.storeName });
     }, [user, ready]);
 
@@ -52,8 +52,27 @@ export const StoreProducts = () => {
             <ProductGrid
                 products={products}
                 placeholder={loading}
-                placeholderLength={10}    
+                placeholderLength={10}
             />
+
+            {products.length === 0 && <Box
+                display='flex'
+                flexDirection='column'
+                justifyContent='center'
+                height='30rem'
+                textAlign='center'
+                fontSize='2rem'
+            >
+                <Typography variant='inherit'>
+                    You have not added any products.
+                </Typography>
+
+                <Box marginTop={4} fontSize='1rem'>
+                    <Link to='/dashboard/products/add'>
+                        Add a Product now!</Link>
+                </Box>
+
+            </Box>}
 
         </>
     </StorePage>

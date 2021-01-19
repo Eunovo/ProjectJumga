@@ -177,6 +177,10 @@ const ApprovedStore = () => {
                 Top Selling Products</Typography>
 
             <HorizontalProductsView products={topProducts} />
+            { topProducts.length === 0 && <Box>
+                <Typography align='center'>
+                    You have not sold any products</Typography>
+            </Box> }
 
         </div>
     </>
