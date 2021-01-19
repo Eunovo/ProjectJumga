@@ -120,7 +120,7 @@ const ApprovedStore = () => {
     useEffect(() => {
         if (!ready || !user) return;
 
-        getProducts({ store: user.storeName });
+        getProducts({ store: user.seller.storeName });
     }, [user, ready]);
 
     return <>
