@@ -109,7 +109,7 @@
             "role": "user"
         },
         {
-            "firstName": "NovoGH",
+            "firstName": "RiderGH",
             "lastName": "Usiwoma",
             "email": "ridergh@email.com",
             "password": "password",
@@ -122,7 +122,21 @@
             "role": "rider"
         },
         {
-            "firstName": "NovoKE",
+            "firstName": "SellerGH",
+            "lastName": "Usiwoma",
+            "email": "sellergh@email.com",
+            "password": "password",
+            "address": {
+                "country": "Ghana",
+                "state": "Accra",
+                "city": "Accra",
+                "street": "203, Elephant Street"
+            },
+            "role": "seller",
+            "storeName": "SampleStore"
+        },
+        {
+            "firstName": "RiderKE",
             "lastName": "Usiwoma",
             "email": "riderke@email.com",
             "password": "password",
@@ -135,7 +149,21 @@
             "role": "rider"
         },
         {
-            "firstName": "NovoUK",
+            "firstName": "SellerKE",
+            "lastName": "Usiwoma",
+            "email": "sellerke@email.com",
+            "password": "password",
+            "address": {
+                "country": "Kenya",
+                "state": "Nairobi",
+                "city": "Nairobi",
+                "street": "203, Elephant Street"
+            },
+            "role": "seller",
+            "storeName": "SampleStore"
+        },
+        {
+            "firstName": "RiderUK",
             "lastName": "Usiwoma",
             "email": "rideruk@email.com",
             "password": "password",
@@ -146,6 +174,20 @@
                 "street": "203, Elephant Street"
             },
             "role": "rider"
+        },
+        {
+            "firstName": "SellerUK",
+            "lastName": "Usiwoma",
+            "email": "selleruk@email.com",
+            "password": "password",
+            "address": {
+                "country": "United Kingdom",
+                "state": "London",
+                "city": "London",
+                "street": "203, Elephant Street"
+            },
+            "role": "seller",
+            "storeName": "SampleStore"
         }
     ]
 }
