@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -85,6 +85,10 @@ interface OrderProps {
 const Order: React.FC<OrderProps> = ({ order: initialOrder, placeholder }) => {
     const [order, setOrder] = useState(initialOrder);
     const sales = order?.sales || [];
+
+    useEffect(() => {
+        setOrder(initialOrder);
+    }, [initialOrder]);
 
     const View = placeholder ? [
         <Sale key={'p_0'} placeholder />,
