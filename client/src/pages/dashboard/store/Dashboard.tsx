@@ -143,7 +143,7 @@ const ApprovedStore = () => {
                         </Typography>
 
                         <Typography variant='body2' style={{ color: 'green' }}>
-                            +12.72%</Typography>
+                            +12.72% from last month</Typography>
                     </Box>
                 </Paper>
             </Box>
@@ -160,7 +160,7 @@ const ApprovedStore = () => {
                         </Typography>
 
                         <Typography variant='body2' style={{ color: 'green' }}>
-                            +8.23%</Typography>
+                            +8.23% from last month</Typography>
                     </Box>
                 </Paper>
             </Box>
