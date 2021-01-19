@@ -45,15 +45,21 @@ export const CartProvider: React.FC = ({ children }) => {
         localStorage.setItem('CART', JSON.stringify(cart));
     }, [cart]);
 
-    const increment = (product: ProductInfo, quantity: number) => setCart(
-        (c) => ({
-            ...c,
-            [product.url]: {
-                ...product,
-                quantity: (c[product.url]?.quantity || 0) + quantity
-            }
-        })
-    );
+    const increment = (product: ProductInfo, quantity: number) => {
+        setCart(
+            (c) => ({
+                ...c,
+                [product.url]: {
+                    ...product,
+                    quantity: (c[product.url]?.quantity || 0) + quantity
+                }
+            })
+        );
+        enqueueSnackbar(
+            `Added 1 ${product.name} to cart`,
+            { variant: 'success' }
+        );
+    }
     const decrement = (product: ProductInfo, quantity: number) => setCart(
         (c) => ({
             ...c,
