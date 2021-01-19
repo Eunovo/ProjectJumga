@@ -10,6 +10,30 @@
                 "Edo",
                 "Delta"
             ]
+        },
+        {
+            "name": "Ghana",
+            "shortCode": "GH",
+            "currency": "GHS",
+            "states": [
+                "Accra"
+            ]
+        },
+        {
+            "name": "kenya",
+            "shortCode": "KEN",
+            "currency": "KES",
+            "states": [
+                "Nairobi"
+            ]
+        },
+        {
+            "name": "United Kingdom",
+            "shortCode": "UK",
+            "currency": "EUR",
+            "states": [
+                "London"
+            ]
         }
     ],
     "Commission": [
@@ -34,7 +58,7 @@
         {
             "firstName": "Oghenovo",
             "lastName": "Usiwoma",
-            "email": "admin@gmail.com",
+            "email": "admin@email.com",
             "password": "password",
             "address": {
                 "country": "Nigeria",
@@ -47,7 +71,7 @@
         {
             "firstName": "Oghenovo",
             "lastName": "Usiwoma",
-            "email": "rider@gmail.com",
+            "email": "rider@email.com",
             "password": "password",
             "address": {
                 "country": "Nigeria",
@@ -60,7 +84,7 @@
         {
             "firstName": "Oghenovo",
             "lastName": "Usiwoma",
-            "email": "seller@gmail.com",
+            "email": "seller@email.com",
             "password": "password",
             "address": {
                 "country": "Nigeria",
@@ -74,7 +98,7 @@
         {
             "firstName": "Oghenovo",
             "lastName": "Usiwoma",
-            "email": "user@gmail.com",
+            "email": "user@email.com",
             "password": "password",
             "address": {
                 "country": "Nigeria",
