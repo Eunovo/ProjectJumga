@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import { withStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Nav } from './Sidebar';
 
@@ -11,6 +12,13 @@ interface BottomMenuProps {
     selected: string;
 }
 
+const StyledBottomNavigationAction = withStyles({
+    root: {
+        minWidth: 'auto'
+    }
+})(BottomNavigationAction);
+
+
 export const BottomMenu: React.FC<BottomMenuProps> = ({ className, navs, selected }) => {
     const history = useHistory();
 
@@ -20,7 +28,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ className, navs, selecte
     >
         {
             navs.map((nav, i) => (
-                <BottomNavigationAction
+                <StyledBottomNavigationAction
                     key={i}
                     label={nav.name}
                     value={nav.name}
