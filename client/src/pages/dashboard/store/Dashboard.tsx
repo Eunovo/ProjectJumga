@@ -49,7 +49,7 @@ const ApproveSection = () => {
     const { approveStore, loading } = useApproveStore();
     const { data, loading: fetching } =
         useGetCommissions({ key: 'storeapproval' });
-    const storeApprovalFee = data?.commissions?.[0] || 0;
+    const storeApprovalFee = data?.commissions?.[0]?.value || 0;
 
     return <Box
         width='100%'
