@@ -4,9 +4,13 @@ import { useLazyGet } from "../../api";
 
 export const useApproveStore = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const { get, ...state } = useLazyGet('/users/approve');
+    const { get, data, ...state } = useLazyGet('/users/approve');
 
     const approveStore = async () => {
+        if (data?.paymentLink) {
+            window.open(data?.paymentLink, '_blank');
+        }
+
         try {
             const response = await get();
             const link = response?.data?.paymentLink;
