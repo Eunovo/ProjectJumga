@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { HorizontalOptionButtons, SpinnerButton } from '../../components/forms';
 import { useCancelOrder, useGetOrders } from '../../hooks/orders';
 import { OrderStatus } from '../../models';
@@ -50,6 +51,25 @@ export const Purchases = () => {
 
             <Box marginTop={2}>
                 {View}
+                {
+                    orders.length === 0 && !loading &&
+                    <Box
+                        display='flex'
+                        flexDirection='column'
+                        justifyContent='center'
+                        height='30rem'
+                        textAlign='center'
+                        fontSize='2rem'
+                    >
+                        <Typography variant='inherit'>
+                            You have no Purchases.</Typography>
+
+                        <Box marginTop={4} fontSize='1rem'>
+                            <Link to='/'>Start Shopping now!</Link>
+                        </Box>
+
+                    </Box>
+                }
             </Box>
         </Box>
 
@@ -127,7 +147,7 @@ const CancelButton: React.FC<{ orderId: string, orderCode: string, onSuccess: ()
                 try {
                     await cancelOrder(orderId, orderCode);
                     onSuccess();
-                } catch (error) {}
+                } catch (error) { }
             }}
             size='small'
         >
