@@ -105,6 +105,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
                     label='% Purchase Commission'
                     placeholder='10.0'
                     disabled={fetching || fetchError}
+                    helperText="Jumga will collect this commission on every order"
                 />
 
                 <AmountField
@@ -121,6 +122,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
                     label='% Delivery Commission'
                     placeholder='10.0'
                     disabled={fetching || fetchError}
+                    helperText="Jumga will collect this commission on every order"
                 />
 
                 <SpinnerButton
