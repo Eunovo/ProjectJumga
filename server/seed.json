@@ -107,6 +107,45 @@
                 "street": "203, Elephant Street"
             },
             "role": "user"
+        },
+        {
+            "firstName": "NovoGH",
+            "lastName": "Usiwoma",
+            "email": "ridergh@email.com",
+            "password": "password",
+            "address": {
+                "country": "Ghana",
+                "state": "Accra",
+                "city": "Accra",
+                "street": "203, Elephant Street"
+            },
+            "role": "rider"
+        },
+        {
+            "firstName": "NovoKE",
+            "lastName": "Usiwoma",
+            "email": "riderke@email.com",
+            "password": "password",
+            "address": {
+                "country": "Kenya",
+                "state": "Nairobi",
+                "city": "Nairobi",
+                "street": "203, Elephant Street"
+            },
+            "role": "rider"
+        },
+        {
+            "firstName": "NovoUK",
+            "lastName": "Usiwoma",
+            "email": "rideruk@email.com",
+            "password": "password",
+            "address": {
+                "country": "United Kingdom",
+                "state": "London",
+                "city": "London",
+                "street": "203, Elephant Street"
+            },
+            "role": "rider"
         }
     ]
 }
