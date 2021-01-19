@@ -86,9 +86,9 @@ const CartItemCard: React.FC<CartItemProps> = ({ product }) => {
         <Box padding={2}>
             <CardMedia
                 component="img"
-                alt={product.image}
+                alt={product.name}
                 height="200"
-                image={product.image}
+                image={`${process.env.REACT_APP_API_URL}/files/${product?.image}`}
                 title={product.name}
             />
 
