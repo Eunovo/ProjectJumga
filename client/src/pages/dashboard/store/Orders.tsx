@@ -27,7 +27,8 @@ export const StoreOrders = () => {
 
             <div style={{
                 display: 'flex',
-                alignItems: 'center'
+                alignItems: 'center',
+                flexWrap: 'wrap'
             }}>
                 <HorizontalOptionButtons
                     options={statuses}

@@ -4,8 +4,14 @@ export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         dashboard: {
             display: 'flex',
-            paddingInline: theme.spacing(2),
-            marginBlock: theme.spacing(4)
+            paddingInline: theme.spacing(),
+            marginBlock: theme.spacing(4),
+            marginInline: 'auto',
+            width: '100%',
+            maxWidth: '100rem',
+            [theme.breakpoints.up('sm')]: {
+                paddingInline: theme.spacing(2),
+            }
         },
         sidebar: {
             height: '50vh',
@@ -28,6 +34,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(),
             flexGrow: 1,
             marginBottom: '8vh',
+            width: '100%',
             [theme.breakpoints.up('md')]: {
                 width: `calc(80vw - ${theme.spacing(3)}px)`
             }

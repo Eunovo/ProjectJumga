@@ -62,7 +62,8 @@ export const StoreWallet = () => {
 
             <div style={{
                 display: 'flex',
-                alignItems: 'center'
+                alignItems: 'center',
+                flexWrap: 'wrap'
             }}>
                 <HorizontalOptionButtons
                     options={statuses}
