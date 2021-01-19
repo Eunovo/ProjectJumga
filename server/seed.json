@@ -133,7 +133,7 @@
                 "street": "203, Elephant Street"
             },
             "role": "seller",
-            "storeName": "SampleStore"
+            "storeName": "SampleStoreGH"
         },
         {
             "firstName": "RiderKE",
@@ -160,7 +160,7 @@
                 "street": "203, Elephant Street"
             },
             "role": "seller",
-            "storeName": "SampleStore"
+            "storeName": "SampleStoreKE"
         },
         {
             "firstName": "RiderUK",
@@ -187,7 +187,7 @@
                 "street": "203, Elephant Street"
             },
             "role": "seller",
-            "storeName": "SampleStore"
+            "storeName": "SampleStoreUK"
         }
     ]
 }
