@@ -8,7 +8,7 @@ Jumga operates in these countries;
 - Kenya
 - United Kingdom
 
-Jumga operates in US Dollars but it can pay sellers, riders in its target countries and accept payments from its target countries using Flutterwave. 
+Jumga performs transactions in US Dollars but it can pay sellers, riders in its target countries and accept payments from its target countries using Flutterwave. 
 
 **[The PaymentService file](https://github.com/Eunovo/ProjectJumga/blob/main/server/src/services/payment/PaymentService.ts) houses all the Flutterwave related logic.**
 
