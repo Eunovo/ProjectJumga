@@ -100,6 +100,7 @@ export const SelectBankBranch: React.FC<SelectBankBranchProps> =
 
         useEffect(() => {
             if (!bankId) return;
+            console.log(bankId);
             execute()
         }, [bankId]);
 
