@@ -190,19 +190,21 @@ export const StoreOwnerHeader = () => {
             onClose={handleMenuClose}
         >
             <StyledMenuItem onClick={() => {
-                history.push(`/profile`);
+                handleMenuClose();
             }}>
                 Profile
             </StyledMenuItem>
 
             <StyledMenuItem onClick={() => {
                 history.push(`/purchases`);
+                handleMenuClose();
             }}>
                 Purchases
             </StyledMenuItem>
 
             <StyledMenuItem onClick={() => {
                 history.push(`/logout`);
+                handleMenuClose();
             }}>
                 Logout
             </StyledMenuItem>
