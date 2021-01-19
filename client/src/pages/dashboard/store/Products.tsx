@@ -55,7 +55,7 @@ export const StoreProducts = () => {
                 placeholderLength={10}
             />
 
-            {products.length === 0 && <Box
+            {products.length === 0 && !loading && <Box
                 display='flex'
                 flexDirection='column'
                 justifyContent='center'

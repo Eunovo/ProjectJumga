@@ -112,7 +112,7 @@ const ApproveSection = () => {
 const ApprovedStore = () => {
     const classes = useStyles();
     const { user, ready } = useCurrentUser();
-    const { getProducts, data } = useLazyGetProducts();
+    const { getProducts, data, loading } = useLazyGetProducts();
 
     let topProducts = data?.products || [];
     topProducts = topProducts.map((p: any) => ({ ...p, image: p.images[0] }));
@@ -177,10 +177,12 @@ const ApprovedStore = () => {
                 Top Selling Products</Typography>
 
             <HorizontalProductsView products={topProducts} />
-            { topProducts.length === 0 && <Box>
-                <Typography align='center'>
-                    You have not sold any products</Typography>
-            </Box> }
+            {
+                topProducts.length === 0 && !loading && <Box>
+                    <Typography align='center'>
+                        You have not sold any products</Typography>
+                </Box>
+            }
 
         </div>
     </>
