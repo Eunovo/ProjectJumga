@@ -15,6 +15,8 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         sidebar: {
             height: '50vh',
+            minHeight: '20rem',
+            maxHeight: '30rem',
             width: '10vw',
             marginRight: theme.spacing(3),
             [theme.breakpoints.up('md')]: {
