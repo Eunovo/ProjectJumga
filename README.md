@@ -21,7 +21,7 @@ The app supports three types of users. Jumga comes with user accounts for each o
 
 #### user
 This class represents the buyers.
-Login to a sample user account using these details.  
+Login to a sample user account [here](https://pure-crag-32381.herokuapp.com/login) using these details.  
 > email: user@email.com  
 > password: password
 
@@ -31,7 +31,7 @@ Login to a sample user account using these details.
 This class represents the dispatch riders. Only `admins` can add new riders.  
 They get paid when they deliver orders assigned to them.  
 They can **withdraw** their earnings at any time.
-Login to a sample rider accounts using these details.  
+Login to sample rider accounts [here](https://pure-crag-32381.herokuapp.com/login/rider) using these details.  
 Nigeria
 > email: rider@email.com  
 > password: password
@@ -53,7 +53,7 @@ United Kingdom
 This class represents the sellers. They have to pay a **one-time fee** set by admins
 after registration before their store becomes active.  
 They can **withdraw** their earnings at any time.
-Login to a sample seller accounts using these details.  
+Login to sample seller accounts [here](https://pure-crag-32381.herokuapp.com/login/store) using these details.  
 Nigeria
 > email: seller@email.com  
 > password: password
@@ -72,7 +72,7 @@ United Kingdom
 
 #### admin
 This class of users can create riders, **review refund requests** and sets the **app's commssions and fees**.  
-Login to a sample user account using these details.
+Login to a sample user account [here](https://pure-crag-32381.herokuapp.com/login/admin) using these details.
 > email: admin@email.com  
 > password: password
 
@@ -85,8 +85,11 @@ Find the code for this [here](https://github.com/Eunovo/ProjectJumga/blob/main/s
 Users can create an order and pay using Flutterwave gateway. Jumga holds this money paid until the order is delivered.
 When the order is delivered **Jumga allocates seller and rider earnings and it's own commissions too**.  
 You can see this [here](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/orders/OrderController.ts#L114-L138).  
-The purchase and delivery commissions are calculated on [Order creation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/backend.ts#L59-L93) and saved for later use.  
+The purchase and delivery commissions are calculated on [Order creation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/backend.ts#L59-L93) and saved for later use when paying all entities involved.  
 Riders can mark orders found on the [Orders page](https://pure-crag-32381.herokuapp.com/dashboard/orders) as "delivered". Simply, select an Order and click the "Mark Delivered" button on its page.
+
+>Note that the delivery process has been greatly simplified for demonstration purposes,  
+>Riders only need mark an Order as 'delivered' and the Order will be considered fulfilled.
 
 ### Order Cancellation and Refund
 User can vist [the purchases page](https://pure-crag-32381.herokuapp.com/purchases) and cancel their orders that have not been completed.  
@@ -97,3 +100,5 @@ Admins can fufill these refunds manually on through the FlutterWave dashboard.
 Riders and Sellers can withdraw from their earnings at anytime by visiting [the wallet page](https://pure-crag-32381.herokuapp.com/dashboard/wallet).
 **Jumga uses FlutterWave's Transfer** api to make transfers to user bank accounts.  
 See how I do this [here](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/payouts/PayoutController.ts#L20-L24) and [here](https://github.com/Eunovo/ProjectJumga/blob/main/server/src/services/payouts/requestPayout.ts)
+
+Also, the Jumga server listens for `transfer.complete` events, if the transfer fails, the user's money is returned. See [here](https://github.com/Eunovo/ProjectJumga/blob/main/server/src/controllers/events/EventController.ts)
