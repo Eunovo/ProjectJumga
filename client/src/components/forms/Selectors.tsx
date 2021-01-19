@@ -95,8 +95,13 @@ type SelectBankBranchProps = SelectCountryProps & { bankId: string };
 export const SelectBankBranch: React.FC<SelectBankBranchProps> =
     ({ name, bankId, ...props }) => {
         const { values, setFieldValue } = useFormikContext();
-        const { data, loading } = useGet(`/banks/${bankId}/branches`);
+        const { data, loading, execute } = useGet(`/banks/${bankId}/branches`);
         const branches = data?.branches || [];
+
+        useEffect(() => {
+            if (!bankId) return;
+            execute()
+        }, [bankId]);
 
         const selected = (values as any)[name];
 
