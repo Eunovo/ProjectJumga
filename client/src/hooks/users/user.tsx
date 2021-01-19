@@ -1,3 +1,4 @@
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useGet, useMutate } from "../../api";
 import { useCurrentUser } from '../../state/AppState';
@@ -40,6 +41,7 @@ export const useSignup = () => {
 }
 
 export const useUpdateUser = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const { setUser } = useCurrentUser();
     const { mutate, ...state } = useMutate('/users', 'put');
 
@@ -49,6 +51,10 @@ export const useUpdateUser = () => {
         try {
             await mutate(data, { params: filter });
             setUser((user: any) => ({ ...user, ...data }));
+            enqueueSnackbar(
+                'User details updated successfully!',
+                { variant: 'success' }
+            );
         } catch (error) {
             throw error;
         }
