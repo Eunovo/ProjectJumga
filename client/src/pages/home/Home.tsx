@@ -7,7 +7,9 @@ type Keys = "name" | "image" | "price" | "url";
 
 export const Home = () => {
     const { data, loading } = useGetProducts({ accessible: true });
-    const products = data?.products || [];
+    let products = data?.products || [];
+    products = products.map((p: any) => ({ ...p, image: p.images[0] }));
+    
     return <Container>
 
         <Box marginY={8}>

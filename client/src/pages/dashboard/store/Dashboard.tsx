@@ -114,7 +114,8 @@ const ApprovedStore = () => {
     const { user, ready } = useCurrentUser();
     const { getProducts, data } = useLazyGetProducts();
 
-    const topProducts = data?.products || [];
+    let topProducts = data?.products || [];
+    topProducts = topProducts.map((p: any) => ({ ...p, image: p.images[0] }));
 
     useEffect(() => {
         if (!ready || !user) return;
