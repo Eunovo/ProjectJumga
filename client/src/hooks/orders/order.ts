@@ -77,6 +77,29 @@ export const useCreateAndPayOrder = () => {
 export const useGetOrders = (type?: "rider" | "store" | "", params?: any) =>
     useGet(`/orders/${type}`, { params });
 
+export const useGetDeliveryFee = () => {
+    const { enqueueSnackbar } = useSnackbar();
+    const { mutate, data, ...state } = useMutate('/orders/delivery-fee', 'post');
+
+    const getDeliveryFee = async (sales: any[]) => {
+        try {
+            const response = await mutate({ sales });
+            return response?.data?.deliveryFee;
+        } catch (error) {
+            enqueueSnackbar(
+                `Could not get delivery fee: ${error.message}`,
+                { variant: 'error' }
+            );
+        }
+    }
+
+    return {
+        deliveryFee: data?.deliveryFee | 0,
+        getDeliveryFee,
+        ...state
+    };
+}
+
 export const useGetOrderByTxRef = (txRef: string) =>
     useGet(`/orders/tx-ref/${txRef}`);
 

@@ -1,4 +1,4 @@
-import { orderPayService } from "../../services/orders";
+import { getDeliveryFee, orderPayService } from "../../services/orders";
 import { services } from "../../backend";
 import { BaseController } from "../BaseController";
 import { updateStatus } from "../../services/orders/update_status";
@@ -12,6 +12,7 @@ export class OrderController extends BaseController {
         this.get('/', this.getMany);
         this.get('/store', this.getStoreOrders);
         this.get('/rider', this.getRiderOrders);
+        this.post('/delivery-fee', this.getDeliveryFee);
         this.get('/tx-ref/:tranxRef', this.getByTranxRef);
         this.put('/', this.update);
         this.get('/pay', this.pay);
@@ -58,6 +59,12 @@ export class OrderController extends BaseController {
             (order: any) => ({ ...order, sales: undefined })
         );
         return { message: 'success', data: { orders } };
+    }
+
+    private async getDeliveryFee(req: any) {
+        const { sales } = req.body;
+        const fee = await getDeliveryFee(sales);
+        return { message: 'success', data: { deliveryFee: fee } }; 
     }
 
     private async getByTranxRef(req: any) {

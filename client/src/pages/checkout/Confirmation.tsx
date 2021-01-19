@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { SpinnerButton } from '../../components/forms';
 import { Amount } from '../../components/Utils';
 import { useCart } from '../../hooks/cart';
-import { useCreateAndPayOrder } from '../../hooks/orders';
+import { useCreateAndPayOrder, useGetDeliveryFee } from '../../hooks/orders';
 import { CheckoutForm } from './BuyerForm';
 import { useCurrentUser } from '../../state/AppState';
 
@@ -24,14 +24,25 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
 }) => {
     const { user } = useCurrentUser();
     const { cart } = useCart();
-    const { createAndPay, successful, loading } = useCreateAndPayOrder();
+    const { createAndPay, successful, loading } =
+        useCreateAndPayOrder();
+    const { deliveryFee, getDeliveryFee, loading: fetchingDeliveryFee } =
+        useGetDeliveryFee();
     const history = useHistory();
     const theme = useTheme();
 
-    const deliveryFee = 0;
     const cartTotal = Object.values(cart)
         .reduce((prev, cur) => prev + (cur.quantity * cur.price), 0);
     const totalPrice = deliveryFee + cartTotal;
+    const sales = Object.keys(cart)
+        .map(key => {
+            const { quantity, url } = cart[key];
+            return { product: url, quantity };
+        });
+
+    useEffect(() => {
+        getDeliveryFee(sales);
+    }, []);
 
     const submit = () => {
         createAndPay({
@@ -45,12 +56,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
                 city: form?.deliveryCity,
                 street: form?.deliveryStreet
             },
-            sales: Object.keys(cart)
-                .map(key => {
-                    const { quantity, url } = cart[key];
-                    return { product: url, quantity };
-                }),
-            createdBy: user?._id
+            sales, createdBy: user?._id
         });
     };
 
@@ -116,11 +122,14 @@ export const Confirmation: React.FC<ConfirmationProps> = ({
 
                 <Grid item xs>
                     <Typography align='right'>
-                        <Amount
-                            amount={deliveryFee}
-                            currency='USD'
-                            sign
-                        />
+                        {
+                            !fetchingDeliveryFee &&
+                            <Amount
+                                amount={deliveryFee}
+                                currency='USD'
+                                sign
+                            />
+                        }
                     </Typography>
                 </Grid>
 

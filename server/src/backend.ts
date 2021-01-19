@@ -9,6 +9,7 @@ import {
 import {
     CreatedAtPlugin
 } from './plugins';
+import { getDeliveryFee } from './services/orders';
 import { getNearestRider, getUserExtension } from './services/users';
 import { generateUniqueRandomString } from './utils';
 
@@ -85,7 +86,7 @@ services.Order.pre('create', async (args: any) => {
     args.input.code = `order-${prefix}`;
     args.input.total = saleTotals.reduce(
         (prev: number, cur: number) => prev + cur, 0);
-    args.input.deliveryFee = 0;
+    args.input.deliveryFee = await getDeliveryFee(sales);
     args.input.deliveryCommission =
         deliveryCommission.value * args.input.deliveryFee;
     args.input.path = [rider._id];
