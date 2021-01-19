@@ -40,7 +40,7 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
         bankId: account?.bankId || '',
         bankCode: account?.bankCode || '',
         branchId: account?.branchId || '',
-        branchName: account?.branchName || '',
+        branch: account?.branchName || '',
         branchCode: account?.branchCode || '',
         branchBic: account?.branchBic || '',
         branchSwiftCode: account?.swiftCode || ''
@@ -64,7 +64,7 @@ export const AccountTab: React.FC<AccountTabProps> = ({ account, user, index }) 
                             bankCode: values.bankCode,
                             bankId: values.bankId,
                             branchId: values.branchId,
-                            branchName: values.branchName,
+                            branchName: values.branch,
                             branchCode: values.branchCode,
                             branchBic: values.branchBic,
                             swiftCode: values.branchSwiftCode
