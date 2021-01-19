@@ -24,6 +24,10 @@
         {
             "key": "delivery",
             "value": 10.0
+        },
+        {
+            "key": "deliveryFee",
+            "value": 200
         }
     ],
     "User": [

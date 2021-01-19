@@ -3,7 +3,7 @@ import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Formik, Form } from "formik";
-import { Field, SpinnerButton, useFormStyles } from "../../../components/forms";
+import { AmountField, Field, SpinnerButton, useFormStyles } from "../../../components/forms";
 import { useGetCommissions, useUpdateCommissions } from "../../../hooks/commissions";
 import { TabPanel, TabPanelProps } from "./common";
 
@@ -12,14 +12,29 @@ interface AppSettingsProps extends Pick<TabPanelProps, "index"> {
 
 const validationSchema = yup.object({
     storeapproval: yup.string()
-        .matches(/[0-9]*/g, 'Price must be a number')
+        .matches(
+            /[0-9]*\.?[0-9]{0,2}/g,
+            'Store Approval fee must be a number with no more than two decimal digits'
+        )
+        .test(
+            'storeapproval',
+            'Store Approval fee must be greater than 0',
+            (value) => Number.parseFloat(value as string) > 0
+        )
         .required(),
-    purchase: yup.string()
-        .matches(/[0-9]*/g, 'Price must be a number')
-        .required(),
-    delivery: yup.string()
-        .matches(/[0-9]*/g, 'Price must be a number')
-        .required(),
+    purchase: yup.number().required(),
+    delivery: yup.number().required(),
+    deliveryFee: yup.string()
+        .matches(
+            /[0-9]*\.?[0-9]{0,2}/g,
+            'Delivery must be a number with no more than two decimal digits'
+        )
+        .test(
+            'deliveryFee',
+            'Delivery Fee must be greater than 0',
+            (value) => Number.parseFloat(value as string) > 0
+        )
+        .required()
 });
 
 export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
@@ -32,7 +47,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
     const initialValues = data?.commissions
         .reduce((prev: any, cur: any) =>
             ({ ...prev, [cur.key]: cur.value }), {}) || {
-        storeapproval: '', purchase: '', delivery: ''
+        storeapproval: '', purchase: '', delivery: '', deliveryFee: ''
     };
 
     const alert = (error: any) => (
@@ -76,12 +91,12 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
         >
             <Form className={classes.form}>
 
-                <Field
+                <AmountField
                     className={classes.field}
                     name='storeapproval'
                     label='($) Store Approval Fee'
-                    placeholder='20.00'
                     disabled={fetching || fetchError}
+                    helperText='All stores must pay this one-time fee after registration'
                 />
 
                 <Field
@@ -90,6 +105,14 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
                     label='% Purchase Commission'
                     placeholder='10.0'
                     disabled={fetching || fetchError}
+                />
+
+                <AmountField
+                    className={classes.field}
+                    name='deliveryFee'
+                    label='($) Delivery Fee'
+                    disabled={fetching || fetchError}
+                    helperText='This is the price for the delivery one item'
                 />
 
                 <Field

@@ -228,7 +228,14 @@ type Commission {
 enum Fees {
     storeapproval
     purchase
+    """
+    delivery commission
+    """
     delivery
+    """
+    delivery fee
+    """
+    deliveryFee
 }
 
 """
