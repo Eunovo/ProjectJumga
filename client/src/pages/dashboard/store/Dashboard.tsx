@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import {
     Box,
     CircularProgress,
+    Hidden,
     Paper,
     Typography
 } from '@material-ui/core';
@@ -8,10 +10,11 @@ import { useStyles } from '../styles';
 import { StorePage } from './StorePage';
 import { useCurrentUser } from '../../../state/AppState';
 import { useApproveStore } from '../../../hooks/users';
-import { Amount } from '../../../components/Utils';
+import { LineChart } from '../../../components/charts';
 import { SpinnerButton } from '../../../components/forms';
 import { HorizontalProductsView } from '../../../components/products';
-import { useGetCommissions } from '../../../hooks';
+import { Amount } from '../../../components/Utils';
+import { useGetCommissions, useLazyGetProducts } from '../../../hooks';
 import { SetupAccountAlert } from '../SetupAcccountAlert';
 
 
@@ -108,71 +111,69 @@ const ApproveSection = () => {
 
 const ApprovedStore = () => {
     const classes = useStyles();
-    const topProducts = [
-        {
-            name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-            image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-            url: 'tech-no-beebop'
-        },
-        {
-            name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-            image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-            url: 'tech-no-beebop'
-        },
-        {
-            name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-            image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-            url: 'tech-no-beebop'
-        },
-        {
-            name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-            image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-            url: 'tech-no-beebop'
-        },
-        {
-            name: 'Tecno POP4 (BC2) 6" Screen 32GB ROM + 2GB RAM, 8MP/5MP Camera, Android Q (Go Edition), 5000mah - Ice Lake Green',
-            image: 'https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/79/781166/1.jpg?7012',
-            url: 'tech-no-beebop'
-        }
-    ];
+    const { user, ready } = useCurrentUser();
+    const { getProducts, data } = useLazyGetProducts();
+
+    const topProducts = data?.products || [];
+
+    useEffect(() => {
+        if (!ready || !user) return;
+
+        getProducts({ store: user.storeName });
+    }, [user, ready]);
 
     return <>
+
         <Box
             display='flex'
+            justifyContent='center'
+            alignItems='stretch'
             flexWrap='wrap'
-            justifyContent='space-between'
-            marginTop={-2}
-            width='100%'
-            maxWidth='60rem'
-            marginX='auto'
+            marginBottom={4}
         >
+            <Box marginY={1} marginX={1} minHeight='6rem'>
+                <Paper variant='outlined' style={{ height: '100%' }}>
+                    <Box padding={2} width='15rem'>
+                        <Typography variant='caption'>Your earnings this month</Typography>
 
-            <div className={classes.infoBlock}>
-                <div className={classes.infoBlockMain}>1000</div>
-                <div className={classes.infoBlockSub}>Products Sold</div>
-            </div>
+                        <Typography style={{
+                            fontWeight: 'bold', fontSize: '1.5rem', marginBlock: '1rem'
+                        }}>
+                            <Amount amount={47877} currency='USD' sign />
+                        </Typography>
 
-            <div className={classes.infoBlock}>
-                <div className={classes.infoBlockMain}>10</div>
-                <div className={classes.infoBlockSub}>Refunds</div>
-            </div>
+                        <Typography variant='body2' style={{ color: 'green' }}>
+                            +12.72%</Typography>
+                    </Box>
+                </Paper>
+            </Box>
 
-            <div className={classes.infoBlock}>
-                <div className={classes.infoBlockMain}>4.5</div>
-                <div className={classes.infoBlockSub}>Average Rating</div>
-            </div>
+            <Box marginY={1} marginX={1}>
+                <Paper variant='outlined' style={{ height: '100%' }}>
+                    <Box padding={2} width='15rem'>
+                        <Typography variant='caption'>Your sales this month</Typography>
 
-            <div className={classes.infoBlock}>
-                <div className={classes.infoBlockMain}>$100.00</div>
-                <div className={classes.infoBlockSub}>Average Weekly Sale</div>
-            </div>
+                        <Typography style={{
+                            fontWeight: 'bold', fontSize: '1.5rem', marginBlock: '1rem'
+                        }}>
+                            325
+                        </Typography>
 
-        </Box >
+                        <Typography variant='body2' style={{ color: 'green' }}>
+                            +8.23%</Typography>
+                    </Box>
+                </Paper>
+            </Box>
+        </Box>
 
+        <Hidden smDown>
+            <LineChart />
+        </Hidden>
 
         <div style={{ marginTop: '5rem' }}>
 
-            <Typography className={classes.header} variant='h5'>Top Selling Products</Typography>
+            <Typography className={classes.header} align='center' variant='h5'>
+                Top Selling Products</Typography>
 
             <HorizontalProductsView products={topProducts} />
 

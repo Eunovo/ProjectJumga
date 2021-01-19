@@ -1,10 +1,10 @@
 import Box from "@material-ui/core/Box";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../styles";
 import { SetupAccountAlert } from '../SetupAcccountAlert';
-import { RiderPage } from "./RiderPage";
 import { useCurrentUser } from "../../../state/AppState";
+import { DashboardAction } from "../DashboardAction";
+import { RiderPage } from "./RiderPage";
 
 
 export const RiderDashboard = () => {
@@ -21,29 +21,69 @@ export const RiderDashboard = () => {
         </Box>
 
         <Box
-            width='100%'
-            maxWidth='30rem'
-            marginX='auto'
-            marginBottom={2}
-        >
-            <Paper elevation={0}>
-                <Typography
-                    align='center'
-                    style={{ fontWeight: 'bold', fontSize: '1.5rem' }}
-                >
-                    $ {user.earnings}
-                </Typography>
-            </Paper>
-        </Box>
-
-        <Box
             component='div'
-            display='flex'
-            flexWrap='wrap'
             width='100%'
             maxWidth='60rem'
             marginX='auto'
         >
+            <Box
+                display='flex'
+                justifyContent='space-between'
+                alignItems='stretch'
+                flexWrap='wrap'
+                width='100%'
+            >
+                <DashboardAction
+                    actionText='goto orders'
+                    actionUrl={`/dashboard/orders`}
+                >
+                    <Box marginBottom={2}>
+                        <Typography align='center' variant='h6'>
+                            Make some deliveries</Typography>
+                    </Box>
+
+                    <Typography align='center'>
+                        See new orders ready to be delivered!
+                    </Typography>
+                </DashboardAction>
+
+                <DashboardAction
+                    actionText='goto wallet'
+                    actionUrl={`/dashboard/wallet`}
+                >
+                    <Box marginBottom={2}>
+                        <Typography align='center' variant='h6'>
+                            In need of cash?</Typography>
+                    </Box>
+
+                    <Typography align='center'>
+                        Check out your wallet and make a withdrawal!
+                    </Typography>
+                </DashboardAction>
+            </Box>
+
+            <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='stretch'
+                flexWrap='wrap'
+                width='100%'
+            >
+                <DashboardAction
+                    actionText='goto settings'
+                    actionUrl={`/dashboard/settings`}
+                >
+                    <Box marginBottom={2}>
+                        <Typography align='center' variant='h6'>
+                            Edit your details</Typography>
+                    </Box>
+
+                    <Typography align='center'>
+                        Maybe you just want to edit your personal information,
+                        or your account details.
+                    </Typography>
+                </DashboardAction>
+            </Box>
         </Box>
     </RiderPage>
 }
