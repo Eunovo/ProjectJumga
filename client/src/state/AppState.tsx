@@ -42,6 +42,8 @@ export const CurrentUserProvider: React.FC = ({ children }) => {
                 console.error('Failed to retrieve logged in user: ', err.message);
                 setReady(true);
             }
+        } else {
+            saveOrUpdate('user', user);
         }
     }, [user, ready, setUser, setReady]);
 

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 import { Header } from './components/header';
-import { CustomerSignup, Login, StoreOwnerSignup } from './pages/auth';
+import { CustomerSignup, Login, Logout, StoreOwnerSignup } from './pages/auth';
 import { Cart } from './pages/cart';
 import { Checkout } from './pages/checkout';
 import {
@@ -32,6 +32,7 @@ export const Routes = () => {
                 <Route path='/login/admin'><Login userType='admin' /></Route>
                 <Route path='/signup' component={CustomerSignup} exact />
                 <Route path='/signup/store' component={StoreOwnerSignup} />
+                <Route path='/logout' exact component={Logout} />
 
                 <Route path='/dashboard'>
                     <Header />
