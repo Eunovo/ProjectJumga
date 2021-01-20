@@ -85,7 +85,7 @@ Find the code for this [here](https://github.com/Eunovo/ProjectJumga/blob/main/s
 Users can create an order and pay using Flutterwave gateway. Jumga holds this money paid until the order is delivered.
 When the order is delivered **Jumga allocates seller and rider earnings and it's own commissions too**.  
 You can see this [here](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/orders/OrderController.ts#L114-L138).  
-The purchase and delivery commissions are calculated on [Order creation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/backend.ts#L59-L93) and saved for later use when paying all entities involved.  
+The purchase and delivery commissions are calculated on [Order creation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/backend.ts#L59-L95) and saved for later use when paying all entities involved.  
 Riders can mark orders found on the [Orders page](https://pure-crag-32381.herokuapp.com/dashboard/orders) as "delivered". Simply, select an Order and click the "Mark Delivered" button on its page.
 
 >Note that the delivery process has been greatly simplified for demonstration purposes,  

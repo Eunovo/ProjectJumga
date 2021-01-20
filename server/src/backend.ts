@@ -74,7 +74,8 @@ services.Order.pre('create', async (args: any) => {
 
             sale.store = product.store;
             sale.amount = parseFloat(product.price) * parseInt(sale.quantity);
-            sale.commission = purchaseCommission.value * sale.amount;
+            // Calc actual commission using purchaseCommission % and amount sold 
+            sale.commission = 0.01 * purchaseCommission.value * sale.amount;
             return sale.amount;
         }
     );
@@ -87,7 +88,8 @@ services.Order.pre('create', async (args: any) => {
     args.input.total = saleTotals.reduce(
         (prev: number, cur: number) => prev + cur, 0);
     args.input.deliveryFee = await getDeliveryFee(sales);
-    args.input.deliveryCommission =
+    // Calc actual deliveryCommision using deliveryCommission % and deliveryFee
+    args.input.deliveryCommission = 0.01 *
         deliveryCommission.value * args.input.deliveryFee;
     args.input.path = [rider._id];
 });
