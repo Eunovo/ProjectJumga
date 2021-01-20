@@ -91,7 +91,7 @@ export const Riders = () => {
             </AddRiderButton>
         </Box>
 
-        <Box marginTop={4}>
+        <Box marginTop={4} className={classes.table}>
             <TableContainer component={Paper}>
                 <Table className={classes?.table} aria-label="customized table">
                     <FieldsTableHead fields={fields} fieldsMap={fieldsMap} />

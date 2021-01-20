@@ -104,7 +104,8 @@ export const Refunds = () => {
 
         <div style={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexWrap: 'wrap'
         }}>
             <HorizontalOptionButtons
                 options={statuses}
@@ -113,7 +114,7 @@ export const Refunds = () => {
             />
         </div>
 
-        <Box marginTop={4}>
+        <Box marginTop={4} className={classes.table}>
             <TableContainer component={Paper}>
                 <Table className={classes?.table} aria-label="customized table">
                     <FieldsTableHead fields={fields} fieldsMap={fieldsMap} />
@@ -145,7 +146,13 @@ const RefundActions: React.FC<{ id: string, onSuccess: (status: string) => void 
             }
         }
 
-        return <Box display='flex' alignItems='center' justifyContent='center'>
+        return <Box
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
+            flexWrap='wrap'
+            marginTop='-0.5rem'
+        >
 
             <SpinnerButton
                 onClick={handleSuccess(decline, RefundStatus.declined)}
@@ -153,6 +160,7 @@ const RefundActions: React.FC<{ id: string, onSuccess: (status: string) => void 
                 variant='contained'
                 size='small'
                 disabled={(accepting || declining)}
+                style={{ marginTop: '0.5rem' }}
             >
                 decline
         </SpinnerButton>
@@ -166,6 +174,7 @@ const RefundActions: React.FC<{ id: string, onSuccess: (status: string) => void 
                 variant='contained'
                 size='small'
                 disabled={(accepting || declining)}
+                style={{ marginTop: '0.5rem' }}
             >
                 accept
         </SpinnerButton>

@@ -72,7 +72,7 @@ export const StoreWallet = () => {
                 />
             </div>
 
-            <Box marginTop={4}>
+            <Box marginTop={4} className={classes.table}>
                 <PayoutsTable
                     classes={classes}
                     fields={{

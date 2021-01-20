@@ -37,7 +37,7 @@ export const RiderOrders = () => {
                 />
             </div>
 
-            <Box marginTop={4}>
+            <Box marginTop={4} className={classes.table}>
                 <OrdersTable
                     classes={classes}
                     fields={{

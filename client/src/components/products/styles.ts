@@ -12,7 +12,7 @@ export const useProductStyles = makeStyles((theme: Theme) =>
         },
         slider: {
             marginInline: 'auto',
-            maxWidth: '20rem',
+            maxWidth: '18rem',
             [theme.breakpoints.up('sm')]: {
                 maxWidth: '30rem'
             },

@@ -73,7 +73,13 @@ export const useStyles = makeStyles((theme: Theme) =>
             }
         },
         infoBlockSub: {},
-        table: {},
+        table: {
+            marginInline: 'auto',
+            maxWidth: '18rem',
+            [theme.breakpoints.up('sm')]: {
+                maxWidth: '100%'
+            }
+        },
         split: {
             width: '100%',
             marginBlock: theme.spacing(2),
