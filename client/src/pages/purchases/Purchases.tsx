@@ -188,7 +188,7 @@ const Sale: React.FC<SaleProps> = ({ sale, placeholder }) => {
             {
                 placeholder ? <ImageSkeleton /> :
                     <img
-                        src={`${process.env.REACT_APP_API}/files/${product?.images[0]}`}
+                        src={`${process.env.REACT_APP_API_URL}/files/${product?.images[0]}`}
                         alt={product?.name || ''}
                         style={{
                             objectFit: 'cover',
