@@ -36,7 +36,8 @@ export class FileService {
         this.s3.upload({
             Bucket: BUCKET_NAME,
             Key: key,
-            Body: file
+            Body: file,
+            ACL: 'public-read'
         }, function (err, data) {
             if (err) {
                 console.log(err);
