@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Formik, Form } from "formik";
 import { AmountField, Field, SpinnerButton, useFormStyles } from "../../../components/forms";
 import { useGetCommissions, useUpdateCommissions } from "../../../hooks/commissions";
+import { unformatAmount } from "../../../utils";
 import { TabPanel, TabPanelProps } from "./common";
 
 interface AppSettingsProps extends Pick<TabPanelProps, "index"> {
@@ -81,7 +82,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ index }) => {
                         Object.keys(values)
                             .map((key) => ({
                                 key,
-                                value: (values as any)[key]
+                                value: unformatAmount((values as any)[key])
                             }))
                     );
                 } catch (error) {
