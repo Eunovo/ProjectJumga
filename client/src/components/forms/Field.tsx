@@ -5,6 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import { useField } from 'formik';
+import { unformatAmount } from '../../utils';
 
 type FieldProps = TextFieldProps & {
     className?: string;
@@ -32,20 +33,35 @@ export const AmountField: React.FC<FieldProps> = ({ name, helperText, ...props }
     if (isError) helperText = meta.error;
 
     const formatter = new Intl
-        .NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        .NumberFormat('en-GB', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
 
     return (
         <TextField
             error={isError}
             helperText={helperText}
             {...field} {...props}
+            onFocus={() => {
+                if (!field.value) return;
+                action.setValue(
+                    `${unformatAmount(field.value)}`);
+            }}
             onBlur={() => {
                 if (!field.value) {
                     action.setValue('0.00');
                     return;
                 }
 
-                const parsed = parseFloat(field.value.replaceAll(',', ''));
+                const parsed = parseFloat(field.value
+                    .replaceAll(',', '')
+                    .replaceAll(' ', '')
+                );
+                if (parsed === NaN) {
+                    action.setValue('0.00');
+                    return;
+                }
                 const formattedValue = formatter.format(parsed);
 
                 action.setValue(formattedValue);

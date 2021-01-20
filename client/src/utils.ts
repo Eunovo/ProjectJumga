@@ -18,3 +18,8 @@ export function objectToFormData(object: any) {
 
     return formData;
 }
+
+export function unformatAmount(amount: string) {
+    amount = amount.replaceAll(',', '');
+    return Number.parseFloat(amount);
+}

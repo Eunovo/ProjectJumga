@@ -6,6 +6,7 @@ import { useStyles } from "../styles"
 import { StorePage } from "./StorePage"
 import { useHistory } from 'react-router-dom';
 import { useCurrentUser } from '../../../state/AppState';
+import { unformatAmount } from '../../../utils';
 
 
 export const StoreAddProduct = () => {
@@ -34,7 +35,9 @@ export const StoreAddProduct = () => {
                 onSubmit={async (values, actions) => {
                     try {
                         await addProduct({
-                            ...values, store: user?.seller?.storeName
+                            ...values,
+                            price: unformatAmount(values.price),
+                            store: user?.seller?.storeName
                         });
                         history.push('/dashboard/products');
                     } catch (error) {

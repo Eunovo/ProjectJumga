@@ -7,7 +7,7 @@ interface AmountProps {
 export const Amount: React.FC<AmountProps> = ({ amount = 0, currency, sign }) => {
     const formatter = new Intl
         .NumberFormat(
-            'en-IN',
+            'en-GB',
             {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,

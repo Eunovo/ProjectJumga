@@ -14,6 +14,7 @@ import { Formik, Form } from 'formik';
 import { AmountField, SpinnerButton } from '../../components/forms';
 import { useRequestPayout } from '../../hooks/payouts';
 import { useCurrentUser } from '../../state/AppState';
+import { unformatAmount } from '../../utils';
 
 
 interface WithdrawProps {
@@ -88,7 +89,7 @@ export const WithdrawDialog: React.FC<WithdrawProps> = ({ open, handleClose }) =
             validationSchema={validationSchema}
             onSubmit={async (values, actions) => {
                 try {
-                    await withdraw(Number.parseInt(values.amount));
+                    await withdraw(unformatAmount(values.amount));
                 } catch (error) {
                     actions.setErrors(error?.errors);
                 }
