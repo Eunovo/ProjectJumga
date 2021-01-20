@@ -98,12 +98,6 @@ export const SelectBankBranch: React.FC<SelectBankBranchProps> =
         const { data, loading, execute } = useGet(`/banks/${bankId}/branches`);
         const branches = data?.branches || [];
 
-        useEffect(() => {
-            if (!bankId) return;
-            console.log(bankId);
-            execute()
-        }, [bankId]);
-
         const selected = (values as any)[name];
 
         useEffect(() => {
