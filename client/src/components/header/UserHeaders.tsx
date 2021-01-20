@@ -12,6 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useStyles } from './styles';
+import { useCurrentUser } from '../../state/AppState';
 
 const StyledMenuItem = withStyles({
     root: {
@@ -146,6 +147,7 @@ export const GuestHeader = () => {
 
 export const StoreOwnerHeader = () => {
     const history = useHistory();
+    const { user } = useCurrentUser();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const isMenuOpen = Boolean(anchorEl);
@@ -189,11 +191,15 @@ export const StoreOwnerHeader = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <StyledMenuItem onClick={() => {
-                handleMenuClose();
-            }}>
-                Profile
-            </StyledMenuItem>
+            {
+                user.role !== 'user' &&
+                <StyledMenuItem onClick={() => {
+                    history.push(`/dashboard`);
+                    handleMenuClose();
+                }}>
+                    Dashboard
+                </StyledMenuItem>
+            }
 
             <StyledMenuItem onClick={() => {
                 history.push(`/purchases`);
