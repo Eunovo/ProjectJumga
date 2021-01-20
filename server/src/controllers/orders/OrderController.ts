@@ -145,7 +145,7 @@ export class OrderController extends BaseController {
 
         if (order.status === 'paid') {
             // request refund of paid money
-            services.Refund.create({ order: order.code });
+            services.Refund.create({ orderId: order._id, order: order.code });
         }
     
         return { message: 'success' };

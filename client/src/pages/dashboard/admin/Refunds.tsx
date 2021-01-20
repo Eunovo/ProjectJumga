@@ -33,9 +33,13 @@ export const Refunds = () => {
             scope: "row",
             title: 'Order'
         },
+        transactionRef: {
+            align: 'center',
+            title: 'Tranx Ref'
+        },
         status: {
             align: 'center',
-            title: 'Status'
+            title: 'Refund Status'
         },
         createdAt: {
             align: 'right',

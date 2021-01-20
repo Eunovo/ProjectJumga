@@ -92,4 +92,11 @@ services.Order.pre('create', async (args: any) => {
     args.input.path = [rider._id];
 });
 
+services.Refund.pre('create', async (args: any) => {
+    const { orderId } = args.input;
+    const payment = await services.Payment.findOne(
+        { 'meta.orderId': orderId.toString(), status: 'verified' });
+    args.input.transactionRef = payment.transactionRef;
+});
+
 export { repos, services };

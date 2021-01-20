@@ -94,7 +94,7 @@ Riders can mark orders found on the [Orders page](https://pure-crag-32381.heroku
 ### Order Cancellation and Refund
 User can vist [the purchases page](https://pure-crag-32381.herokuapp.com/purchases) and cancel their orders that have not been completed.  
 Upon [order cancellation](https://github.com/Eunovo/ProjectJumga/blob/2488dd9a643953368155c67aa82288dbaaa56378/server/src/controllers/orders/OrderController.ts#L140-L153), a **Refund Request** is created for `admins` to review.  
-Admins can fufill these refunds manually on through the FlutterWave dashboard.
+Admins armed with the transaction reference of the payment can fufill these refunds manually through the FlutterWave dashboard.
 
 ### Withdrawals
 Riders and Sellers can withdraw from their earnings at anytime by visiting [the wallet page](https://pure-crag-32381.herokuapp.com/dashboard/wallet).

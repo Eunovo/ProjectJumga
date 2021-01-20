@@ -182,6 +182,7 @@ type Refund {
     @OneToOne('Order', 'code')
     """
     order: String!
+    transactionRef: String!
     """
     @default('pending')
     """

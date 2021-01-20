@@ -15,7 +15,7 @@ export class OrderPayService {
             amount: order.total + order.deliveryFee,
             redirectUrl: `${process.env.URL}/orders/confirm-pay`,
             customer: order.customer,
-            meta: { orderId: order._id },
+            meta: { orderId: order._id.toString() },
             narration: "Order payment"
         });
     }
