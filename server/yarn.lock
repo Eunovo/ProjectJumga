@@ -278,7 +278,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@eunovo/superbackend@^0.1.8":
+"@eunovo/superbackend@0.1.8":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@eunovo/superbackend/-/superbackend-0.1.8.tgz#d1e04ecd3056470115713628a242eeee10fd24b0"
   integrity sha512-ls5omDyJRtNYKKdl8u7rpRcprNoklY22E9ECPQIkVEq04Sadxdn+V+iUMx4BvxvXRdbaOVkXunMFet/NMeWR7w==
