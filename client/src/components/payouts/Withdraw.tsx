@@ -90,6 +90,7 @@ export const WithdrawDialog: React.FC<WithdrawProps> = ({ open, handleClose }) =
             onSubmit={async (values, actions) => {
                 try {
                     await withdraw(unformatAmount(values.amount));
+                    handleClose();
                 } catch (error) {
                     actions.setErrors(error?.errors);
                 }
